@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About GG Creation - YouTube DIY & Homemade Inventions</title>
+  <meta name="description"
+    content="Learn about GG Creation (@GGCreative-x9o), our homemade products, tractor mechanics, gearbox repair tutorials, and maker values.">
+
+  <!-- Font Awesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+  <!-- Ambient Glowing Background Elements -->
+  <div class="bg-ambient-orb orb-red"></div>
+  <div class="bg-ambient-orb orb-rose"></div>
+
+  <!-- NAVIGATION BAR -->
+  <header class="navbar" id="mainNavbar">
+    <div class="container navbar-container">
+      <a href="index.html" class="brand-logo" id="navBrandLogo">
+        <div class="brand-icon-box">GG</div>
+        <div class="brand-text">
+          <span class="brand-title">GG Creation</span>
+          <span class="brand-tag">HOMEMADE & DIY INNOVATION</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <nav>
+        <ul class="nav-menu" id="navDesktopMenu">
+          <li><a href="index.html" class="nav-link" id="navLinkHome"><i class="fa-solid fa-house"></i> Home</a></li>
+          <li><a href="projects.html" class="nav-link" id="navLinkProjects"><i class="fa-solid fa-shapes"></i>
+              Project</a></li>
+          <li><a href="products.html" class="nav-link" id="navLinkProducts"><i class="fa-solid fa-link"></i> Link
+              Product</a></li>
+          <li><a href="about.html" class="nav-link active" id="navLinkAbout"><i class="fa-solid fa-user"></i> About</a>
+          </li>
+          <li><a href="contact.html" class="nav-link" id="navLinkContact"><i class="fa-solid fa-phone"></i> Contact
+              Number</a></li>
+        </ul>
+      </nav>
+
+      <!-- Nav Actions -->
+      <div class="nav-actions">
+        <button class="nav-btn" id="themeToggleBtn" aria-label="Toggle Theme">
+          <i class="fa-solid fa-sun" id="themeIcon"></i>
+        </button>
+
+        <div class="profile-dropdown-wrapper">
+          <button class="profile-avatar-btn" id="profileAvatarBtn">
+            <img src="assets/images/avatar.jpg" alt="GG Creation" class="avatar-img-sm"
+              onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80'">
+            <span class="profile-name-text" id="navProfileName">GG Creation</span>
+            <i class="fa-solid fa-chevron-down" style="font-size: 0.75rem; color: var(--text-muted);"></i>
+          </button>
+          <div class="profile-menu" id="profileMenuDropdown">
+            <div class="profile-menu-header">
+              <div class="profile-menu-title">GG Creation</div>
+              <div class="profile-menu-sub">@GGCreative-x9o</div>
+            </div>
+            <a href="profile.html" class="profile-menu-item"><i class="fa-solid fa-user-circle"></i> Profile
+              Dashboard</a>
+            <a href="projects.html" class="profile-menu-item"><i class="fa-solid fa-layer-group"></i> My DIY
+              Projects</a>
+            <a href="products.html" class="profile-menu-item"><i class="fa-solid fa-tags"></i> Affiliate Gear</a>
+            <a href="https://youtube.com/@ggcreative-x9o?si=xSec0GQZRetnup0H" target="_blank"
+              class="profile-menu-item"><i class="fa-brands fa-youtube" style="color: #ff0000;"></i> Open YouTube
+              Channel</a>
+            <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 4px 0;">
+            <a href="#" class="profile-menu-item logout" id="navLogoutBtn"><i
+                class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out</a>
+          </div>
+        </div>
+
+        <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Open Navigation">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT: ABOUT PAGE -->
+  <main class="container" style="flex: 1;">
+    <section class="page-header">
+      <div class="badge badge-spent-time" style="margin-bottom: 10px;">
+        <i class="fa-brands fa-youtube" style="color: #ff0000;"></i> Verified YouTube Channel Creator
+      </div>
+      <h1 class="page-title">About <span>GG Creation</span></h1>
+      <p class="page-subtitle">
+        The story behind <strong>@GGCreative-x9o</strong>, our homemade product innovations, tractor builds, and
+        transparent project pricing.
+      </p>
+    </section>
+
+    <!-- Channel Owner & Purpose Card -->
+    <div class="about-hero-card">
+      <!-- Channel Owner Profile (Left Column) -->
+      <div class="owner-profile-card">
+        <img src="assets/images/avatar.jpg" alt="GG Creation (@GGCreative-x9o)" class="owner-avatar-lg"
+          onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80'">
+        <h2 class="owner-name">
+          GG Creation
+          <i class="fa-solid fa-circle-check" style="color: var(--accent-red); font-size: 1.1rem;"
+            title="Verified Creator"></i>
+        </h2>
+        <div class="owner-role">@GGCreative-x9o • Founder & Maker</div>
+
+        <div class="owner-badges">
+          <span class="badge badge-category"><i class="fa-brands fa-youtube" style="color: #ff0000;"></i> 34.9K
+            Subs</span>
+          <span class="badge badge-spent-time"><i class="fa-solid fa-tractor"></i> Homemade Tech</span>
+          <span class="badge badge-price">Tamil Nadu, India</span>
+        </div>
+
+        <p
+          style="font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 20px; font-style: italic;">
+          "I am making some product for homemade and make a new product and implementation the product."
+        </p>
+
+        <a href="https://youtube.com/@ggcreative-x9o?si=xSec0GQZRetnup0H" target="_blank" class="btn btn-primary btn-sm"
+          style="width: 100%;">
+          <i class="fa-brands fa-youtube"></i> Visit YouTube Channel
+        </a>
+      </div>
+
+      <!-- What Purpose to Created Channel (Right Column) -->
+      <div class="about-story-content">
+        <h3 class="about-heading">
+          <i class="fa-solid fa-compass-drafting"></i> What Purpose Created Channel
+        </h3>
+
+        <p class="about-paragraph">
+          When working on homemade machines, toy tractors, and mechanics, enthusiasts face constant challenges: gear
+          teeth stripping, weak motors, improper lubricants, and lack of clarity on <strong>what raw parts cost or how
+            to implement fixes</strong>.
+        </p>
+
+        <p class="about-paragraph">
+          <strong>GG Creation (@GGCreative-x9o)</strong> was created with a clear mission: to build innovative homemade
+          products from scratch, test real mechanical implementations (like toy tractor gearboxes and electric
+          steering), and publish <strong>100% honest spent time and material bills ("If Bill")</strong> so anyone in the
+          community can learn, replicate, and innovate.
+        </p>
+
+        <div class="purpose-highlights-grid">
+          <div class="purpose-card">
+            <div class="purpose-icon"><i class="fa-solid fa-tractor"></i></div>
+            <h4 class="purpose-title">Homemade Tractor Builds</h4>
+            <p class="purpose-text">Handcrafting working scale tractors with custom steel sheet bodies, electric geared
+              drive, and steering systems.</p>
+          </div>
+
+          <div class="purpose-card">
+            <div class="purpose-icon"><i class="fa-solid fa-gears"></i></div>
+            <h4 class="purpose-title">Gearbox Teardowns & Fixes</h4>
+            <p class="purpose-text">Solving real gearbox failures (e.g. John Deere toy tractors), upgrading to brass
+              pinions, and formulating SV lubricants.</p>
+          </div>
+
+          <div class="purpose-card">
+            <div class="purpose-icon"><i class="fa-solid fa-receipt"></i></div>
+            <h4 class="purpose-title">Real Cost Transparency</h4>
+            <p class="purpose-text">Every project includes an itemized bill showing exact costs of motors, sheet metal,
+              gears, and materials.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MEET THE CREATORS SECTION -->
+    <section class="creators-section" id="meetTheCreators">
+      <div class="creators-section-head">
+        <div class="badge badge-spent-time" style="margin-bottom: 8px;">
+          <i class="fa-solid fa-users"></i> The Maker Team
+        </div>
+        <h2 class="section-title">Meet the <span>Creators</span></h2>
+        <p style="color: var(--text-secondary); margin-top: 6px;">
+          The passionate makers, mechanics, and editors behind GG Creation's homemade innovations and YouTube tutorials.
+        </p>
+      </div>
+
+      <div class="creators-list">
+        <!-- Creator 1: Gopi -->
+        <article class="creator-row-card">
+          <div class="creator-photo-col">
+            <div class="creator-photo-frame">
+              <img src="assets/images/GOPI.jpg" alt="Gopi - Founder & Lead Creator" class="creator-photo"
+                style="object-position: center 15%;" onerror="this.src='assets/images/avatar.jpg'">
+              <div class="creator-badge-overlay">
+                <i class="fa-solid fa-star" style="color: #fbbf24;"></i> Founder & Maker
+              </div>
+            </div>
+          </div>
+          <div class="creator-info-col">
+            <div class="creator-meta-header">
+              <span class="creator-role-badge">
+                <i class="fa-solid fa-wrench"></i> Founder & Lead Creator
+              </span>
+            </div>
+            <h3 class="creator-name">Gopi</h3>
+            <p class="creator-bio">
+              Handcrafts scale tractors, mechanical implementations, and custom DIY workshop machinery from scratch.
+              Leads channel innovation, gearbox teardowns, and transparent bill documentation for the maker community.
+            </p>
+            <div class="creator-skills-row">
+              <span class="creator-skill-tag">Scale Model Mechanics</span>
+              <span class="creator-skill-tag">Gearbox Diagnostics</span>
+              <span class="creator-skill-tag">Product Prototyping</span>
+            </div>
+            <div class="creator-socials">
+              <a href="https://youtube.com/@ggcreative-x9o?si=xSec0GQZRetnup0H" target="_blank"
+                class="creator-social-btn" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+              <a href="mailto:gjgokul2005@gmail.com" class="creator-social-btn" title="Email"><i
+                  class="fa-solid fa-envelope"></i></a>
+              <a href="https://instagram.com" target="_blank" class="creator-social-btn" title="Instagram"><i
+                  class="fa-brands fa-instagram"></i></a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Creator 2: Gokul (GG) -->
+        <article class="creator-row-card">
+          <div class="creator-photo-col">
+            <div class="creator-photo-frame">
+              <img src="assets/images/GG.jpg" alt="Gokul (GG) - Co-Creator & Technical Lead" class="creator-photo"
+                style="object-position: center top;" onerror="this.src='assets/images/avatar.jpg'">
+              <div class="creator-badge-overlay">
+                <i class="fa-solid fa-laptop-code" style="color: var(--accent-red);"></i> Technical Lead
+              </div>
+            </div>
+          </div>
+          <div class="creator-info-col">
+            <div class="creator-meta-header">
+              <span class="creator-role-badge">
+                <i class="fa-solid fa-code"></i> Co-Creator & Technical Editor
+              </span>
+            </div>
+            <h3 class="creator-name">Gokul</h3>
+            <p class="creator-bio">
+              Directs step-by-step video pacing, technical documentation, and project build optimization. Ensures
+              project schematics, wiring connections, and mechanical assembly demonstrations are clear, concise, and
+              easy for enthusiasts to replicate.
+            </p>
+            <div class="creator-skills-row">
+              <span class="creator-skill-tag">Assembly Optimization</span>
+              <span class="creator-skill-tag">Technical Editing</span>
+              <span class="creator-skill-tag">Wiring Schematics</span>
+            </div>
+            <div class="creator-socials">
+              <a href="https://youtube.com/@ggcreative-x9o?si=xSec0GQZRetnup0H" target="_blank"
+                class="creator-social-btn" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+              <a href="mailto:gjgokul2005@gmail.com" class="creator-social-btn" title="Email"><i
+                  class="fa-solid fa-envelope"></i></a>
+              <a href="https://instagram.com" target="_blank" class="creator-social-btn" title="Instagram"><i
+                  class="fa-brands fa-instagram"></i></a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Creator 3: Mano -->
+        <article class="creator-row-card">
+          <div class="creator-photo-col">
+            <div class="creator-photo-frame">
+              <img src="assets/images/MANO.jpg" alt="Mano - Creative Assistant & Junior Maker" class="creator-photo"
+                style="object-position: center 20%;" onerror="this.src='assets/images/avatar.jpg'">
+              <div class="creator-badge-overlay">
+                <i class="fa-solid fa-bolt" style="color: #60a5fa;"></i> Creative Team
+              </div>
+            </div>
+          </div>
+          <div class="creator-info-col">
+            <div class="creator-meta-header">
+              <span class="creator-role-badge">
+                <i class="fa-solid fa-film"></i> Creative Assistant & Junior Maker
+              </span>
+            </div>
+            <h3 class="creator-name">Manoj</h3>
+            <p class="creator-bio">
+              Assists with workshop testing, scale component staging, creative support, and media preparation. Brings
+              energetic maker passion, hands-on curiosity, and enthusiastic team spirit to every homemade build.
+            </p>
+            <div class="creator-skills-row">
+              <span class="creator-skill-tag">Workshop Testing</span>
+              <span class="creator-skill-tag">Component Staging</span>
+              <span class="creator-skill-tag">Creative Support</span>
+            </div>
+            <div class="creator-socials">
+              <a href="https://youtube.com/@ggcreative-x9o?si=xSec0GQZRetnup0H" target="_blank"
+                class="creator-social-btn" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+              <a href="mailto:gjgokul2005@gmail.com" class="creator-social-btn" title="Email"><i
+                  class="fa-solid fa-envelope"></i></a>
+              <a href="https://instagram.com" target="_blank" class="creator-social-btn" title="Instagram"><i
+                  class="fa-brands fa-instagram"></i></a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- SOCIAL MEDIA LINKS -->
+    <div style="margin-bottom: 40px;">
+      <h3
+        style="font-family: var(--font-heading); font-size: 1.6rem; font-weight: 800; margin-bottom: 20px; text-align: center;">
+        Connect with <span>GG Creation</span>
+      </h3>
+
+      <div class="social-links-grid">
+        <a href="https://youtube.com/@ggcreative-x9o?si=xSec0GQZRetnup0H" target="_blank" class="social-card">
+          <div class="social-icon-box social-yt"><i class="fa-brands fa-youtube"></i></div>
+          <div>
+            <div style="font-weight: 700; color: var(--text-primary);">YouTube</div>
+            <div style="font-size: 0.85rem; color: var(--text-secondary);">@GGCreative-x9o (34.9k)</div>
+          </div>
+        </a>
+
+        <a href="https://instagram.com" target="_blank" class="social-card">
+          <div class="social-icon-box social-insta"><i class="fa-brands fa-instagram"></i></div>
+          <div>
+            <div style="font-weight: 700; color: var(--text-primary);">Instagram</div>
+            <div style="font-size: 0.85rem; color: var(--text-secondary);">@gg_creation_official</div>
+          </div>
+        </a>
+
+        <a href="https://wa.me/919876543210" target="_blank" class="social-card">
+          <div class="social-icon-box social-wa"><i class="fa-brands fa-whatsapp"></i></div>
+          <div>
+            <div style="font-weight: 700; color: var(--text-primary);">WhatsApp</div>
+            <div style="font-size: 0.85rem; color: var(--text-secondary);">+91 98765 43210</div>
+          </div>
+        </a>
+
+        <a href="mailto:gjgokul2005@gmail.com" class="social-card">
+          <div class="social-icon-box social-mail"><i class="fa-solid fa-envelope"></i></div>
+          <div>
+            <div style="font-weight: 700; color: var(--text-primary);">Gmail</div>
+            <div style="font-size: 0.85rem; color: var(--text-secondary);">gjgokul2005@gmail.com</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Bottom Navigation Back Bar -->
+    <div class="bottom-back-bar">
+      <a href="index.html" class="bottom-back-btn" onclick="if (history.length > 1) { history.back(); return false; }">
+        <i class="fa-solid fa-arrow-left"></i> Back to Home
+      </a>
+    </div>
+  </main>
+
+  <!-- SITE FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a href="index.html" class="brand-logo" style="margin-bottom: 14px;">
+            <div class="brand-icon-box">GG</div>
+            <div class="brand-text">
+              <span class="brand-title">GG Creation</span>
+              <span class="brand-tag">HOMEMADE & DIY INNOVATION</span>
+            </div>
+          </a>
+          <p class="footer-col-desc">
+            Official website of YouTube channel <strong>GG Creation (@GGCreative-x9o)</strong>. Documenting homemade
+            innovations, tractor gearbox engineering, and transparent project pricing.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="footer-heading">Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="index.html" class="footer-link">Home</a></li>
+            <li><a href="projects.html" class="footer-link">Projects Showcase</a></li>
+            <li><a href="products.html" class="footer-link">Affiliate Gear Links</a></li>
+            <li><a href="about.html" class="footer-link">About GG Creation</a></li>
+            <li><a href="contact.html" class="footer-link">Contact Channels</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-heading">Direct Contact</h4>
+          <ul class="footer-links">
+            <li><a href="https://wa.me/919876543210" target="_blank" class="footer-link"><i
+                  class="fa-brands fa-whatsapp" style="color: #25d366;"></i> WhatsApp Chat</a></li>
+            <li><a href="https://instagram.com" target="_blank" class="footer-link"><i class="fa-brands fa-instagram"
+                  style="color: #e1306c;"></i> Instagram DM</a></li>
+            <li><a href="mailto:gjgokul2005@gmail.com" class="footer-link"><i class="fa-solid fa-envelope"
+                  style="color: var(--accent-red);"></i> Gmail Inquiry</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-heading">Official YouTube</h4>
+          <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 14px;">
+            Join 34,900+ makers and tractor enthusiasts on <strong>@GGCreative-x9o</strong>.
+          </p>
+          <a href="https://youtube.com/@ggcreative-x9o?si=xSec0GQZRetnup0H" target="_blank"
+            class="btn btn-primary btn-sm">
+            <i class="fa-brands fa-youtube"></i> Subscribe on YouTube
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>&copy; 2026 GG Creation. All rights reserved. Handcrafted with passion.</div>
+        <div style="display: flex; gap: 16px;">
+          <a href="login.html" style="color: var(--text-muted);"><i class="fa-solid fa-lock"></i> Creator Login</a>
+          <a href="signup.html" style="color: var(--text-muted);"><i class="fa-solid fa-user-plus"></i> Join
+            Community</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+
+</html>

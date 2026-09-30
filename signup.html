@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up - GG Creation Studio</title>
+  <meta name="description" content="Create a new account on GG Creation Studio. Layout matching wireframe Step 1: Name, Phone Number, Gmail, Password.">
+
+  <!-- Font Awesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Ambient Glowing Background Elements -->
+  <div class="bg-ambient-orb orb-red"></div>
+  <div class="bg-ambient-orb orb-rose"></div>
+
+  <!-- STEP 2: NAVIGATION BAR -->
+  <header class="navbar" id="mainNavbar">
+    <div class="container navbar-container">
+      <a href="index.html" class="brand-logo" id="navBrandLogo">
+        <div class="brand-icon-box">GG</div>
+        <div class="brand-text">
+          <span class="brand-title">GG Creation</span>
+          <span class="brand-tag">HOMEMADE & DIY INNOVATION</span>
+        </div>
+      </a>
+
+      <nav>
+        <ul class="nav-menu" id="navDesktopMenu">
+          <li><a href="index.html" class="nav-link"><i class="fa-solid fa-house"></i> Home</a></li>
+          <li><a href="projects.html" class="nav-link"><i class="fa-solid fa-shapes"></i> Project</a></li>
+          <li><a href="products.html" class="nav-link"><i class="fa-solid fa-link"></i> Link Product</a></li>
+          <li><a href="about.html" class="nav-link"><i class="fa-solid fa-user"></i> About</a></li>
+          <li><a href="contact.html" class="nav-link"><i class="fa-solid fa-phone"></i> Contact Number</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="nav-btn" id="themeToggleBtn" aria-label="Toggle Theme">
+          <i class="fa-solid fa-sun" id="themeIcon"></i>
+        </button>
+        <a href="login.html" class="btn btn-secondary btn-sm">
+          <i class="fa-solid fa-right-to-bracket"></i> Login
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- STEP 1: SIGN UP CARD -->
+  <main class="auth-wrapper">
+    <div class="auth-card">
+      <div class="auth-header">
+        <div class="badge badge-spent-time" style="margin-bottom: 8px;">
+          <i class="fa-solid fa-user-plus"></i> Step 1 in Notebook Wireframe
+        </div>
+        <h1 class="auth-title">Create <span>Account</span></h1>
+        <p class="auth-subtitle">Join the DIY maker community to bookmark builds & download bills.</p>
+      </div>
+
+      <form id="signupForm" onsubmit="event.preventDefault(); handleSignup();">
+        <!-- 1. Name -->
+        <div class="form-group">
+          <label class="form-label" for="signupName">Full Name *</label>
+          <input type="text" id="signupName" class="form-input" placeholder="e.g. Gokul" required>
+        </div>
+
+        <!-- 2. Phone Number -->
+        <div class="form-group">
+          <label class="form-label" for="signupPhone">Phone Number *</label>
+          <input type="tel" id="signupPhone" class="form-input" placeholder="+91 98765 XXXXX" required>
+        </div>
+
+        <!-- 3. Gmail -->
+        <div class="form-group">
+          <label class="form-label" for="signupGmail">Gmail Address *</label>
+          <input type="email" id="signupGmail" class="form-input" placeholder="name@gmail.com" required>
+        </div>
+
+        <!-- 4. Password -->
+        <div class="form-group">
+          <label class="form-label" for="signupPassword">Password *</label>
+          <input type="password" id="signupPassword" class="form-input" placeholder="Create a strong password" required minlength="6">
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">
+          <i class="fa-solid fa-user-check"></i> Sign Up & Get Started
+        </button>
+      </form>
+
+      <div class="auth-footer">
+        Already have an account? <a href="login.html">Sign In (Login)</a>
+      </div>
+
+      <div style="margin-top: 20px; text-align: center; border-top: 1px solid var(--border-color); padding-top: 16px;">
+        <a href="index.html" class="bottom-back-btn" onclick="if (history.length > 1) { history.back(); return false; }">
+          <i class="fa-solid fa-arrow-left"></i> Back to Home
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/main.js"></script>
+  <script>
+    function handleSignup() {
+      const name = document.getElementById('signupName').value;
+      const email = document.getElementById('signupGmail').value;
+      const user = {
+        name: name,
+        email: email,
+        avatar: 'assets/images/avatar.jpg'
+      };
+      localStorage.setItem('gg_user', JSON.stringify(user));
+      showToast(`Welcome ${name}! Account created successfully.`, 'success');
+      setTimeout(() => {
+        window.location.href = 'projects.html';
+      }, 700);
+    }
+  </script>
+</body>
+</html>
