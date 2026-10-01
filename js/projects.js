@@ -14,8 +14,8 @@ const DEFAULT_PROJECTS = [
     categoryLabel: 'Mini Tractors',
     image: 'assets/images/project_mahindra_415di.jpg',
     spentTime: '22.0 Hours',
-    totalPrice: 3450,
-    priceFormatted: '₹ 3,450',
+    totalPrice: 12252,
+    priceFormatted: '₹ 12,252',
     description: 'Scratch-built miniature Mahindra 415DI XP PLUS red tractor featuring realistic die-cut metal hood, 12V high-torque motor drive, mechanical rack steering, working front grille, authentic headlights, and deep-lug rear tires.',
     videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
     youtubeWatchUrl: 'https://youtube.com/@ggcreative-x9o?si=xSec0GQZRetnup0H',
@@ -56,8 +56,8 @@ const DEFAULT_PROJECTS = [
     categoryLabel: 'Mini Tractors',
     image: 'assets/images/project_johndeere_5050d.jpg',
     spentTime: '16.5 Hours',
-    totalPrice: 2950,
-    priceFormatted: '₹ 2,950',
+    totalPrice: 13764,
+    priceFormatted: '₹ 13,764',
     description: 'Handcrafted John Deere 5050 D 2WD green & yellow scale model tractor with dual exhaust stack, front weight bumper, custom rear reduction gearbox with brass pinions, and high-visibility steering controls.',
     videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
     youtubeWatchUrl: 'https://youtube.com/@ggcreative-x9o?si=xSec0GQZRetnup0H',
@@ -98,8 +98,8 @@ const DEFAULT_PROJECTS = [
     categoryLabel: 'Mini Tractors',
     image: 'assets/images/project_johndeere_5310_4wd.jpg',
     spentTime: '28.0 Hours',
-    totalPrice: 4800,
-    priceFormatted: '₹ 4,800',
+    totalPrice: 9965,
+    priceFormatted: '₹ 9,965',
     description: 'Heavy-duty 4WD all-wheel drive John Deere 5310 miniature tractor with dual differential driven axles, transfer case gearbox, extra-wide deep mud traction tires, roll cage, and extreme pulling torque.',
     videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
     youtubeWatchUrl: 'https://youtube.com/@ggcreative-x9o?si=xSec0GQZRetnup0H',
@@ -140,8 +140,8 @@ const DEFAULT_PROJECTS = [
     categoryLabel: 'Handmade Trucks',
     image: 'assets/images/project_truck_1.jpg',
     spentTime: '19.0 Hours',
-    totalPrice: 3100,
-    priceFormatted: '₹ 3,100',
+    totalPrice: 920,
+    priceFormatted: '₹ 920',
     description: 'Handmade heavy cargo carrier truck featuring multi-axle suspension, open wood-slat cargo bed, detailed cabin with acrylic windshield, working rear tailgate latch, and twin rear drive axles.',
     videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
     youtubeWatchUrl: 'https://youtube.com/@ggcreative-x9o?si=xSec0GQZRetnup0H',
@@ -183,8 +183,8 @@ const DEFAULT_PROJECTS = [
     categoryLabel: 'Handmade Trucks',
     image: 'assets/images/project_truck_2.jpg',
     spentTime: '24.0 Hours',
-    totalPrice: 3650,
-    priceFormatted: '₹ 3,650',
+    totalPrice: 1610,
+    priceFormatted: '₹ 1,610',
     description: 'Handmade heavy tipper dump truck equipped with motorized screw-jack dump bed tipping mechanism, reinforced metal bed lining, wide-stance offroad tires, and rugged steel bumper.',
     videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
     youtubeWatchUrl: 'https://youtube.com/@ggcreative-x9o?si=xSec0GQZRetnup0H',
@@ -226,8 +226,8 @@ const DEFAULT_PROJECTS = [
     categoryLabel: 'Workshop Inventions',
     image: 'assets/images/project_water_pump.jpg',
     spentTime: '7.5 Hours',
-    totalPrice: 1450,
-    priceFormatted: '₹ 1,450',
+    totalPrice: 1200,
+    priceFormatted: '₹ 1,200',
     description: 'High-flow handmade 12V 775 motor centrifugal water pump with transparent acrylic impeller casing, custom resin curved vane impeller, 1/2-inch PVC inlet/outlet valves, and high-pressure water stream output.',
     videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
     youtubeWatchUrl: 'https://youtube.com/@ggcreative-x9o?si=xSec0GQZRetnup0H',
@@ -258,11 +258,64 @@ const DEFAULT_PROJECTS = [
       { item: 'Casting Resin & Gasket Silicone Sealant', qty: '1 lot', unit: 160, total: 160 },
       { item: 'Teak Wooden Mount Base & Toggle Switch', qty: '1 set', unit: 100, total: 100 }
     ]
+  },
+  {
+    id: 'proj-jcb-3dx',
+    projectNumber: 7,
+    name: '7. DIY Homemade JCB 3DX Backhoe Loader',
+    shortName: 'DIY JCB 3DX Backhoe',
+    category: 'machinery-diy',
+    categoryLabel: 'Heavy Machinery',
+    image: 'assets/images/project_jcb_build.jpg',
+    spentTime: '12.5 Hours',
+    totalPrice: 14800,
+    priceFormatted: '₹ 14,800',
+    description: 'Scratch-built miniature JCB 3DX backhoe loader excavator currently under active fabrication. Handcrafted all-metal yellow chassis, dual-cylinder articulated front loader bucket, functional rear excavator boom, and high-torque DC motor drivetrain.',
+    videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+    youtubeWatchUrl: 'https://youtube.com/@ggcreative-x9o?si=xSec0GQZRetnup0H',
+    progressPct: 30,
+    progressStatus: 'Currently Finishing 30% (Chassis & Boom Fabrication)',
+    requiredTools: [
+      'iBELL 650W Impact Drill Kit (TD13-100)',
+      'Sauran AG-801 Angle Grinder (100mm)',
+      'OMXE OPAL-801 950w Heavy Duty Angle Grinder',
+      'INGCO 60W Simple Soldering Iron',
+      'SEE INSIDE Digital Vernier Caliper LCD'
+    ],
+    materials: [
+      'Sheet Metal (2mm) & Structural Box Channel (JCB Yellow Chassis)',
+      'Front Loader Bucket & Dual-Arm Lifting Linkage',
+      'Rear Excavator Boom, Dipper & Pivot Kingpin Mount',
+      '12V DC High-Torque Geared Motors & Steering Servo',
+      'High-Traction Deep-Tread Construction Lug Tires (4 pcs)'
+    ],
+    steps: [
+      'Cut and weld 25x25mm steel box channel chassis frame with front axle pivot.',
+      'Fabricate articulated front loader bucket and lifting arms from 2mm cold-rolled sheet.',
+      'Assemble rear excavator swing post and boom arm structural members (30% stage).',
+      'Mount 12V high-torque DC geared drivetrain motors and steerable front axle.',
+      'Prime and spray signature JCB industrial yellow coating with black accent trim.'
+    ],
+    bill: [
+      { item: 'Cold-Rolled Sheet Metal & Box Channel Steel', qty: '1 set', unit: 2200, total: 2200 },
+      { item: '12V High-Torque Drivetrain Motors & Linkages', qty: '2 units', unit: 1350, total: 2700 },
+      { item: 'Front Bucket & Rear Excavator Arm Mechanism', qty: '1 lot', unit: 3400, total: 3400 },
+      { item: 'High-Traction Construction Lug Tires & Rims', qty: '4 pcs', unit: 650, total: 2600 },
+      { item: 'Radio Controller, 30A ESC & JCB Yellow Paint', qty: '1 lot', unit: 3900, total: 3900 }
+    ]
   }
 ];
 
 // Official Component Price Details & Purchase Links extracted directly from GG Creation PDF Catalog
 const PDF_PROJECT_COMPONENTS = {
+  'proj-jcb-3dx': [
+    { sNo: 1, name: 'Cold-Rolled Sheet Metal & Box Channel Frame', qty: 1, price: 2200, link: 'https://amzn.in/d/0bpoNrn3', store: 'Amazon' },
+    { sNo: 2, name: '12V High-Torque DC Geared Motor', qty: 2, price: 2700, link: 'https://dl.flipkart.com/s/pBx0lIuuuN', store: 'Flipkart' },
+    { sNo: 3, name: 'Front Loader Bucket & Mechanical Boom Linkage', qty: 1, price: 3400, link: 'https://dl.flipkart.com/s/30ytxXNNNN', store: 'Flipkart' },
+    { sNo: 4, name: 'Heavy-Duty Construction Lug Wheels (4 pcs)', qty: 4, price: 2600, link: 'https://amzn.in/d/04ejyy9R', store: 'Amazon' },
+    { sNo: 5, name: 'FS-GT2 Transmitter & Receiver System', qty: 1, price: 2500, link: 'https://robu.in/product/flysky-fs-gt2-transmitter-with-fs-gr3e-receiver/', store: 'Robu.in' },
+    { sNo: 6, name: '30A Motor Speed Controller (ESC)', qty: 1, price: 1400, link: 'https://amzn.in/d/0as8pbV5', store: 'Amazon' }
+  ],
   'proj-mahindra-415di': [
     { sNo: 1, name: 'Drill Machine', qty: 1, price: 1300, link: 'https://dl.flipkart.com/dl/tomahawk-t7386-12v-cordless-screwdriver-drill-machine-compact-lightweight-powerful/p/itm8383db7ef34b5?pid=PODH2SH3AHVTEY2S&lid=LSTPODH2SH3AHVTEY2S2DTDMS&marketplace=FLIPKART&q=drill+machine+charging&store=h1m/hww/slm/nkc&srno=s_1_2&otracker=AS_Query_HistoryAutoSuggest_5_0&otracker1=AS_Query_HistoryAutoSuggest_5_0&fm=organic&iid=en_L9bGd0WMnmabWsVs4YZuYBozW0G3TxteSv4Nt9wmXWUvnPwDJ2U8Z03l_mQZCCq8Dlobk06nGnKlJbsHR_9RX8hGastXCUMNrc4sHyZ9Zp85VOUxmJtE8k78_jRsnU&ppt=clp&ppn=aw-base-new-inline-2025-at-store&ssid=1rw842hsnk0000001788270925124&qH=c4d90e3d343674ae&ov_redirect=true&_refId=&_appId=CL', store: 'Flipkart' },
     { sNo: 2, name: 'PVC Pipe', qty: 1, price: 700, link: '', store: 'Dummy Link' },
@@ -328,36 +381,52 @@ const PDF_PROJECT_COMPONENTS = {
   ]
 };
 
-// Seamlessly attach PDF components to default projects without overwriting any existing properties
+// Clean up any stale legacy cached project lists
+try {
+  localStorage.removeItem('gg_projects_list_v4');
+  localStorage.removeItem('gg_projects_list_v3');
+  localStorage.removeItem('gg_projects_list_v2');
+} catch (e) {}
+
+// Seamlessly attach PDF components to default projects and ensure exact calculated total prices
 DEFAULT_PROJECTS.forEach(proj => {
   if (PDF_PROJECT_COMPONENTS[proj.id]) {
     proj.pdfComponents = PDF_PROJECT_COMPONENTS[proj.id];
+    const computedTotal = PDF_PROJECT_COMPONENTS[proj.id].reduce((sum, item) => sum + (Number(item.price) || 0), 0);
+    proj.totalPrice = computedTotal;
+    proj.priceFormatted = `₹ ${Number(computedTotal).toLocaleString('en-IN')}`;
   }
 });
 
 // Load projects from localStorage or use defaults
 function getStoredProjects() {
-  const stored = localStorage.getItem('gg_projects_list_v4');
+  const stored = localStorage.getItem('gg_projects_list_v5');
   if (stored) {
     try {
       const parsed = JSON.parse(stored);
       if (Array.isArray(parsed) && parsed.some(p => p.id === 'proj-mahindra-415di')) {
-        // Ensure default projects have latest authentic images
+        // Ensure default projects have latest authentic images and correct total prices
         return parsed.map(p => {
           const defaultMatch = DEFAULT_PROJECTS.find(d => d.id === p.id);
-          return defaultMatch ? { ...p, image: defaultMatch.image } : p;
+          return defaultMatch ? {
+            ...p,
+            image: defaultMatch.image,
+            totalPrice: defaultMatch.totalPrice,
+            priceFormatted: defaultMatch.priceFormatted,
+            pdfComponents: defaultMatch.pdfComponents
+          } : p;
         });
       }
     } catch (e) {
       console.error('Failed to parse stored projects', e);
     }
   }
-  localStorage.setItem('gg_projects_list_v4', JSON.stringify(DEFAULT_PROJECTS));
+  localStorage.setItem('gg_projects_list_v5', JSON.stringify(DEFAULT_PROJECTS));
   return DEFAULT_PROJECTS;
 }
 
 function saveProjects(projects) {
-  localStorage.setItem('gg_projects_list_v4', JSON.stringify(projects));
+  localStorage.setItem('gg_projects_list_v5', JSON.stringify(projects));
 }
 
 // Global active projects array
@@ -438,11 +507,6 @@ function renderProjects() {
   }
 
   container.innerHTML = filtered.map(proj => {
-    const materialsChips = (proj.materials || []).slice(0, 3).map(m => {
-      const shortName = m.split('&')[0].replace(/\(.*?\)/g, '').trim();
-      return `<span class="project-mini-chip"><i class="fa-solid fa-check" style="color: var(--accent-red); font-size: 0.7rem;"></i> ${shortName}</span>`;
-    }).join('');
-
     return `
       <article class="project-card" id="card-${proj.id}">
         <div class="project-card-media">
@@ -465,25 +529,16 @@ function renderProjects() {
 
           <h3 class="project-card-title">${proj.name}</h3>
           <p class="project-card-desc">${proj.description}</p>
-          
-          <div class="project-materials-preview">
-            ${materialsChips}
-          </div>
 
           <div class="project-card-footer">
             <div class="price-box">
               <span class="price-label">Total Price</span>
-              <span class="price-amount">${proj.priceFormatted || '₹ ' + proj.totalPrice}</span>
+              <span class="price-amount">${proj.priceFormatted || '₹ ' + Number(proj.totalPrice).toLocaleString('en-IN')}</span>
             </div>
             
             <div class="card-btn-group">
-              <!-- Wireframe Step 4: "If Bill" Itemized Invoice breakdown -->
-              <button class="btn-bill" onclick="openBillModal('${proj.id}')" title="View Itemized Cost & Bill">
-                <i class="fa-solid fa-receipt"></i> If Bill
-              </button>
-              
               <!-- Project Details (Full New Page) -->
-              <a href="project-detail.html?id=${proj.id}" class="btn btn-secondary btn-sm" title="View Details in Full Page">
+              <a href="project-detail.html?id=${proj.id}" class="btn btn-primary btn-sm" title="View Details in Full Page">
                 <i class="fa-solid fa-circle-info"></i> Details
               </a>
             </div>
@@ -649,7 +704,8 @@ function initAddProjectModal() {
       const spentTime = document.getElementById('newProjSpentTime').value.trim();
       const totalPrice = document.getElementById('newProjTotalPrice').value.trim();
       const description = document.getElementById('newProjDesc').value.trim();
-      const materialsRaw = document.getElementById('newProjMaterials').value.trim();
+      const materialsInput = document.getElementById('newProjMaterials');
+      const materialsRaw = materialsInput ? materialsInput.value.trim() : '';
 
       if (!title || !spentTime || !totalPrice || !description) {
         showToast('Please fill out all required fields', 'error');

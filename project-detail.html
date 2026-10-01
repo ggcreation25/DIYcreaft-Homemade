@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Project Details & Step-by-Step Build - GG Creation</title>
-  <meta name="description" content="Detailed engineering teardown, spent time breakdown, materials used, step-by-step maker guide, and itemized invoice bill for GG Creation DIY projects.">
+  <title>Project Details & Component Budget - GG Creation</title>
+  <meta name="description" content="Verified component pricing, purchase links, and itemized budget details for GG Creation DIY projects.">
 
   <!-- Font Awesome 6 Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -23,15 +23,98 @@
   <div class="bg-ambient-orb orb-red"></div>
   <div class="bg-ambient-orb orb-rose"></div>
 
+  <!-- NAVIGATION BAR -->
+  <header class="navbar" id="mainNavbar">
+    <div class="container navbar-container">
+      <!-- Brand Logo -->
+      <a href="index.html" class="brand-logo" id="navBrandLogo">
+        <div class="brand-icon-box">GG</div>
+        <div class="brand-text">
+          <span class="brand-title">GG Creation</span>
+          <span class="brand-tag">HOMEMADE & DIY INNOVATION</span>
+        </div>
+      </a>
 
+      <!-- Desktop Nav Links -->
+      <nav>
+        <ul class="nav-menu" id="navDesktopMenu">
+          <li>
+            <a href="index.html" class="nav-link" id="navLinkHome">
+              <i class="fa-solid fa-house"></i> Home
+            </a>
+          </li>
+          <li>
+            <a href="projects.html" class="nav-link active" id="navLinkProjects">
+              <i class="fa-solid fa-shapes"></i> Project
+            </a>
+          </li>
+          <li>
+            <a href="products.html" class="nav-link" id="navLinkProducts">
+              <i class="fa-solid fa-link"></i> Link Product
+            </a>
+          </li>
+          <li>
+            <a href="about.html" class="nav-link" id="navLinkAbout">
+              <i class="fa-solid fa-user"></i> About
+            </a>
+          </li>
+          <li>
+            <a href="contact.html" class="nav-link" id="navLinkContact">
+              <i class="fa-solid fa-phone"></i> Contact Number
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Nav Actions (Theme, Profile, Mobile Toggle) -->
+      <div class="nav-actions">
+        <!-- Theme Toggle -->
+        <button class="nav-btn" id="themeToggleBtn" aria-label="Toggle Theme">
+          <i class="fa-solid fa-sun" id="themeIcon"></i>
+        </button>
+
+        <!-- Profile Avatar & Dropdown -->
+        <div class="profile-dropdown-wrapper">
+          <button class="profile-avatar-btn" id="profileAvatarBtn" aria-label="User Profile Menu">
+            <img src="assets/images/avatar.jpg" alt="GG Creation" class="avatar-img-sm" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80'">
+            <span class="profile-name-text" id="navProfileName">GG Creation</span>
+            <i class="fa-solid fa-chevron-down" style="font-size: 0.75rem; color: var(--text-muted);"></i>
+          </button>
+          <div class="profile-menu" id="profileMenuDropdown">
+            <div class="profile-menu-header">
+              <div class="profile-menu-title">GG Creation</div>
+              <div class="profile-menu-sub">@GGCreative-x9o</div>
+            </div>
+            <a href="profile.html" class="profile-menu-item"><i class="fa-solid fa-user-circle"></i> Profile Dashboard</a>
+            <a href="projects.html" class="profile-menu-item"><i class="fa-solid fa-layer-group"></i> My DIY Projects</a>
+            <a href="products.html" class="profile-menu-item"><i class="fa-solid fa-tags"></i> Affiliate Gear</a>
+            <a href="https://youtube.com/@ggcreative-x9o?si=xSec0GQZRetnup0H" target="_blank" class="profile-menu-item"><i class="fa-brands fa-youtube" style="color: #ff0000;"></i> Open YouTube Channel</a>
+            <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 4px 0;">
+            <a href="#" class="profile-menu-item logout" id="navLogoutBtn"><i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out</a>
+          </div>
+        </div>
+
+        <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Open Navigation">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
 
   <!-- MAIN PROJECT DETAIL CONTENT -->
-  <main class="container project-detail-wrapper">
+  <main class="container" style="max-width: 1040px; padding-top: 24px; padding-bottom: 70px;">
 
-
+    <!-- Breadcrumb Bar -->
+    <div class="breadcrumb-bar" style="display: flex; align-items: center; gap: 8px; font-size: 0.86rem; color: var(--text-muted); margin-bottom: 22px; padding: 4px 0;">
+      <a href="index.html" style="color: var(--text-secondary); text-decoration: none;"><i class="fa-solid fa-house"></i> Home</a>
+      <span>/</span>
+      <a href="projects.html" style="color: var(--text-secondary); text-decoration: none;">Projects</a>
+      <span>/</span>
+      <span style="color: var(--accent-red-light); font-weight: 600;" id="breadcrumbCurrent">Project Details</span>
+    </div>
 
     <!-- Project Detail Hero -->
-    <section class="project-detail-hero">
+    <section class="project-detail-hero" style="margin-bottom: 28px;">
       <div class="detail-hero-top">
         <span class="badge" id="heroProjectBadge" style="background: rgba(255, 77, 109, 0.15); color: var(--accent-red-light); font-weight: 700; font-size: 0.8rem; padding: 4px 12px; border-radius: 6px;">
           Project 01 of 06
@@ -42,63 +125,34 @@
         </span>
       </div>
 
-      <h1 class="project-detail-title" id="detailProjectTitle">1. Mahindra 415DI XP PLUS</h1>
-      <p class="project-detail-tagline" id="detailProjectTagline">
+      <h1 class="project-detail-title" id="detailProjectTitle" style="margin-top: 12px; margin-bottom: 10px;">1. Mahindra 415DI XP PLUS</h1>
+      <p class="project-detail-tagline" id="detailProjectTagline" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary); max-width: 850px;">
         Scratch-built miniature Mahindra 415DI XP PLUS red tractor featuring realistic die-cut metal hood, 12V high-torque motor drive, mechanical rack steering, working front grille, authentic headlights, and deep-lug rear tires.
       </p>
-
-      <!-- Key Meta Stats Bar -->
-      <div class="detail-meta-bar">
-        <div class="detail-meta-pill pill-time" id="metaSpentTime">
-          <i class="fa-regular fa-clock"></i>
-          <span>Craft Time: <strong>22.0 Hours</strong></span>
-        </div>
-        <div class="detail-meta-pill pill-price" id="metaTotalPrice">
-          <i class="fa-solid fa-tag"></i>
-          <span>Build Cost: <strong>₹ 3,450</strong></span>
-        </div>
-        <div class="detail-meta-pill" id="metaToolsCount">
-          <i class="fa-solid fa-screwdriver-wrench"></i>
-          <span>Required Tools: <strong>4 Workshop Tools</strong></span>
-        </div>
-        <div class="detail-meta-pill" style="color: #3b82f6; border-color: rgba(59, 130, 246, 0.25); background: rgba(59, 130, 246, 0.08);">
-          <i class="fa-solid fa-circle-check"></i>
-          <span>Status: <strong>Completed & Verified</strong></span>
-        </div>
-      </div>
     </section>
 
-    <!-- Master Two-Column Grid -->
-    <div class="project-detail-grid">
-
-      <!-- Left Column: Media Showcase, Overview, Materials, Steps, Tools, Video -->
-      <div class="detail-main-col">
-
-        <!-- Featured Media Showcase -->
-        <div class="detail-image-card">
-          <img src="assets/images/project_mahindra_415di.jpg" alt="Mahindra 415DI XP PLUS" class="detail-featured-img" id="detailFeaturedImg" onerror="this.src='assets/images/project-1.jpg'">
-          <div class="detail-image-overlay">
-            <span class="badge badge-spent-time" id="imageOverlayTime">
-              <i class="fa-regular fa-clock"></i> 22.0 Hours
-            </span>
-            <span class="badge badge-price" id="imageOverlayPrice">
-              ₹ 3,450 Total Price
-            </span>
-          </div>
-        </div>
-
+    <!-- Featured Media Showcase -->
+    <div class="detail-image-card" style="margin-bottom: 36px; max-height: 480px;">
+      <img src="assets/images/project_mahindra_415di.jpg" alt="Mahindra 415DI XP PLUS" class="detail-featured-img" id="detailFeaturedImg" onerror="this.src='assets/images/project-1.jpg'">
+      <div class="detail-image-overlay">
+        <span class="badge badge-spent-time" id="imageOverlayTime">
+          <i class="fa-regular fa-clock"></i> 22.0 Hours
+        </span>
+        <span class="badge badge-price" id="imageOverlayPrice">
+          ₹ 12,252 Total Price
+        </span>
       </div>
     </div>
 
-    <!-- DETAILED COMPONENT PRICING & PURCHASE LINKS (From PDF Catalog) -->
-    <section class="detail-card-box component-pricing-col" style="margin-top: 36px; margin-bottom: 36px;">
+    <!-- DETAILED COMPONENT PRICING & BUDGET TABLE (From Official Catalog) -->
+    <section class="detail-card-box component-pricing-col" style="margin-bottom: 36px;">
       <div class="pricing-card-header">
         <div>
           <h2 class="detail-card-title" style="margin-bottom: 4px; padding-bottom: 0; border-bottom: none;">
-            <i class="fa-solid fa-receipt"></i> Component Price Details & Purchase Links
+            <i class="fa-solid fa-receipt"></i> Component Price Details & Budget Breakdown
           </h2>
           <div style="font-size: 0.84rem; color: var(--text-secondary);">
-            Direct purchase links from Flipkart, Amazon, Robu.in & official PDF catalog
+            Official component catalog pricing and purchase links verified by GG Creation
           </div>
         </div>
         <button class="btn btn-secondary btn-sm" onclick="window.print()" title="Print / Download PDF Catalog Bill">
@@ -110,11 +164,11 @@
         <table class="pdf-components-table">
           <thead>
             <tr>
-              <th style="width: 48px; text-align: center;">S.No</th>
+              <th style="width: 50px; text-align: center;">S.No</th>
               <th>Component Name</th>
-              <th style="width: 55px; text-align: center;">Qty</th>
-              <th style="width: 105px; text-align: right;">Price (₹)</th>
-              <th style="width: 170px; text-align: center;">Purchase Link</th>
+              <th style="width: 60px; text-align: center;">Qty</th>
+              <th style="width: 120px; text-align: right;">Price (₹)</th>
+              <th style="width: 180px; text-align: center;">Purchase Link</th>
             </tr>
           </thead>
           <tbody id="pdfComponentsTableBody">
@@ -122,11 +176,11 @@
           </tbody>
           <tfoot>
             <tr class="pdf-table-total-row">
-              <td colspan="3"><strong>Total Component Cost:</strong></td>
+              <td colspan="3"><strong>Total Project Budget:</strong></td>
               <td class="total-price-cell" id="pdfTableTotalCost">₹ 0</td>
               <td style="text-align: center;">
                 <span class="badge badge-category" style="font-size: 0.72rem; padding: 2px 8px;">
-                  <i class="fa-solid fa-circle-check"></i> Verified PDF
+                  <i class="fa-solid fa-circle-check"></i> Verified Budget
                 </span>
               </td>
             </tr>
@@ -136,9 +190,9 @@
     </section>
 
     <!-- Bottom Navigation Back Bar -->
-    <div class="bottom-back-bar">
-      <a href="projects.html" class="bottom-back-btn" onclick="if (history.length > 1) { history.back(); return false; }">
-        <i class="fa-solid fa-arrow-left"></i> Back to Projects
+    <div class="bottom-back-bar" style="margin-top: 20px;">
+      <a href="projects.html" class="bottom-back-btn">
+        <i class="fa-solid fa-arrow-left"></i> Back to All Projects
       </a>
     </div>
   </main>
@@ -156,7 +210,7 @@
             </div>
           </div>
           <p class="footer-desc">
-            Official website of YouTube channel <strong>GG Creation (@GGCreative-x9o)</strong>. High-torque mini tractors, gearbox teardowns, and transparent "If Bill" cost accounts.
+            Official website of YouTube channel <strong>GG Creation (@GGCreative-x9o)</strong>. High-torque mini tractors, gearbox teardowns, and transparent cost accounts.
           </p>
           <div class="footer-socials">
             <a href="https://youtube.com/@ggcreative-x9o?si=xSec0GQZRetnup0H" target="_blank" class="footer-social-btn" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
@@ -211,88 +265,16 @@
   <script src="js/main.js"></script>
   <script src="js/projects.js"></script>
   <script>
-    // Known Flipkart Tool Catalog Metadata
-    const TOOL_CATALOG = {
-      'iBELL 650W Impact Drill Kit (TD13-100)': {
-        img: 'assets/images/tool_ibell_drill_kit.jpg',
-        link: 'https://dl.flipkart.com/s/R9_0UZNNNN',
-        price: '₹ 2,499'
-      },
-      'IZOM 20V Battery Operated Cordless Drill': {
-        img: 'assets/images/tool_izom_cordless_drill.jpg',
-        link: 'https://dl.flipkart.com/s/Rkprp0NNNN',
-        price: '₹ 1,899'
-      },
-      'Sauran AG-801 Angle Grinder (100mm)': {
-        img: 'assets/images/tool_sauran_angle_grinder.jpg',
-        link: 'https://dl.flipkart.com/s/R9oQQGNNNN',
-        price: '₹ 999'
-      },
-      'OMXE OPAL-801 950w Heavy Duty Angle Grinder': {
-        img: 'assets/images/tool_omxe_angle_grinder.jpg',
-        link: 'https://dl.flipkart.com/s/Rk9WzGNNNN',
-        price: '₹ 1,099'
-      },
-      'Qualigen 2000 W Heavy Duty Heat Gun': {
-        img: 'assets/images/tool_qualigen_heat_gun.jpg',
-        link: 'https://dl.flipkart.com/s/R9Z71UNNNN',
-        price: '₹ 849'
-      },
-      'INGCO 60W Simple Soldering Iron': {
-        img: 'assets/images/tool_ingco_soldering_iron.jpg',
-        link: 'https://dl.flipkart.com/s/R9J9BUNNNN',
-        price: '₹ 329'
-      },
-      'INGCO SI0268 60 W Simple Soldering Iron': {
-        img: 'assets/images/tool_ingco_soldering_iron.jpg',
-        link: 'https://dl.flipkart.com/s/R9J9BUNNNN',
-        price: '₹ 329'
-      },
-      'TechTrove 20W Mini Glue Gun with 15 Sticks': {
-        img: 'assets/images/tool_techtrove_glue_gun.jpg',
-        link: 'https://dl.flipkart.com/s/R9yG0UNNNN',
-        price: '₹ 249'
-      },
-      'SEE INSIDE Digital Vernier Caliper LCD': {
-        img: 'assets/images/tool_digital_vernier_caliper.jpg',
-        link: 'https://dl.flipkart.com/s/R9M34zNNNN',
-        price: '₹ 499'
-      },
-      'SEE INSIDE Vernier Caliper LCD Display': {
-        img: 'assets/images/tool_digital_vernier_caliper.jpg',
-        link: 'https://dl.flipkart.com/s/R9M34zNNNN',
-        price: '₹ 499'
-      },
-      'NITYA HSS Titanium Coated Drill Bit Set': {
-        img: 'assets/images/tool_hss_titanium_drill_bits.jpg',
-        link: 'https://dl.flipkart.com/s/R9b7G0NNNN',
-        price: '₹ 299'
-      },
-      'Kiesh Holesaw Cutter Set 11pcs': {
-        img: 'assets/images/tool_holesaw_cutter_set.jpg',
-        link: 'https://dl.flipkart.com/s/R9WJ4zNNNN',
-        price: '₹ 419'
-      },
-      'Husaini Mart Silicone Mould Skytail 2 Pack': {
-        img: 'assets/images/tool_silicone_mould_tray.jpg',
-        link: 'https://dl.flipkart.com/s/R96J4zNNNN',
-        price: '₹ 279'
-      }
-    };
-
     function loadProjectDetail() {
       // 1. Get project ID or project number from URL query
       const params = new URLSearchParams(window.location.search);
       const projId = params.get('id');
       const projNumber = params.get('project');
 
-      // 2. Load projects list from localStorage or DEFAULT_PROJECTS
+      // 2. Load projects list from getStoredProjects() or DEFAULT_PROJECTS
       let projectsList = [];
-      try {
-        const stored = localStorage.getItem('gg_projects_list_v4') || localStorage.getItem('gg_projects_list') || localStorage.getItem('gg_projects');
-        if (stored) projectsList = JSON.parse(stored);
-      } catch (e) {
-        console.error(e);
+      if (typeof getStoredProjects === 'function') {
+        projectsList = getStoredProjects();
       }
       if (!Array.isArray(projectsList) || projectsList.length === 0) {
         projectsList = (typeof DEFAULT_PROJECTS !== 'undefined') ? DEFAULT_PROJECTS : [];
@@ -301,17 +283,14 @@
       // 3. Find matching project
       let currentProj = null;
       if (projId) {
-        currentProj = projectsList.find(p => p.id === projId);
+        currentProj = projectsList.find(p => p.id === projId || String(p.projectNumber) === String(projId));
       }
       if (!currentProj && projNumber) {
-        currentProj = projectsList.find(p => String(p.projectNumber) === String(projNumber));
-      }
-      if (!currentProj && projId && !isNaN(projId)) {
-        currentProj = projectsList.find(p => String(p.projectNumber) === String(projId));
+        currentProj = projectsList.find(p => String(p.projectNumber) === String(projNumber) || p.id === projNumber);
       }
       // Fallback to first project
       if (!currentProj) {
-        currentProj = projectsList[0] || (typeof DEFAULT_PROJECTS !== 'undefined' ? DEFAULT_PROJECTS[0] : null);
+        currentProj = projectsList[0];
       }
 
       if (!currentProj) return;
@@ -320,7 +299,7 @@
       const totalCount = projectsList.length;
 
       // Update page title & meta
-      document.title = `${currentProj.name} - Full Details & Bill | GG Creation`;
+      document.title = `${currentProj.name} - Components & Budget | GG Creation`;
       const metaDesc = document.querySelector('meta[name="description"]');
       if (metaDesc) {
         metaDesc.setAttribute('content', `${currentProj.name}: ${currentProj.description}`);
@@ -328,7 +307,7 @@
 
       // Breadcrumbs
       const breadcrumbEl = document.getElementById('breadcrumbCurrent');
-      if (breadcrumbEl) breadcrumbEl.textContent = currentProj.name;
+      if (breadcrumbEl) breadcrumbEl.textContent = currentProj.shortName || currentProj.name;
 
       // Hero Badges & Titles
       const pNum = currentProj.projectNumber || (currentIndex + 1);
@@ -344,17 +323,7 @@
       const tagEl = document.getElementById('detailProjectTagline');
       if (tagEl) tagEl.textContent = currentProj.description;
 
-      // Meta Stats
-      const timeEl = document.getElementById('metaSpentTime');
-      if (timeEl) timeEl.innerHTML = `<i class="fa-regular fa-clock"></i> <span>Craft Time: <strong>${currentProj.spentTime}</strong></span>`;
-
-      const priceEl = document.getElementById('metaTotalPrice');
       const formattedPrice = currentProj.priceFormatted || ('₹ ' + Number(currentProj.totalPrice).toLocaleString('en-IN'));
-      if (priceEl) priceEl.innerHTML = `<i class="fa-solid fa-tag"></i> <span>Build Cost: <strong>${formattedPrice}</strong></span>`;
-
-      const toolsCountEl = document.getElementById('metaToolsCount');
-      const toolsLen = currentProj.requiredTools ? currentProj.requiredTools.length : 4;
-      if (toolsCountEl) toolsCountEl.innerHTML = `<i class="fa-solid fa-screwdriver-wrench"></i> <span>Required Tools: <strong>${toolsLen} Workshop Tools</strong></span>`;
 
       // Media Featured Image & Overlays
       const featuredImg = document.getElementById('detailFeaturedImg');
@@ -368,86 +337,14 @@
       const overlayPrice = document.getElementById('imageOverlayPrice');
       if (overlayPrice) overlayPrice.textContent = `${formattedPrice} Total Price`;
 
-      // Full Description
-      const descEl = document.getElementById('detailFullDescription');
-      if (descEl) descEl.textContent = currentProj.description;
-
-      // Materials List
-      const materialsContainer = document.getElementById('detailMaterialsList');
-      if (materialsContainer && currentProj.materials) {
-        materialsContainer.innerHTML = currentProj.materials.map(mat => `
-          <div class="detail-material-pill">
-            <i class="fa-solid fa-check-circle"></i>
-            <span>${mat}</span>
-          </div>
-        `).join('');
-      }
-
-      // Step by Step Process
-      const stepsContainer = document.getElementById('detailStepsTimeline');
-      if (stepsContainer && currentProj.steps) {
-        stepsContainer.innerHTML = currentProj.steps.map((step, idx) => `
-          <div class="detail-step-card">
-            <div class="detail-step-num">${idx + 1}</div>
-            <div class="detail-step-content">
-              <div class="detail-step-header">Phase ${idx + 1}: ${getStepPhaseTitle(idx, currentProj.name)}</div>
-              <div class="detail-step-text">${step}</div>
-            </div>
-          </div>
-        `).join('');
-      }
-
-      // Workshop Tools Grid
-      const toolsContainer = document.getElementById('detailToolsGrid');
-      const toolsBtn = document.getElementById('viewAllToolsBtn');
-      const sidebarBuyBtn = document.getElementById('sidebarBuyToolsBtn');
-
-      if (toolsBtn) toolsBtn.href = `products.html?project=${pNum}`;
-      if (sidebarBuyBtn) {
-        sidebarBuyBtn.href = `products.html?project=${pNum}`;
-        sidebarBuyBtn.innerHTML = `<i class="fa-solid fa-cart-shopping"></i> View Flipkart Tools (${toolsLen})`;
-      }
-
-      if (toolsContainer && currentProj.requiredTools) {
-        toolsContainer.innerHTML = currentProj.requiredTools.map(toolName => {
-          const info = TOOL_CATALOG[toolName] || {
-            img: 'assets/images/project-1.jpg',
-            link: `products.html?project=${pNum}`,
-            price: 'Flipkart Gear'
-          };
-          return `
-            <div class="detail-tool-item">
-              <div class="detail-tool-thumb">
-                <img src="${info.img}" alt="${toolName}" onerror="this.src='assets/images/project-1.jpg'">
-              </div>
-              <div class="detail-tool-info">
-                <div class="detail-tool-name" title="${toolName}">${toolName}</div>
-                <div style="font-size: 0.76rem; color: var(--accent-red); font-weight: 700; margin-bottom: 2px;">${info.price}</div>
-                <a href="${info.link}" target="_blank" rel="noopener noreferrer" class="detail-tool-link">
-                  Buy on Flipkart <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                </a>
-              </div>
-            </div>
-          `;
-        }).join('');
-      }
-
-      // Sidebar Specifications Highlights
-      const sidebarCraftTime = document.getElementById('sidebarCraftTime');
-      const sidebarBuildVal = document.getElementById('sidebarBuildVal');
-      const sidebarToolsCount = document.getElementById('sidebarToolsCount');
-      if (sidebarCraftTime) sidebarCraftTime.textContent = currentProj.spentTime;
-      if (sidebarBuildVal) sidebarBuildVal.textContent = formattedPrice;
-      if (sidebarToolsCount) sidebarToolsCount.textContent = `${toolsLen} Flipkart Tools`;
-
-      // Render Detailed Component Price & Purchase Links Table (Extracted from PDF Catalog)
+      // Render Detailed Component Price & Purchase Links Table (From PDF Catalog)
       const pdfTableBody = document.getElementById('pdfComponentsTableBody');
       const pdfTotalCostEl = document.getElementById('pdfTableTotalCost');
 
-      // Retrieve component list from PDF catalog
+      // Retrieve component list specifically for this project
       const pdfComponentsData = (typeof PDF_PROJECT_COMPONENTS !== 'undefined' && PDF_PROJECT_COMPONENTS[currentProj.id])
         || currentProj.pdfComponents
-        || (typeof PDF_PROJECT_COMPONENTS !== 'undefined' ? PDF_PROJECT_COMPONENTS['proj-mahindra-415di'] : []);
+        || (currentProj.bill ? currentProj.bill.map((b, i) => ({ sNo: i + 1, name: b.item, qty: b.qty, price: b.total, store: 'Local Supply', link: '' })) : []);
 
       if (pdfTableBody && Array.isArray(pdfComponentsData)) {
         let totalCost = 0;
@@ -473,14 +370,14 @@
 
           return `
             <tr>
-              <td class="sno-cell">${item.sNo}</td>
+              <td class="sno-cell" style="text-align: center;">${item.sNo}</td>
               <td class="comp-name-cell">
-                <div>${item.name}</div>
+                <div style="font-weight: 600;">${item.name}</div>
                 ${item.label ? `<div style="font-size: 0.74rem; color: var(--text-muted); margin-top: 2px;">${item.label}</div>` : ''}
               </td>
-              <td class="qty-cell">${item.qty}</td>
-              <td class="price-cell">₹ ${Number(item.price).toLocaleString('en-IN')}</td>
-              <td class="link-cell">${linkHtml}</td>
+              <td class="qty-cell" style="text-align: center; color: var(--text-secondary);">${item.qty}</td>
+              <td class="price-cell" style="text-align: right; font-family: var(--font-mono); font-weight: 700; color: var(--accent-red-light);">₹ ${Number(item.price).toLocaleString('en-IN')}</td>
+              <td class="link-cell" style="text-align: center;">${linkHtml}</td>
             </tr>
           `;
         }).join('');
@@ -488,75 +385,6 @@
         if (pdfTotalCostEl) {
           pdfTotalCostEl.textContent = `₹ ${Number(totalCost).toLocaleString('en-IN')}`;
         }
-      }
-
-      // Prev / Next Project Switcher
-      const pagerContainer = document.getElementById('sidebarProjectPager');
-      if (pagerContainer) {
-        const prevIndex = (currentIndex - 1 + totalCount) % totalCount;
-        const nextIndex = (currentIndex + 1) % totalCount;
-        const prevProj = projectsList[prevIndex];
-        const nextProj = projectsList[nextIndex];
-
-        pagerContainer.innerHTML = `
-          <a href="project-detail.html?id=${prevProj.id}" class="pager-btn" title="${prevProj.name}">
-            <span class="pager-label"><i class="fa-solid fa-arrow-left"></i> Previous</span>
-            <span class="pager-title">${prevProj.shortName || prevProj.name}</span>
-          </a>
-          <a href="project-detail.html?id=${nextProj.id}" class="pager-btn" style="text-align: right;" title="${nextProj.name}">
-            <span class="pager-label" style="justify-content: flex-end;">Next <i class="fa-solid fa-arrow-right"></i></span>
-            <span class="pager-title">${nextProj.shortName || nextProj.name}</span>
-          </a>
-        `;
-      }
-
-      // Bottom Related Projects Grid
-      const relatedGrid = document.getElementById('relatedProjectsGrid');
-      if (relatedGrid) {
-        const otherProjects = projectsList.filter(p => p.id !== currentProj.id).slice(0, 4);
-        relatedGrid.innerHTML = otherProjects.map(proj => `
-          <a href="project-detail.html?id=${proj.id}" class="related-project-card">
-            <div class="related-thumb-box">
-              <img src="${proj.image}" alt="${proj.name}" onerror="this.src='assets/images/project-1.jpg'">
-              <span class="badge badge-category" style="position: absolute; top: 10px; left: 10px; font-size: 0.7rem; padding: 2px 8px;">
-                ${proj.categoryLabel}
-              </span>
-            </div>
-            <div class="related-card-body">
-              <h4 class="related-card-title">${proj.name}</h4>
-              <p style="font-size: 0.84rem; color: var(--text-secondary); line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
-                ${proj.description}
-              </p>
-              <div class="related-card-meta">
-                <span style="color: #10b981; font-weight: 600;"><i class="fa-regular fa-clock"></i> ${proj.spentTime}</span>
-                <span style="color: var(--accent-red-light); font-weight: 700; font-family: var(--font-mono);">${proj.priceFormatted || '₹ ' + proj.totalPrice}</span>
-              </div>
-            </div>
-          </a>
-        `).join('');
-      }
-    }
-
-    function getStepPhaseTitle(index, projName) {
-      const titles = [
-        'Chassis Frame & Structural Geometry',
-        'Steering Axle & Linkage Fabrication',
-        'High-Torque Drive Motor & Wiring Harness',
-        'Body Metalwork, Louvers & Panel Fitment',
-        'Degreasing, Enamel Primer & Final Topcoats'
-      ];
-      return titles[index] || `Fabrication Milestone ${index + 1}`;
-    }
-
-    function shareProject() {
-      if (navigator.clipboard) {
-        navigator.clipboard.writeText(window.location.href).then(() => {
-          if (typeof showToast === 'function') {
-            showToast('Project link copied to clipboard!', 'success');
-          } else {
-            alert('Project link copied to clipboard!');
-          }
-        });
       }
     }
 
