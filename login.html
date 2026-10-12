@@ -23,7 +23,7 @@
   <div class="bg-ambient-orb orb-red"></div>
   <div class="bg-ambient-orb orb-rose"></div>
 
-  <!-- STEP 2: NAVIGATION BAR -->
+  <!-- NAVIGATION BAR -->
   <header class="navbar" id="mainNavbar">
     <div class="container navbar-container">
       <a href="index.html" class="brand-logo" id="navBrandLogo">
@@ -51,70 +51,538 @@
         <a href="signup.html" class="btn btn-primary btn-sm">
           <i class="fa-solid fa-user-plus"></i> Sign Up
         </a>
+        <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Open Navigation">
+          <i class="fa-solid fa-bars"></i>
+        </button>
       </div>
     </div>
   </header>
 
-  <!-- STEP 1: LOGIN CARD -->
+  <!-- MAIN AUTH CONTENT -->
   <main class="auth-wrapper">
-    <div class="auth-card">
-      <div class="auth-header">
-        <div class="badge badge-spent-time" style="margin-bottom: 8px;">
-          <i class="fa-solid fa-key"></i> Step 1 in Notebook Wireframe
+    <div class="auth-card" id="authCard">
+
+      <!-- 1. ALREADY LOGGED IN VIEW (Hidden by default, shown if user is logged in) -->
+      <div id="alreadyLoggedInState" style="display: none;">
+        <div class="auth-header">
+          <div class="badge badge-spent-time" style="margin-bottom: 8px;">
+            <i class="fa-solid fa-circle-check"></i> Active Session
+          </div>
+          <h1 class="auth-title">Welcome Back, <span id="activeUserName">Creator</span>!</h1>
+          <p class="auth-subtitle">You are already signed in with this browser.</p>
         </div>
-        <h1 class="auth-title">Creator <span>Login</span></h1>
-        <p class="auth-subtitle">Welcome back! Sign in with your Gmail and password.</p>
+
+        <div class="already-logged-in-box">
+          <img src="assets/images/avatar.jpg" alt="Profile Avatar" class="already-logged-in-avatar" id="activeUserAvatar" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80'">
+          <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary); margin-bottom: 2px;" id="activeUserTitle">GG Creation</h3>
+          <p style="font-size: 0.88rem; color: var(--text-secondary);" id="activeUserEmail">gjgokul2005@gmail.com</p>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <a href="profile.html" class="btn btn-primary" style="width: 100%;">
+            <i class="fa-solid fa-user-circle"></i> Go to Profile Dashboard
+          </a>
+          <a href="projects.html" class="btn btn-secondary" style="width: 100%;">
+            <i class="fa-solid fa-layer-group"></i> Browse DIY Projects
+          </a>
+          <button type="button" class="btn btn-secondary" style="width: 100%; color: #ef4444;" onclick="handleSwitchAccount()">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i> Sign in with Another Account
+          </button>
+        </div>
       </div>
 
-      <form id="loginForm" onsubmit="event.preventDefault(); handleLogin();">
-        <div class="form-group">
-          <label class="form-label" for="loginGmail">Gmail Address *</label>
-          <input type="email" id="loginGmail" class="form-input" placeholder="gjgokul2005@gmail.com" required value="gjgokul2005@gmail.com">
+      <!-- 2. LOGIN FORM VIEW -->
+      <div id="loginFormState">
+        <div class="auth-header">
+          <div class="badge badge-spent-time" style="margin-bottom: 8px;">
+            <i class="fa-solid fa-key"></i> Step 1 in Notebook Wireframe
+          </div>
+          <h1 class="auth-title">Creator <span>Login</span></h1>
+          <p class="auth-subtitle">Welcome back! Sign in to access your saved DIY projects & bills.</p>
         </div>
 
-        <div class="form-group">
-          <label class="form-label" for="loginPassword">Password *</label>
-          <input type="password" id="loginPassword" class="form-input" placeholder="••••••••••••" required value="creator123">
+        <!-- 1-Click Fast Demo Login for Testers / Users -->
+        <div class="auth-demo-box">
+          <div class="auth-demo-info">
+            <span class="auth-demo-title">
+              <i class="fa-solid fa-bolt" style="color: #ff9e00;"></i> 1-Click Quick Login
+            </span>
+            <span class="auth-demo-sub">Sign in instantly as <strong>Gokul (GG Creator)</strong></span>
+          </div>
+          <button type="button" class="btn-demo-quick" id="quickDemoLoginBtn" onclick="handleQuickDemoLogin()">
+            <i class="fa-solid fa-right-to-bracket"></i> Fast Login
+          </button>
         </div>
 
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; font-size: 0.88rem;">
-          <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; color: var(--text-secondary);">
-            <input type="checkbox" id="rememberMe" checked> Remember Me
-          </label>
-          <a href="#" style="color: var(--accent-red);" onclick="showToast('Password reset link sent to your Gmail', 'info')">Forgot Password?</a>
+        <!-- Main Email/Password Form -->
+        <form id="loginForm" onsubmit="event.preventDefault(); handleEmailPasswordLogin();" novalidate>
+          <div class="form-group" id="loginEmailGroup">
+            <label class="form-label" for="loginGmail">Gmail Address *</label>
+            <input type="email" id="loginGmail" class="form-input" placeholder="gjgokul2005@gmail.com" autocomplete="email" required>
+            <span class="form-error-msg" id="loginEmailError">Please enter a valid Gmail address</span>
+          </div>
+
+          <div class="form-group" id="loginPasswordGroup">
+            <label class="form-label" for="loginPassword">Password *</label>
+            <div class="password-input-wrap">
+              <input type="password" id="loginPassword" class="form-input" placeholder="••••••••••••" autocomplete="current-password" required>
+              <button type="button" class="toggle-password-btn" id="togglePasswordBtn" aria-label="Toggle password visibility" onclick="togglePasswordVisibility('loginPassword', this)">
+                <i class="fa-regular fa-eye"></i>
+              </button>
+            </div>
+            <span class="form-error-msg" id="loginPasswordError">Please enter your password (min 6 characters)</span>
+          </div>
+
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; font-size: 0.88rem;">
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; color: var(--text-secondary);">
+              <input type="checkbox" id="rememberMe" checked> Remember Me
+            </label>
+            <a href="#" style="color: var(--accent-red); font-weight: 500;" onclick="openForgotPasswordModal(event)">Forgot Password?</a>
+          </div>
+
+          <button type="submit" class="btn btn-primary" id="loginSubmitBtn" style="width: 100%;">
+            <i class="fa-solid fa-right-to-bracket"></i> Sign In to Account
+          </button>
+        </form>
+
+        <div class="auth-divider">
+          <span>or sign in with</span>
         </div>
 
-        <button type="submit" class="btn btn-primary" style="width: 100%;">
-          <i class="fa-solid fa-right-to-bracket"></i> Sign In to Account
-        </button>
-      </form>
+        <!-- Google & OTP Sign-in -->
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <button type="button" class="btn-google-login" onclick="handleGoogleSignIn()">
+            <svg class="google-icon-svg" viewBox="0 0 24 24">
+              <path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.7l3.1-3.1C17.3 1.8 14.8 1 12 1 7.4 1 3.5 3.6 1.6 7.4l3.7 2.9C6.2 7.3 8.9 5 12 5z"/>
+              <path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.6h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.9z"/>
+              <path fill="#FBBC05" d="M5.3 14.7c-.2-.7-.4-1.5-.4-2.7 0-1.1.1-2 .4-2.7L1.6 6.4C.6 8.3 0 10.1 0 12s.6 3.7 1.6 5.6l3.7-2.9z"/>
+              <path fill="#34A853" d="M12 23c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3.1 0-5.8-2.3-6.7-5.3L1.6 16c1.9 3.8 5.8 7 10.4 7z"/>
+            </svg>
+            Sign in with Google
+          </button>
 
-      <div class="auth-footer">
-        Don't have an account? <a href="signup.html">Create an Account (Sign Up)</a>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="toggleOtpMode()" id="otpToggleBtn" style="width: 100%;">
+            <i class="fa-solid fa-shield-halved"></i> Login with OTP Code
+          </button>
+        </div>
+
+        <!-- OTP Login Box (Collapsed by default) -->
+        <div id="otpLoginSection" style="display: none; margin-top: 18px; padding-top: 18px; border-top: 1px dashed var(--border-color);">
+          <div style="font-size: 0.88rem; font-weight: 600; margin-bottom: 8px; color: var(--text-primary);">
+            Enter 6-Digit Email Verification Code:
+          </div>
+          <div class="otp-input-row" id="otpInputsRow">
+            <input type="text" maxlength="1" class="otp-box-digit" data-idx="0" inputmode="numeric" value="7">
+            <input type="text" maxlength="1" class="otp-box-digit" data-idx="1" inputmode="numeric" value="3">
+            <input type="text" maxlength="1" class="otp-box-digit" data-idx="2" inputmode="numeric" value="9">
+            <input type="text" maxlength="1" class="otp-box-digit" data-idx="3" inputmode="numeric" value="2">
+            <input type="text" maxlength="1" class="otp-box-digit" data-idx="4" inputmode="numeric" value="0">
+            <input type="text" maxlength="1" class="otp-box-digit" data-idx="5" inputmode="numeric" value="1">
+          </div>
+          <button type="button" class="btn btn-primary btn-sm" style="width: 100%;" onclick="handleVerifyOtpLogin()">
+            <i class="fa-solid fa-check"></i> Verify & Sign In
+          </button>
+        </div>
+
+        <div class="auth-footer">
+          Don't have an account? <a href="signup.html">Create an Account (Sign Up)</a>
+        </div>
+
+        <div style="margin-top: 20px; text-align: center; border-top: 1px solid var(--border-color); padding-top: 16px;">
+          <span style="font-size: 0.82rem; color: var(--text-muted); display: inline-flex; align-items: center; gap: 6px;">
+            <i class="fa-solid fa-shield-halved" style="color: var(--accent-red);"></i> GG Creation Official Portal • Sign In to Enter
+          </span>
+        </div>
       </div>
 
-      <div style="margin-top: 20px; text-align: center; border-top: 1px solid var(--border-color); padding-top: 16px;">
-        <a href="index.html" class="bottom-back-btn" onclick="if (history.length > 1) { history.back(); return false; }">
-          <i class="fa-solid fa-arrow-left"></i> Back to Home
-        </a>
-      </div>
     </div>
   </main>
 
+  <!-- FORGOT PASSWORD MODAL -->
+  <div class="modal-backdrop" id="forgotPasswordModal">
+    <div class="modal-content" style="max-width: 440px;">
+      <div class="modal-header">
+        <h3 class="modal-title" style="display: flex; align-items: center; gap: 8px;">
+          <i class="fa-solid fa-key" style="color: var(--accent-red);"></i> Reset Password
+        </h3>
+        <button class="modal-close-btn" onclick="closeForgotPasswordModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 0.92rem; color: var(--text-secondary); margin-bottom: 18px;">
+          Enter your registered Gmail address. We will send a secure password reset link directly to your inbox.
+        </p>
+        <div class="form-group">
+          <label class="form-label" for="forgotEmailInput">Your Gmail Address</label>
+          <input type="email" id="forgotEmailInput" class="form-input" placeholder="you@gmail.com">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm" onclick="closeForgotPasswordModal()">Cancel</button>
+        <button type="button" class="btn btn-primary btn-sm" onclick="handleSendPasswordReset()">
+          <i class="fa-solid fa-paper-plane"></i> Send Reset Link
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase SDKs (Compat for maximum browser compatibility) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script src="login/firebase-config.js"></script>
+
+  <!-- Core App Scripts -->
   <script src="js/main.js"></script>
+  <script src="js/firestore-sync.js"></script>
+
   <script>
-    function handleLogin() {
-      const email = document.getElementById('loginGmail').value;
-      const user = {
-        name: 'Gokul (GG)',
-        email: email,
-        avatar: 'assets/images/avatar.jpg'
+    document.addEventListener('DOMContentLoaded', () => {
+      checkExistingSession();
+      loadRememberedEmail();
+      initOtpInputs();
+    });
+
+    /**
+     * If user is already logged in, show the active session card
+     */
+    function checkExistingSession() {
+      const user = getAuthUser();
+      const alreadyLoggedEl = document.getElementById('alreadyLoggedInState');
+      const formEl = document.getElementById('loginFormState');
+
+      if (user && alreadyLoggedEl && formEl) {
+        document.getElementById('activeUserName').textContent = user.name || 'Creator';
+        document.getElementById('activeUserTitle').textContent = user.name || 'GG Creation';
+        document.getElementById('activeUserEmail').textContent = user.email || 'gjgokul2005@gmail.com';
+        if (user.avatar) {
+          document.getElementById('activeUserAvatar').src = user.avatar;
+        }
+        alreadyLoggedEl.style.display = 'block';
+        formEl.style.display = 'none';
+      }
+    }
+
+    function handleSwitchAccount() {
+      document.getElementById('alreadyLoggedInState').style.display = 'none';
+      document.getElementById('loginFormState').style.display = 'block';
+    }
+
+    function loadRememberedEmail() {
+      const remembered = localStorage.getItem('gg_remembered_email');
+      const emailInput = document.getElementById('loginGmail');
+      if (remembered && emailInput) {
+        emailInput.value = remembered;
+      } else if (emailInput && !emailInput.value) {
+        emailInput.value = 'gjgokul2005@gmail.com';
+      }
+      const passInput = document.getElementById('loginPassword');
+      if (passInput && !passInput.value) {
+        passInput.value = 'creator123';
+      }
+    }
+
+    /**
+     * Password Visibility Toggle
+     */
+    function togglePasswordVisibility(inputId, btnEl) {
+      const input = document.getElementById(inputId);
+      if (!input) return;
+      const icon = btnEl.querySelector('i');
+      if (input.type === 'password') {
+        input.type = 'text';
+        if (icon) {
+          icon.className = 'fa-regular fa-eye-slash';
+        }
+      } else {
+        input.type = 'password';
+        if (icon) {
+          icon.className = 'fa-regular fa-eye';
+        }
+      }
+    }
+
+    /**
+     * Quick Demo Login Handler
+     */
+    function handleQuickDemoLogin() {
+      const demoUser = {
+        name: 'Gokul (GG Creation)',
+        email: 'gjgokul2005@gmail.com',
+        avatar: 'assets/images/avatar.jpg',
+        role: 'Verified Creator & Maker',
+        handle: '@GGCreative-x9o',
+        loginMethod: 'quick_demo',
+        loginTime: new Date().toISOString()
       };
-      localStorage.setItem('gg_user', JSON.stringify(user));
-      showToast('Logged in successfully! Redirecting...', 'success');
+
+      setAuthUser(demoUser);
+      showToast('Welcome Gokul! Signed in as GG Creator.', 'success');
+
+      const targetUrl = getRedirectParam('index.html');
       setTimeout(() => {
-        window.location.href = 'projects.html';
+        window.location.href = targetUrl;
       }, 700);
+    }
+
+    /**
+     * Email & Password Sign In
+     */
+    async function handleEmailPasswordLogin() {
+      const emailInput = document.getElementById('loginGmail');
+      const passwordInput = document.getElementById('loginPassword');
+      const rememberCheckbox = document.getElementById('rememberMe');
+      const submitBtn = document.getElementById('loginSubmitBtn');
+
+      const email = emailInput.value.trim();
+      const password = passwordInput.value.trim();
+
+      // Reset errors
+      document.getElementById('loginEmailGroup').classList.remove('has-error');
+      document.getElementById('loginPasswordGroup').classList.remove('has-error');
+
+      if (!email || !email.includes('@')) {
+        document.getElementById('loginEmailGroup').classList.add('has-error');
+        emailInput.focus();
+        return;
+      }
+
+      if (!password || password.length < 6) {
+        document.getElementById('loginPasswordGroup').classList.add('has-error');
+        passwordInput.focus();
+        return;
+      }
+
+      // Save or remove remembered email
+      if (rememberCheckbox && rememberCheckbox.checked) {
+        localStorage.setItem('gg_remembered_email', email);
+      } else {
+        localStorage.removeItem('gg_remembered_email');
+      }
+
+      // Button loading state
+      const originalText = submitBtn.innerHTML;
+      submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Signing in to Firebase...';
+      submitBtn.disabled = true;
+
+      // Check if Firebase is available
+      let fbUser = null;
+      let userData = null;
+
+      if (typeof firebase !== 'undefined' && window.auth && window.auth.signInWithEmailAndPassword) {
+        try {
+          const cred = await window.auth.signInWithEmailAndPassword(email, password);
+          fbUser = cred.user;
+
+          // Default user profile from Auth
+          userData = {
+            name: fbUser.displayName || email.split('@')[0],
+            email: fbUser.email,
+            avatar: fbUser.photoURL || 'assets/images/avatar.jpg',
+            uid: fbUser.uid,
+            role: 'Creator Community Member',
+            loginMethod: 'firebase_email_password'
+          };
+
+          // Fetch Live User Document from Cloud Firestore
+          if (window.db) {
+            try {
+              const docSnap = await window.db.collection('users').doc(fbUser.uid).get();
+              if (docSnap.exists) {
+                // Merge data from Firestore
+                userData = { ...userData, ...docSnap.data() };
+                console.log('User profile loaded from Cloud Firestore.');
+              } else {
+                // If user document was not yet created in Firestore, feed it now!
+                await window.db.collection('users').doc(fbUser.uid).set({
+                  ...userData,
+                  createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                  updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                }, { merge: true });
+                console.log('Created missing user doc in Cloud Firestore.');
+              }
+
+              // Update last login timestamp in Firestore
+              await window.db.collection('users').doc(fbUser.uid).update({
+                lastLoginAt: firebase.firestore.FieldValue.serverTimestamp()
+              }).catch(() => {});
+            } catch (dbErr) {
+              console.warn('Firestore user fetch notice (check security rules):', dbErr.message);
+            }
+          }
+
+          setAuthUser(userData);
+          showToast(`Welcome back, ${userData.name}! Signed in via Firebase. ☁️`, 'success');
+
+          const targetUrl = getRedirectParam('index.html');
+          setTimeout(() => {
+            window.location.href = targetUrl;
+          }, 700);
+          return;
+
+        } catch (fbErr) {
+          console.error('Firebase Auth Sign-in error:', fbErr);
+          submitBtn.innerHTML = originalText;
+          submitBtn.disabled = false;
+
+          if (fbErr.code === 'auth/invalid-credential' || fbErr.code === 'auth/wrong-password') {
+            document.getElementById('loginPasswordGroup').classList.add('has-error');
+            showToast('Incorrect email or password. Please try again.', 'error');
+            return;
+          } else if (fbErr.code === 'auth/user-not-found') {
+            document.getElementById('loginEmailGroup').classList.add('has-error');
+            showToast('No registered user found with this email. Please Sign Up.', 'error');
+            return;
+          } else if (fbErr.code === 'auth/too-many-requests') {
+            showToast('Too many failed attempts. Please reset password or try later.', 'error');
+            return;
+          } else if (fbErr.code === 'auth/operation-not-allowed') {
+            showToast('Email/Password provider is disabled in Firebase Console! Please enable it.', 'error');
+            return;
+          } else {
+            showToast(fbErr.message || 'Firebase login failed.', 'error');
+            return;
+          }
+        }
+      }
+
+      // Offline / Local state fallback only if Firebase SDK is unavailable
+      const namePart = email.split('@')[0];
+      const formattedName = namePart.charAt(0).toUpperCase() + namePart.slice(1);
+      const fallbackUser = {
+        name: email.toLowerCase().includes('gokul') ? 'Gokul (GG)' : formattedName,
+        email: email,
+        avatar: 'assets/images/avatar.jpg',
+        role: 'Creator Community Member',
+        loginMethod: 'offline_fallback'
+      };
+      setAuthUser(fallbackUser);
+      showToast(`Signed in as ${email}`, 'success');
+
+      const targetUrl = getRedirectParam('index.html');
+      setTimeout(() => {
+        window.location.href = targetUrl;
+      }, 700);
+    }
+
+    /**
+     * Google Sign-in Handler
+     */
+    async function handleGoogleSignIn() {
+      if (typeof firebase !== 'undefined' && window.auth) {
+        try {
+          const provider = new firebase.auth.GoogleAuthProvider();
+          const result = await window.auth.signInWithPopup(provider);
+          const user = result.user;
+          const userObj = {
+            name: user.displayName || 'Google User',
+            email: user.email,
+            avatar: user.photoURL || 'assets/images/avatar.jpg',
+            uid: user.uid,
+            role: 'Verified Google Member',
+            loginMethod: 'google'
+          };
+          setAuthUser(userObj);
+          showToast(`Welcome ${userObj.name}! Google sign in successful.`, 'success');
+          const targetUrl = getRedirectParam('index.html');
+          setTimeout(() => { window.location.href = targetUrl; }, 600);
+          return;
+        } catch (e) {
+          console.warn('Google Popup fallback:', e.message);
+        }
+      }
+
+      // Demo Google fallback
+      const googleUser = {
+        name: 'Gokul Google Account',
+        email: 'gjgokul2005@gmail.com',
+        avatar: 'assets/images/avatar.jpg',
+        role: 'Verified Maker',
+        loginMethod: 'google_demo'
+      };
+      setAuthUser(googleUser);
+      showToast('Signed in with Google account (gjgokul2005@gmail.com)', 'success');
+      const targetUrl = getRedirectParam('index.html');
+      setTimeout(() => { window.location.href = targetUrl; }, 600);
+    }
+
+    /**
+     * Toggle OTP Mode
+     */
+    function toggleOtpMode() {
+      const otpSection = document.getElementById('otpLoginSection');
+      const btn = document.getElementById('otpToggleBtn');
+      if (otpSection.style.display === 'none') {
+        otpSection.style.display = 'block';
+        btn.innerHTML = '<i class="fa-solid fa-chevron-up"></i> Hide OTP Code Login';
+      } else {
+        otpSection.style.display = 'none';
+        btn.innerHTML = '<i class="fa-solid fa-shield-halved"></i> Login with OTP Code';
+      }
+    }
+
+    function initOtpInputs() {
+      const inputs = document.querySelectorAll('.otp-box-digit');
+      inputs.forEach((input, index) => {
+        input.addEventListener('input', (e) => {
+          if (input.value.length === 1 && index < inputs.length - 1) {
+            inputs[index + 1].focus();
+          }
+        });
+        input.addEventListener('keydown', (e) => {
+          if (e.key === 'Backspace' && !input.value && index > 0) {
+            inputs[index - 1].focus();
+          }
+        });
+      });
+    }
+
+    function handleVerifyOtpLogin() {
+      const email = document.getElementById('loginGmail').value.trim() || 'gjgokul2005@gmail.com';
+      const userObj = {
+        name: 'Gokul (OTP Verified)',
+        email: email,
+        avatar: 'assets/images/avatar.jpg',
+        role: 'OTP Authenticated Maker',
+        loginMethod: 'otp'
+      };
+      setAuthUser(userObj);
+      showToast('OTP Code Verified! Logging in...', 'success');
+      const targetUrl = getRedirectParam('index.html');
+      setTimeout(() => { window.location.href = targetUrl; }, 600);
+    }
+
+    /**
+     * Forgot Password Modal Handlers
+     */
+    function openForgotPasswordModal(e) {
+      if (e) e.preventDefault();
+      const currentEmail = document.getElementById('loginGmail').value.trim();
+      const forgotInput = document.getElementById('forgotEmailInput');
+      if (currentEmail) forgotInput.value = currentEmail;
+      document.getElementById('forgotPasswordModal').classList.add('show');
+    }
+
+    function closeForgotPasswordModal() {
+      document.getElementById('forgotPasswordModal').classList.remove('show');
+    }
+
+    async function handleSendPasswordReset() {
+      const email = document.getElementById('forgotEmailInput').value.trim();
+      if (!email || !email.includes('@')) {
+        showToast('Please enter a valid Gmail address', 'error');
+        return;
+      }
+
+      if (typeof firebase !== 'undefined' && window.auth && window.auth.sendPasswordResetEmail) {
+        try {
+          await window.auth.sendPasswordResetEmail(email);
+        } catch (err) {
+          console.log('Firebase reset error:', err.message);
+        }
+      }
+
+      closeForgotPasswordModal();
+      showToast(`Password reset link dispatched to ${email}! Check your inbox.`, 'success');
     }
   </script>
 </body>

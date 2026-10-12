@@ -20,6 +20,13 @@
     href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
     rel="stylesheet">
 
+  <!-- Instant Auth Route Guard: Website always starts with Login -->
+  <script>
+    if (!localStorage.getItem('gg_user')) {
+      window.location.replace('login.html?redirect=products.html');
+    }
+  </script>
+
   <!-- Custom Stylesheet -->
   <link rel="stylesheet" href="css/styles.css">
 </head>
@@ -61,27 +68,33 @@
           <i class="fa-solid fa-sun" id="themeIcon"></i>
         </button>
 
-        <div class="profile-dropdown-wrapper">
+        <!-- Login Button (Visible when Logged Out) -->
+        <a href="login.html" class="btn btn-primary btn-sm nav-login-btn" id="navLoginBtn">
+          <i class="fa-solid fa-right-to-bracket"></i> Login
+        </a>
+
+        <!-- Profile Avatar & Dropdown -->
+        <div class="profile-dropdown-wrapper" id="navProfileDropdownWrapper">
           <button class="profile-avatar-btn" id="profileAvatarBtn">
-            <img src="assets/images/avatar.jpg" alt="GG Creation" class="avatar-img-sm"
+            <img src="assets/images/avatar.jpg" alt="GG Creation" class="avatar-img-sm" id="navAvatarImg"
               onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80'">
             <span class="profile-name-text" id="navProfileName">GG Creation</span>
             <i class="fa-solid fa-chevron-down" style="font-size: 0.75rem; color: var(--text-muted);"></i>
           </button>
           <div class="profile-menu" id="profileMenuDropdown">
             <div class="profile-menu-header">
-              <div class="profile-menu-title">GG Creation</div>
-              <div class="profile-menu-sub">@GGCreative-x9o</div>
+              <div class="profile-menu-title" id="dropdownUserTitle">GG Creation</div>
+              <div class="profile-menu-sub" id="dropdownUserSub">@GGCreative-x9o</div>
             </div>
-            <a href="profile.html" class="profile-menu-item"><i class="fa-solid fa-user-circle"></i> Profile
-              Dashboard</a>
-            <a href="projects.html" class="profile-menu-item"><i class="fa-solid fa-layer-group"></i> My DIY
-              Projects</a>
+            <a href="profile.html" class="profile-menu-item"><i class="fa-solid fa-user-circle"></i> Profile Dashboard</a>
+            <a href="projects.html" class="profile-menu-item"><i class="fa-solid fa-layer-group"></i> My DIY Projects</a>
             <a href="products.html" class="profile-menu-item"><i class="fa-solid fa-tags"></i> Affiliate Gear</a>
-            <a href="https://youtube.com/@ggcreative-x9o?si=xSec0GQZRetnup0H" target="_blank"
-              class="profile-menu-item"><i class="fa-brands fa-youtube" style="color: #ff0000;"></i> Open YouTube
-              Channel</a>
+            <a href="https://youtube.com/@ggcreative-x9o?si=3LtZbnrBawQbGshe" target="_blank"
+              class="profile-menu-item"><i class="fa-brands fa-youtube" style="color: #ff0000;"></i> Open YouTube Channel</a>
             <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 4px 0;">
+            <a href="login.html" class="profile-menu-item" id="dropdownLoginItem">
+              <i class="fa-solid fa-right-to-bracket"></i> Sign In / Login
+            </a>
             <a href="#" class="profile-menu-item logout" id="navLogoutBtn"><i
                 class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out</a>
           </div>
@@ -120,16 +133,16 @@
           <img src="assets/images/tool_ibell_drill_kit.jpg" alt="iBELL Tool Kit with Impact Drill TD13-100"
             onerror="this.src='assets/images/project-1.jpg'">
         </div>
-        <div class="product-price-cell">
-          <span class="product-price-tag">₹ 2,499</span>
-          <span class="product-price-sub">115 Tools Kit • 650W</span>
-        </div>
         <div class="product-info-cell">
           <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 2px;">
             <span class="badge badge-category" style="font-size: 0.72rem; padding: 2px 8px;">Product 1 • PDF Page 1</span>
             <span class="badge badge-price" style="font-size: 0.72rem; padding: 2px 8px;"><i class="fa-solid fa-award"></i> Workshop Essential</span>
           </div>
           <h3 class="product-title">iBELL Tool Kit with Impact Drill TD13-100, 650W, Copper Armature, Chuck 13mm Keyless Power & Hand Tool Kit (115 Tools)</h3>
+        </div>
+        <div class="product-price-cell">
+          <span class="product-price-tag">₹ 2,499</span>
+          <span class="product-price-sub">115 Tools Kit • 650W</span>
         </div>
         <div class="product-actions-cell">
           <a href="https://dl.flipkart.com/s/R9_0UZNNNN" target="_blank" rel="noopener noreferrer"
@@ -145,16 +158,16 @@
           <img src="assets/images/tool_izom_cordless_drill.jpg" alt="IZOM 20V Battery Operated Drill"
             onerror="this.src='assets/images/project-2.jpg'">
         </div>
-        <div class="product-price-cell">
-          <span class="product-price-tag">₹ 1,899</span>
-          <span class="product-price-sub">20V Cordless • Li-ion</span>
-        </div>
         <div class="product-info-cell">
           <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 2px;">
             <span class="badge badge-category" style="font-size: 0.72rem; padding: 2px 8px;">Product 2 • PDF Page 1</span>
             <span class="badge badge-spent-time" style="font-size: 0.72rem; padding: 2px 8px;"><i class="fa-solid fa-battery-full"></i> 20V Battery</span>
           </div>
           <h3 class="product-title">IZOM 20V IZOM Battery Operated Drill - IZ-CDK Power & Hand Tool Kit (1 Tools)</h3>
+        </div>
+        <div class="product-price-cell">
+          <span class="product-price-tag">₹ 1,899</span>
+          <span class="product-price-sub">20V Cordless • Li-ion</span>
         </div>
         <div class="product-actions-cell">
           <a href="https://dl.flipkart.com/s/Rkprp0NNNN" target="_blank" rel="noopener noreferrer"
@@ -170,16 +183,16 @@
           <img src="assets/images/tool_sauran_angle_grinder.jpg" alt="Sauran AG-801 Angle Grinder"
             onerror="this.src='assets/images/project-3.jpg'">
         </div>
-        <div class="product-price-cell">
-          <span class="product-price-tag">₹ 999</span>
-          <span class="product-price-sub">100mm Disc • Metal Cut</span>
-        </div>
         <div class="product-info-cell">
           <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 2px;">
             <span class="badge badge-category" style="font-size: 0.72rem; padding: 2px 8px;">Product 3 • PDF Page 1</span>
             <span class="badge badge-price" style="font-size: 0.72rem; padding: 2px 8px;"><i class="fa-solid fa-bolt"></i> 100mm Wheel</span>
           </div>
           <h3 class="product-title">Sauran AG-801 Angle Grinder (100 mm Wheel Diameter)</h3>
+        </div>
+        <div class="product-price-cell">
+          <span class="product-price-tag">₹ 999</span>
+          <span class="product-price-sub">100mm Disc • Metal Cut</span>
         </div>
         <div class="product-actions-cell">
           <a href="https://dl.flipkart.com/s/R9oQQGNNNN" target="_blank" rel="noopener noreferrer"
@@ -195,16 +208,16 @@
           <img src="assets/images/tool_omxe_angle_grinder.jpg" alt="OMXE OPAL-801 950w Angle Grinder"
             onerror="this.src='assets/images/project-4.jpg'">
         </div>
-        <div class="product-price-cell">
-          <span class="product-price-tag">₹ 1,199</span>
-          <span class="product-price-sub">950W Heavy Duty</span>
-        </div>
         <div class="product-info-cell">
           <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 2px;">
             <span class="badge badge-category" style="font-size: 0.72rem; padding: 2px 8px;">Product 4 • PDF Page 1</span>
             <span class="badge badge-price" style="font-size: 0.72rem; padding: 2px 8px;"><i class="fa-solid fa-fire"></i> 11,000 RPM</span>
           </div>
           <h3 class="product-title">OMXE OPAL-801 950w Heavy Duty Professional Angle Grinder (100 mm Wheel Diameter)</h3>
+        </div>
+        <div class="product-price-cell">
+          <span class="product-price-tag">₹ 1,199</span>
+          <span class="product-price-sub">950W Heavy Duty</span>
         </div>
         <div class="product-actions-cell">
           <a href="https://dl.flipkart.com/s/R9GS4rNNNN" target="_blank" rel="noopener noreferrer"
@@ -220,16 +233,16 @@
           <img src="assets/images/tool_qualigen_heat_gun.jpg" alt="Qualigen 2000 W Heavy Duty Heat Gun"
             onerror="this.src='assets/images/hero.jpg'">
         </div>
-        <div class="product-price-cell">
-          <span class="product-price-tag">₹ 849</span>
-          <span class="product-price-sub">2000W Hot Air</span>
-        </div>
         <div class="product-info-cell">
           <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 2px;">
             <span class="badge badge-category" style="font-size: 0.72rem; padding: 2px 8px;">Product 5 • PDF Page 2</span>
             <span class="badge badge-price" style="font-size: 0.72rem; padding: 2px 8px;">Thermal Tool</span>
           </div>
           <h3 class="product-title">Qualigen 2000 W HEAVY DUTY hot air 2000 W Heat Gun</h3>
+        </div>
+        <div class="product-price-cell">
+          <span class="product-price-tag">₹ 849</span>
+          <span class="product-price-sub">2000W Hot Air</span>
         </div>
         <div class="product-actions-cell">
           <a href="https://dl.flipkart.com/s/R9!GFUNNNN" target="_blank" rel="noopener noreferrer"
@@ -245,16 +258,16 @@
           <img src="assets/images/tool_ingco_soldering_iron.jpg" alt="INGCO SI0268 60 W Soldering Iron"
             onerror="this.src='assets/images/project-1.jpg'">
         </div>
-        <div class="product-price-cell">
-          <span class="product-price-tag">₹ 399</span>
-          <span class="product-price-sub">60W Conical Tip</span>
-        </div>
         <div class="product-info-cell">
           <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 2px;">
             <span class="badge badge-category" style="font-size: 0.72rem; padding: 2px 8px;">Product 6 • PDF Page 2</span>
             <span class="badge badge-spent-time" style="font-size: 0.72rem; padding: 2px 8px;"><i class="fa-solid fa-plug"></i> 60W Mica Core</span>
           </div>
           <h3 class="product-title">INGCO SI0268 60 W Simple (Conical Tip) Soldering Iron</h3>
+        </div>
+        <div class="product-price-cell">
+          <span class="product-price-tag">₹ 399</span>
+          <span class="product-price-sub">60W Conical Tip</span>
         </div>
         <div class="product-actions-cell">
           <a href="https://dl.flipkart.com/s/R9ixIqNNNN" target="_blank" rel="noopener noreferrer"
@@ -270,16 +283,16 @@
           <img src="assets/images/tool_techtrove_glue_gun.jpg" alt="TechTrove 20W Mini Glue Gun"
             onerror="this.src='assets/images/project-2.jpg'">
         </div>
-        <div class="product-price-cell">
-          <span class="product-price-tag">₹ 249</span>
-          <span class="product-price-sub">Incl. 15 Sticks (7mm)</span>
-        </div>
         <div class="product-info-cell">
           <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 2px;">
             <span class="badge badge-category" style="font-size: 0.72rem; padding: 2px 8px;">Product 7 • PDF Page 2</span>
             <span class="badge badge-price" style="font-size: 0.72rem; padding: 2px 8px;">Craft & Repair</span>
           </div>
           <h3 class="product-title">TechTrove 20W MINI GLUE GUN WITH 15 STICKS FOR DIY HOME CRAFT ,ART, 7MM Standard Temperature Corded Glue Gun (7 mm)</h3>
+        </div>
+        <div class="product-price-cell">
+          <span class="product-price-tag">₹ 249</span>
+          <span class="product-price-sub">Incl. 15 Sticks (7mm)</span>
         </div>
         <div class="product-actions-cell">
           <a href="https://dl.flipkart.com/s/RfkkPXNNNN" target="_blank" rel="noopener noreferrer"
@@ -295,16 +308,16 @@
           <img src="assets/images/tool_digital_vernier_caliper.jpg" alt="SEE INSIDE Electronic Digital Vernier Caliper"
             onerror="this.src='assets/images/project-3.jpg'">
         </div>
-        <div class="product-price-cell">
-          <span class="product-price-tag">₹ 499</span>
-          <span class="product-price-sub">0-150 mm • 0.01mm Res</span>
-        </div>
         <div class="product-info-cell">
           <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 2px;">
             <span class="badge badge-category" style="font-size: 0.72rem; padding: 2px 8px;">Product 8 • PDF Page 2</span>
             <span class="badge badge-price" style="font-size: 0.72rem; padding: 2px 8px;"><i class="fa-solid fa-microscope"></i> Precision Metric</span>
           </div>
           <h3 class="product-title">SEE INSIDE Vernier Caliper Electronic Digital LCD Display Ruler Measuring tool Gauge Vernier Caliper (0 -150 mm)</h3>
+        </div>
+        <div class="product-price-cell">
+          <span class="product-price-tag">₹ 499</span>
+          <span class="product-price-sub">0-150 mm • 0.01mm Res</span>
         </div>
         <div class="product-actions-cell">
           <a href="https://dl.flipkart.com/s/RkLQ40NNNN" target="_blank" rel="noopener noreferrer"
@@ -320,16 +333,16 @@
           <img src="assets/images/tool_hss_titanium_drill_bits.jpg" alt="NITYA HSS Titanium Coated Drill Bit Set"
             onerror="this.src='assets/images/project-4.jpg'">
         </div>
-        <div class="product-price-cell">
-          <span class="product-price-tag">₹ 450</span>
-          <span class="product-price-sub">6 PCS Set • HSS 4241</span>
-        </div>
         <div class="product-info-cell">
           <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 2px;">
             <span class="badge badge-category" style="font-size: 0.72rem; padding: 2px 8px;">Product 9 • PDF Page 3</span>
             <span class="badge badge-spent-time" style="font-size: 0.72rem; padding: 2px 8px;">Drill, Cut & Ream</span>
           </div>
           <h3 class="product-title">NITYA HSS Titanium Coated Drill Bit Set 6PCS for cutting, drilling and reaming of wood, aluminum alloy and plastic sheets</h3>
+        </div>
+        <div class="product-price-cell">
+          <span class="product-price-tag">₹ 450</span>
+          <span class="product-price-sub">6 PCS Set • HSS 4241</span>
         </div>
         <div class="product-actions-cell">
           <a href="https://dl.flipkart.com/dl/nitya-hss-titanium-coated-drill-bit-set-6pcs-cutting-drilling-reaming-wood-aluminum-alloy-plastic-sheets/p/itm4cb03bd3f74ef?pid=DBSGUEC7RJZHSNAX&lid=LSTDBSGUEC7RJZHSNAXNPVEPH&_refId=&_appId=WA&_refId=&_appId=CL"
@@ -345,16 +358,16 @@
           <img src="assets/images/tool_holesaw_cutter_set.jpg" alt="Kiesh Holesaw Cutter Set 11pcs"
             onerror="this.src='assets/images/project-5.jpg'">
         </div>
-        <div class="product-price-cell">
-          <span class="product-price-tag">₹ 599</span>
-          <span class="product-price-sub">11 PCS • 3/4" to 2 1/2"</span>
-        </div>
         <div class="product-info-cell">
           <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 2px;">
             <span class="badge badge-category" style="font-size: 0.72rem; padding: 2px 8px;">Product 10 • PDF Page 3</span>
             <span class="badge badge-price" style="font-size: 0.72rem; padding: 2px 8px;">Hole Saws</span>
           </div>
           <h3 class="product-title">Kiesh Holesaw Cutter Set 11pcs Woodworking Hole Saw Drill Bit Kit 3/4" to 2 1/2" BHS56 Drilling Tool Wood Thin Alloy Metal Cutter Core Drill Bits Rotary Tool (7 mm)</h3>
+        </div>
+        <div class="product-price-cell">
+          <span class="product-price-tag">₹ 599</span>
+          <span class="product-price-sub">11 PCS • 3/4" to 2 1/2"</span>
         </div>
         <div class="product-actions-cell">
           <a href="https://dl.flipkart.com/s/5_1k1JuuuN" target="_blank" rel="noopener noreferrer"
@@ -370,16 +383,16 @@
           <img src="assets/images/tool_silicone_mould_tray.jpg" alt="Husaini Mart Silicone Mould 2 Pack"
             onerror="this.src='assets/images/project-1.jpg'">
         </div>
-        <div class="product-price-cell">
-          <span class="product-price-tag">₹ 349</span>
-          <span class="product-price-sub">Pack of 2 Trays</span>
-        </div>
         <div class="product-info-cell">
           <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 2px;">
             <span class="badge badge-category" style="font-size: 0.72rem; padding: 2px 8px;">Product 11 • PDF Page 3</span>
             <span class="badge badge-spent-time" style="font-size: 0.72rem; padding: 2px 8px;">Silicone Molds</span>
           </div>
           <h3 class="product-title">Husaini Mart Silicone Chocolate Mould Skytail 2 Pack Rectangle Protein Bar Silicone Mold (Pack of 2)</h3>
+        </div>
+        <div class="product-price-cell">
+          <span class="product-price-tag">₹ 349</span>
+          <span class="product-price-sub">Pack of 2 Trays</span>
         </div>
         <div class="product-actions-cell">
           <a href="https://dl.flipkart.com/s/eZYB6xNNNN" target="_blank" rel="noopener noreferrer"
@@ -432,9 +445,9 @@
         <div>
           <h4 class="footer-heading">Direct Contact</h4>
           <ul class="footer-links">
-            <li><a href="https://wa.me/919876543210" target="_blank" class="footer-link"><i
+            <li><a href="https://wa.me/919043081667" target="_blank" class="footer-link"><i
                   class="fa-brands fa-whatsapp" style="color: #25d366;"></i> WhatsApp Chat</a></li>
-            <li><a href="https://instagram.com" target="_blank" class="footer-link"><i class="fa-brands fa-instagram"
+            <li><a href="https://www.instagram.com/gj_farming23?stkn=MWRnM3puaXJ2cHExNw==" target="_blank" class="footer-link"><i class="fa-brands fa-instagram"
                   style="color: #e1306c;"></i> Instagram DM</a></li>
             <li><a href="mailto:gjgokul2005@gmail.com" class="footer-link"><i class="fa-solid fa-envelope"
                   style="color: var(--accent-red);"></i> Gmail Inquiry</a></li>
@@ -446,7 +459,7 @@
           <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 14px;">
             Join 34,900+ makers and tractor enthusiasts on <strong>@GGCreative-x9o</strong>.
           </p>
-          <a href="https://youtube.com/@ggcreative-x9o?si=xSec0GQZRetnup0H" target="_blank"
+          <a href="https://youtube.com/@ggcreative-x9o?si=3LtZbnrBawQbGshe" target="_blank"
             class="btn btn-primary btn-sm">
             <i class="fa-brands fa-youtube"></i> Subscribe on YouTube
           </a>
@@ -464,8 +477,15 @@
     </div>
   </footer>
 
+  <!-- Firebase SDKs (Compat) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script src="login/firebase-config.js"></script>
+
   <!-- Scripts -->
   <script src="js/main.js"></script>
+  <script src="js/firestore-sync.js"></script>
   <script>
     let currentCategoryFilter = 'all';
     let currentProjectFilter = 'all';

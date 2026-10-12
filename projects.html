@@ -14,6 +14,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+  <!-- Instant Auth Route Guard: Website always starts with Login -->
+  <script>
+    if (!localStorage.getItem('gg_user')) {
+      window.location.replace('login.html?redirect=projects.html');
+    }
+  </script>
+
   <!-- Custom Stylesheet -->
   <link rel="stylesheet" href="css/styles.css">
 </head>
@@ -73,10 +80,15 @@
           <i class="fa-solid fa-sun" id="themeIcon"></i>
         </button>
 
+        <!-- Login Button (Visible when Logged Out) -->
+        <a href="login.html" class="btn btn-primary btn-sm nav-login-btn" id="navLoginBtn">
+          <i class="fa-solid fa-right-to-bracket"></i> Login
+        </a>
+
         <!-- Profile Avatar & Dropdown -->
-        <div class="profile-dropdown-wrapper">
+        <div class="profile-dropdown-wrapper" id="navProfileDropdownWrapper">
           <button class="profile-avatar-btn" id="profileAvatarBtn" aria-label="User Profile Menu">
-            <img src="assets/images/avatar.jpg" alt="GG Creation" class="avatar-img-sm" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80'">
+            <img src="assets/images/avatar.jpg" alt="GG Creation" class="avatar-img-sm" id="navAvatarImg" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80'">
             <span class="profile-name-text" id="navProfileName">GG Creation</span>
             <i class="fa-solid fa-chevron-down" style="font-size: 0.75rem; color: var(--text-muted);"></i>
           </button>
@@ -84,8 +96,8 @@
           <!-- Dropdown Menu (Step 8 from Wireframe) -->
           <div class="profile-menu" id="profileMenuDropdown">
             <div class="profile-menu-header">
-              <div class="profile-menu-title">GG Creation</div>
-              <div class="profile-menu-sub">@GGCreative-x9o</div>
+              <div class="profile-menu-title" id="dropdownUserTitle">GG Creation</div>
+              <div class="profile-menu-sub" id="dropdownUserSub">@GGCreative-x9o</div>
             </div>
             <a href="profile.html" class="profile-menu-item">
               <i class="fa-solid fa-user-circle"></i> Profile Dashboard
@@ -96,10 +108,13 @@
             <a href="products.html" class="profile-menu-item">
               <i class="fa-solid fa-tags"></i> Affiliate Gear
             </a>
-            <a href="https://youtube.com/@ggcreative-x9o?si=xSec0GQZRetnup0H" target="_blank" class="profile-menu-item">
+            <a href="https://youtube.com/@ggcreative-x9o?si=3LtZbnrBawQbGshe" target="_blank" class="profile-menu-item">
               <i class="fa-brands fa-youtube" style="color: #ff0000;"></i> Open YouTube Channel
             </a>
             <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 4px 0;">
+            <a href="login.html" class="profile-menu-item" id="dropdownLoginItem">
+              <i class="fa-solid fa-right-to-bracket"></i> Sign In / Login
+            </a>
             <a href="#" class="profile-menu-item logout" id="navLogoutBtn">
               <i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out
             </a>
@@ -115,7 +130,7 @@
   </header>
 
   <!-- MAIN CONTENT: PROJECTS PAGE (Step 4) -->
-  <main class="container" style="flex: 1;">
+  <main class="container" style="flex: 1; padding-bottom: 80px;">
     
     <!-- Page Header -->
     <section class="page-header">
@@ -129,6 +144,23 @@
     </section>
 
 
+
+    <!-- FIRESTORE SYNC & CONTROL BAR -->
+    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 24px; padding: 14px 18px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px;">
+      <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+        <span class="badge" style="background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3); font-weight: 600; padding: 6px 12px; border-radius: 20px; font-size: 0.85rem;">
+          <i class="fa-solid fa-cloud"></i> Cloud Firestore: Live Connected
+        </span>
+        <span style="font-size: 0.85rem; color: var(--text-secondary);">
+          7 Authentic DIY builds loaded from cloud database
+        </span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+        <button type="button" class="btn btn-secondary btn-sm" id="btnFeedFirestore" onclick="handleFeedFirestoreClick(this)" title="Feed all previous projects, materials, and channel data into Cloud Firestore">
+          <i class="fa-solid fa-cloud-arrow-up" style="color: var(--accent-red);"></i> Feed Previous Data to Firestore
+        </button>
+      </div>
+    </div>
 
     <!-- STEP 4: PROJECTS GRID (Projects 1 to 7) -->
     <div class="projects-grid" id="projectsContainer">
@@ -285,8 +317,8 @@
         <div>
           <h4 class="footer-heading">Direct Contact</h4>
           <ul class="footer-links">
-            <li><a href="https://wa.me/919876543210" target="_blank" class="footer-link"><i class="fa-brands fa-whatsapp" style="color: #25d366;"></i> WhatsApp Chat</a></li>
-            <li><a href="https://instagram.com" target="_blank" class="footer-link"><i class="fa-brands fa-instagram" style="color: #e1306c;"></i> Instagram DM</a></li>
+            <li><a href="https://wa.me/919043081667" target="_blank" class="footer-link"><i class="fa-brands fa-whatsapp" style="color: #25d366;"></i> WhatsApp Chat</a></li>
+            <li><a href="https://www.instagram.com/gj_farming23?stkn=MWRnM3puaXJ2cHExNw==" target="_blank" class="footer-link"><i class="fa-brands fa-instagram" style="color: #e1306c;"></i> Instagram DM</a></li>
             <li><a href="mailto:gjgokul2005@gmail.com" class="footer-link"><i class="fa-solid fa-envelope" style="color: var(--accent-red);"></i> Gmail Inquiry</a></li>
           </ul>
         </div>
@@ -296,7 +328,7 @@
           <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 14px;">
             Join 34,900+ makers and tractor enthusiasts on <strong>@GGCreative-x9o</strong>.
           </p>
-          <a href="https://youtube.com/@ggcreative-x9o?si=xSec0GQZRetnup0H" target="_blank" class="btn btn-primary btn-sm">
+          <a href="https://youtube.com/@ggcreative-x9o?si=3LtZbnrBawQbGshe" target="_blank" class="btn btn-primary btn-sm">
             <i class="fa-brands fa-youtube"></i> Subscribe on YouTube
           </a>
         </div>
@@ -312,8 +344,34 @@
     </div>
   </footer>
 
+  <!-- Firebase SDKs (Compat) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script src="login/firebase-config.js"></script>
+
   <!-- Scripts -->
   <script src="js/main.js"></script>
+  <script src="js/firestore-sync.js"></script>
   <script src="js/projects.js"></script>
+  <script>
+    async function handleFeedFirestoreClick(btn) {
+      if (!window.GGFirestore) {
+        showToast('Firestore module is loading...', 'info');
+        return;
+      }
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Feeding Firestore...';
+      btn.disabled = true;
+
+      const result = await window.GGFirestore.feedPreviousData();
+      btn.disabled = false;
+      btn.innerHTML = originalText;
+      if (result && result.success) {
+        btn.innerHTML = '<i class="fa-solid fa-check"></i> Firestore Synced!';
+        setTimeout(() => { btn.innerHTML = originalText; }, 3500);
+      }
+    }
+  </script>
 </body>
 </html>

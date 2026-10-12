@@ -1277,7 +1277,7 @@ button, input, select, textarea {
   border-radius: var(--radius-md);
   padding: 20px 24px;
   display: grid;
-  grid-template-columns: 160px 140px 1fr auto;
+  grid-template-columns: 160px 1fr 140px auto;
   align-items: center;
   gap: 24px;
   box-shadow: var(--shadow-sm);
@@ -1322,9 +1322,33 @@ button, input, select, textarea {
   transform: scale(1.05);
 }
 
+.product-info-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.product-title {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.35;
+}
+
+.product-specs {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
 .product-price-cell {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  text-align: right;
+  min-width: 120px;
 }
 
 .product-price-tag {
@@ -1339,28 +1363,11 @@ button, input, select, textarea {
   color: var(--text-muted);
 }
 
-.product-info-cell {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.product-title {
-  font-family: var(--font-heading);
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: var(--text-primary);
-}
-
-.product-specs {
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-}
-
 .product-actions-cell {
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: flex-end;
+  white-space: nowrap;
 }
 
 /* ==========================================================================
@@ -1980,6 +1987,294 @@ button, input, select, textarea {
 .auth-footer a {
   color: var(--accent-red);
   font-weight: 600;
+}
+
+/* Auth Demo Box / 1-Click Fast Login */
+.auth-demo-box {
+  background: var(--accent-red-subtle);
+  border: 1px dashed var(--accent-red-border);
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.auth-demo-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.auth-demo-title {
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.auth-demo-sub {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+.btn-demo-quick {
+  background: var(--gradient-red);
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 12px rgba(255, 77, 109, 0.3);
+}
+
+.btn-demo-quick:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(255, 77, 109, 0.45);
+}
+
+/* Password Input with Toggle Button */
+.password-input-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.password-input-wrap .form-input {
+  padding-right: 46px;
+}
+
+.toggle-password-btn {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 6px;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+
+.toggle-password-btn:hover {
+  color: var(--accent-red);
+}
+
+/* Password Strength Indicator */
+.password-strength-container {
+  margin-top: 8px;
+}
+
+.password-strength-bar {
+  height: 4px;
+  width: 100%;
+  background: var(--border-color);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+
+.strength-fill {
+  height: 100%;
+  width: 0%;
+  transition: width 0.3s ease, background-color 0.3s ease;
+  border-radius: var(--radius-full);
+}
+
+.strength-fill.weak {
+  width: 33%;
+  background-color: #ef4444;
+}
+
+.strength-fill.medium {
+  width: 66%;
+  background-color: #f59e0b;
+}
+
+.strength-fill.strong {
+  width: 100%;
+  background-color: #10b981;
+}
+
+.strength-text {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* Auth Divider */
+.auth-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 22px 0;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.auth-divider span {
+  padding: 0 14px;
+}
+
+/* Google Sign-in Button */
+.btn-google-login {
+  width: 100%;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 11px 18px;
+  border-radius: var(--radius-full);
+  font-weight: 600;
+  font-size: 0.92rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-google-login:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-light);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.google-icon-svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Already Logged In Card Banner */
+.already-logged-in-box {
+  background: var(--bg-secondary);
+  border: 1px solid var(--accent-red-border);
+  border-radius: var(--radius-md);
+  padding: 22px;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.already-logged-in-avatar {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--accent-red);
+  margin: 0 auto 12px;
+}
+
+/* Guest Banner on Profile / Dashboard */
+.guest-profile-banner {
+  background: linear-gradient(135deg, rgba(255, 77, 109, 0.12) 0%, rgba(255, 158, 0, 0.08) 100%);
+  border: 1px solid var(--accent-red-border);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  margin-bottom: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.guest-banner-text {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.92rem;
+  color: var(--text-primary);
+}
+
+.guest-banner-text i {
+  color: var(--accent-red);
+  font-size: 1.25rem;
+}
+
+/* Input Error Message */
+.form-error-msg {
+  color: #ef4444;
+  font-size: 0.78rem;
+  margin-top: 4px;
+  display: none;
+}
+
+.form-group.has-error .form-input {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.25) !important;
+}
+
+.form-group.has-error .form-error-msg {
+  display: block;
+}
+
+/* OTP Digits Row */
+.otp-input-row {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin: 16px 0;
+}
+
+.otp-box-digit {
+  width: 44px;
+  height: 52px;
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  outline: none;
+  transition: var(--transition);
+}
+
+.otp-box-digit:focus {
+  border-color: var(--accent-red);
+  box-shadow: 0 0 0 3px var(--accent-red-subtle);
+}
+
+/* Bottom Back Link */
+.bottom-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.bottom-back-btn:hover {
+  color: var(--accent-red);
+  transform: translateX(-3px);
 }
 
 /* ==========================================================================
@@ -2640,12 +2935,14 @@ button, input, select, textarea {
     height: 130px;
     min-width: 130px;
   }
-  .product-price-cell {
-    grid-column: 2;
-    justify-content: center;
-  }
   .product-info-cell {
+    grid-column: 2;
+  }
+  .product-price-cell {
     grid-column: 1 / -1;
+    align-items: flex-start;
+    text-align: left;
+    min-width: auto;
   }
   .product-actions-cell {
     grid-column: 1 / -1;

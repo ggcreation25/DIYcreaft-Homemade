@@ -1,7 +1,31 @@
 /**
  * GG CREATOR - MAIN JAVASCRIPT
- * Handles Theme Toggling, Mobile Navigation, Profile Menu, Auth State, and Toasts
+ * Handles Theme Toggling, Mobile Navigation, Profile Menu, Dynamic Auth State, Route Guard, and Toasts
  */
+
+// ═══════════════════════════════════════════════════════════════
+// 🔒 AUTH ROUTE GUARD: ALL WEBSITE PAGES REQUIRE LOGIN
+// Prevents direct URL path bypass without an active session
+// ═══════════════════════════════════════════════════════════════
+(function enforceAuthGuard() {
+  const currentPath = window.location.pathname.toLowerCase();
+  const filename = currentPath.split('/').pop() || 'index.html';
+  
+  // Public pages permitted without login
+  const isAuthPage = filename === 'login.html' || 
+                     filename === 'signup.html' || 
+                     currentPath.endsWith('/login') ||
+                     currentPath.endsWith('/login/') ||
+                     currentPath.endsWith('/login/index.html');
+
+  const user = localStorage.getItem('gg_user');
+
+  if (!isAuthPage && !user) {
+    // Attempting to access protected page without authentication
+    const redirectTarget = encodeURIComponent(filename + window.location.search);
+    window.location.replace('login.html?redirect=' + redirectTarget);
+  }
+})();
 
 // Initialize default state
 document.addEventListener('DOMContentLoaded', () => {
@@ -77,7 +101,7 @@ function initMobileNav() {
 }
 
 /* ==========================================================================
-   PROFILE DROPDOWN & AUTH STATE
+   PROFILE DROPDOWN & AUTHENTICATION STATE
    ========================================================================== */
 function initProfileDropdown() {
   const profileBtn = document.getElementById('profileAvatarBtn');
@@ -97,25 +121,137 @@ function initProfileDropdown() {
   }
 }
 
+/**
+ * Get currently logged-in user object from localStorage
+ */
+function getAuthUser() {
+  try {
+    const raw = localStorage.getItem('gg_user');
+    return raw ? JSON.parse(raw) : null;
+  } catch (err) {
+    console.error('Error parsing stored user:', err);
+    return null;
+  }
+}
+
+/**
+ * Store user session in localStorage and update UI
+ */
+function setAuthUser(user) {
+  if (user) {
+    localStorage.setItem('gg_user', JSON.stringify(user));
+  } else {
+    localStorage.removeItem('gg_user');
+  }
+  initAuthState();
+  window.dispatchEvent(new CustomEvent('gg_auth_changed', { detail: user }));
+}
+
+/**
+ * Update UI across all pages based on user login state
+ */
 function initAuthState() {
-  const user = JSON.parse(localStorage.getItem('gg_user') || 'null');
-  const profileNameEl = document.getElementById('navProfileName');
-  const logoutBtn = document.getElementById('navLogoutBtn');
+  const user = getAuthUser();
+  const navLoginBtns = document.querySelectorAll('.nav-login-btn, #navLoginBtn');
+  const profileWrappers = document.querySelectorAll('.profile-dropdown-wrapper, #navProfileDropdownWrapper');
+  const profileNameEls = document.querySelectorAll('#navProfileName');
+  const profileAvatarImgs = document.querySelectorAll('#navAvatarImg, .profile-avatar-btn img');
+  const userTitleEls = document.querySelectorAll('#dropdownUserTitle, #dropdownChannelTitle');
+  const userSubEls = document.querySelectorAll('#dropdownUserSub, #dropdownChannelHandle');
+  const logoutBtns = document.querySelectorAll('#navLogoutBtn, .profile-logout-btn');
+  const dropdownLoginItems = document.querySelectorAll('#dropdownLoginItem');
+  const guestBanners = document.querySelectorAll('.guest-profile-banner');
+  const authOnlyEls = document.querySelectorAll('[data-auth-only]');
+  const guestOnlyEls = document.querySelectorAll('[data-guest-only]');
 
-  if (user && profileNameEl) {
-    profileNameEl.textContent = user.name || 'GG Creation';
-  }
+  if (user) {
+    // ── USER IS LOGGED IN ──
+    const displayName = user.name || (user.email ? user.email.split('@')[0] : 'Creator');
+    const displayEmail = user.email || '@GGCreative-x9o';
+    const avatarSrc = user.avatar || 'assets/images/avatar.jpg';
 
-  if (logoutBtn) {
-    logoutBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      localStorage.removeItem('gg_user');
-      showToast('Logged out successfully', 'info');
-      setTimeout(() => {
-        window.location.href = 'login.html';
-      }, 700);
+    navLoginBtns.forEach(btn => btn.style.display = 'none');
+    profileWrappers.forEach(wrap => wrap.style.display = 'block');
+
+    profileNameEls.forEach(el => { el.textContent = displayName; });
+    userTitleEls.forEach(el => { el.textContent = displayName; });
+    userSubEls.forEach(el => { el.textContent = displayEmail; });
+    profileAvatarImgs.forEach(img => {
+      if (img) img.src = avatarSrc;
     });
+
+    dropdownLoginItems.forEach(item => item.style.display = 'none');
+    logoutBtns.forEach(btn => {
+      btn.style.display = 'flex';
+      btn.onclick = handleLogout;
+    });
+
+    guestBanners.forEach(b => b.style.display = 'none');
+    authOnlyEls.forEach(el => el.style.display = '');
+    guestOnlyEls.forEach(el => el.style.display = 'none');
+
+    // Update Profile page personalized greeting if present
+    const profileGreeting = document.getElementById('userGreetingName');
+    if (profileGreeting) profileGreeting.textContent = displayName;
+
+  } else {
+    // ── USER IS LOGGED OUT (GUEST) ──
+    navLoginBtns.forEach(btn => btn.style.display = 'inline-flex');
+
+    profileWrappers.forEach(wrap => {
+      // If there is a separate login button, we can hide avatar or keep it with guest state
+      if (document.querySelector('.nav-login-btn, #navLoginBtn')) {
+        wrap.style.display = 'none';
+      } else {
+        wrap.style.display = 'block';
+      }
+    });
+
+    profileNameEls.forEach(el => { el.textContent = 'Guest'; });
+    userTitleEls.forEach(el => { el.textContent = 'Guest Maker'; });
+    userSubEls.forEach(el => { el.textContent = 'Not signed in'; });
+
+    dropdownLoginItems.forEach(item => item.style.display = 'flex');
+    logoutBtns.forEach(btn => btn.style.display = 'none');
+
+    guestBanners.forEach(b => b.style.display = 'flex');
+    authOnlyEls.forEach(el => el.style.display = 'none');
+    guestOnlyEls.forEach(el => el.style.display = '');
   }
+}
+
+/**
+ * Handle user logout with smooth toast and redirect
+ */
+function handleLogout(e) {
+  if (e) e.preventDefault();
+  localStorage.removeItem('gg_user');
+  showToast('Logged out successfully', 'info');
+  initAuthState();
+
+  setTimeout(() => {
+    window.location.replace('login.html');
+  }, 400);
+}
+
+/**
+ * Utility to extract redirect URL from query string
+ */
+function getRedirectParam(defaultUrl = 'index.html') {
+  const params = new URLSearchParams(window.location.search);
+  const redirect = params.get('redirect');
+  if (redirect) {
+    try {
+      const decoded = decodeURIComponent(redirect);
+      // Validate relative path or safe destination
+      if (decoded.startsWith('http') || decoded.endsWith('.html') || decoded.includes('/')) {
+        return decoded;
+      }
+    } catch (e) {
+      console.warn('Invalid redirect param', e);
+    }
+  }
+  return defaultUrl;
 }
 
 /* ==========================================================================
@@ -154,9 +290,14 @@ function showToast(message, type = 'success') {
 
 // Global helper for opening external links or copy
 function copyText(text, successMsg = 'Copied to clipboard!') {
-  navigator.clipboard.writeText(text).then(() => {
-    showToast(successMsg, 'success');
-  }).catch(() => {
-    showToast('Failed to copy', 'error');
-  });
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(() => {
+      showToast(successMsg, 'success');
+    }).catch(() => {
+      showToast(text, 'info');
+    });
+  } else {
+    showToast(text, 'info');
+  }
 }
+

@@ -18,7 +18,7 @@ const DEFAULT_PROJECTS = [
     priceFormatted: '₹ 12,252',
     description: 'Scratch-built miniature Mahindra 415DI XP PLUS red tractor featuring realistic die-cut metal hood, 12V high-torque motor drive, mechanical rack steering, working front grille, authentic headlights, and deep-lug rear tires.',
     videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-    youtubeWatchUrl: 'https://youtube.com/@ggcreative-x9o?si=xSec0GQZRetnup0H',
+    youtubeWatchUrl: 'https://youtube.com/@ggcreative-x9o?si=3LtZbnrBawQbGshe',
     requiredTools: [
       'iBELL 650W Impact Drill Kit (TD13-100)',
       'Sauran AG-801 Angle Grinder (100mm)',
@@ -60,7 +60,7 @@ const DEFAULT_PROJECTS = [
     priceFormatted: '₹ 13,764',
     description: 'Handcrafted John Deere 5050 D 2WD green & yellow scale model tractor with dual exhaust stack, front weight bumper, custom rear reduction gearbox with brass pinions, and high-visibility steering controls.',
     videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-    youtubeWatchUrl: 'https://youtube.com/@ggcreative-x9o?si=xSec0GQZRetnup0H',
+    youtubeWatchUrl: 'https://youtube.com/@ggcreative-x9o?si=3LtZbnrBawQbGshe',
     requiredTools: [
       'Sauran AG-801 Angle Grinder (100mm)',
       'Qualigen 2000 W Heavy Duty Heat Gun',
@@ -102,7 +102,7 @@ const DEFAULT_PROJECTS = [
     priceFormatted: '₹ 9,965',
     description: 'Heavy-duty 4WD all-wheel drive John Deere 5310 miniature tractor with dual differential driven axles, transfer case gearbox, extra-wide deep mud traction tires, roll cage, and extreme pulling torque.',
     videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-    youtubeWatchUrl: 'https://youtube.com/@ggcreative-x9o?si=xSec0GQZRetnup0H',
+    youtubeWatchUrl: 'https://youtube.com/@ggcreative-x9o?si=3LtZbnrBawQbGshe',
     requiredTools: [
       'IZOM 20V Battery Operated Cordless Drill',
       'OMXE OPAL-801 950w Heavy Duty Angle Grinder',
@@ -144,7 +144,7 @@ const DEFAULT_PROJECTS = [
     priceFormatted: '₹ 920',
     description: 'Handmade heavy cargo carrier truck featuring multi-axle suspension, open wood-slat cargo bed, detailed cabin with acrylic windshield, working rear tailgate latch, and twin rear drive axles.',
     videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-    youtubeWatchUrl: 'https://youtube.com/@ggcreative-x9o?si=xSec0GQZRetnup0H',
+    youtubeWatchUrl: 'https://youtube.com/@ggcreative-x9o?si=3LtZbnrBawQbGshe',
     requiredTools: [
       'iBELL Tool Kit with Impact Drill TD13-100',
       'IZOM 20V Battery Operated Cordless Drill',
@@ -187,7 +187,7 @@ const DEFAULT_PROJECTS = [
     priceFormatted: '₹ 1,610',
     description: 'Handmade heavy tipper dump truck equipped with motorized screw-jack dump bed tipping mechanism, reinforced metal bed lining, wide-stance offroad tires, and rugged steel bumper.',
     videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-    youtubeWatchUrl: 'https://youtube.com/@ggcreative-x9o?si=xSec0GQZRetnup0H',
+    youtubeWatchUrl: 'https://youtube.com/@ggcreative-x9o?si=3LtZbnrBawQbGshe',
     requiredTools: [
       'OMXE OPAL-801 950w Heavy Duty Angle Grinder',
       'Qualigen 2000 W Heavy Duty Heat Gun',
@@ -230,7 +230,7 @@ const DEFAULT_PROJECTS = [
     priceFormatted: '₹ 1,200',
     description: 'High-flow handmade 12V 775 motor centrifugal water pump with transparent acrylic impeller casing, custom resin curved vane impeller, 1/2-inch PVC inlet/outlet valves, and high-pressure water stream output.',
     videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-    youtubeWatchUrl: 'https://youtube.com/@ggcreative-x9o?si=xSec0GQZRetnup0H',
+    youtubeWatchUrl: 'https://youtube.com/@ggcreative-x9o?si=3LtZbnrBawQbGshe',
     requiredTools: [
       'INGCO SI0268 60 W Simple Soldering Iron',
       'NITYA HSS Titanium Coated Drill Bit Set',
@@ -272,7 +272,7 @@ const DEFAULT_PROJECTS = [
     priceFormatted: '₹ 14,800',
     description: 'Scratch-built miniature JCB 3DX backhoe loader excavator currently under active fabrication. Handcrafted all-metal yellow chassis, dual-cylinder articulated front loader bucket, functional rear excavator boom, and high-torque DC motor drivetrain.',
     videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-    youtubeWatchUrl: 'https://youtube.com/@ggcreative-x9o?si=xSec0GQZRetnup0H',
+    youtubeWatchUrl: 'https://youtube.com/@ggcreative-x9o?si=3LtZbnrBawQbGshe',
     progressPct: 30,
     progressStatus: 'Currently Finishing 30% (Chassis & Boom Fabrication)',
     requiredTools: [
@@ -439,6 +439,34 @@ document.addEventListener('DOMContentLoaded', () => {
   initBillModal();
   initDetailsModal();
   initAddProjectModal();
+  loadProjectsFromFirestoreAsync();
+});
+
+// Load live data from Firestore asynchronously if available
+async function loadProjectsFromFirestoreAsync() {
+  if (window.GGFirestore && typeof window.GGFirestore.getProjects === 'function') {
+    try {
+      const fsProjects = await window.GGFirestore.getProjects();
+      if (Array.isArray(fsProjects) && fsProjects.length > 0) {
+        currentProjects = fsProjects;
+        renderProjects();
+        console.log(`Loaded ${fsProjects.length} projects directly from Cloud Firestore`);
+      }
+    } catch (err) {
+      console.warn('Firestore async load notice:', err.message);
+    }
+  }
+}
+
+// Re-render when data is fed/updated in Firestore
+window.addEventListener('gg_firestore_data_updated', async () => {
+  if (window.GGFirestore && typeof window.GGFirestore.getProjects === 'function') {
+    const fresh = await window.GGFirestore.getProjects();
+    if (fresh && fresh.length) {
+      currentProjects = fresh;
+      renderProjects();
+    }
+  }
 });
 
 /* ==========================================================================
@@ -749,6 +777,15 @@ function initAddProjectModal() {
       currentProjects.unshift(newProject);
       saveProjects(currentProjects);
       renderProjects();
+
+      // Update in Cloud Firestore
+      if (window.GGFirestore && typeof window.GGFirestore.updateProject === 'function') {
+        window.GGFirestore.updateProject(newProject).then(saved => {
+          if (saved) {
+            showToast(`Project "${title}" synced to Cloud Firestore!`, 'success');
+          }
+        }).catch(e => console.warn('Firestore project save warning:', e));
+      }
 
       form.reset();
       addModal.classList.remove('show');

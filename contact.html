@@ -14,6 +14,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+  <!-- Instant Auth Route Guard: Website always starts with Login -->
+  <script>
+    if (!localStorage.getItem('gg_user')) {
+      window.location.replace('login.html?redirect=contact.html');
+    }
+  </script>
+
   <!-- Custom Stylesheet -->
   <link rel="stylesheet" href="css/styles.css">
 </head>
@@ -51,22 +58,31 @@
           <i class="fa-solid fa-sun" id="themeIcon"></i>
         </button>
 
-        <div class="profile-dropdown-wrapper">
+        <!-- Login Button (Visible when Logged Out) -->
+        <a href="login.html" class="btn btn-primary btn-sm nav-login-btn" id="navLoginBtn">
+          <i class="fa-solid fa-right-to-bracket"></i> Login
+        </a>
+
+        <!-- Profile Avatar & Dropdown -->
+        <div class="profile-dropdown-wrapper" id="navProfileDropdownWrapper">
           <button class="profile-avatar-btn" id="profileAvatarBtn">
-            <img src="assets/images/avatar.jpg" alt="GG Creation" class="avatar-img-sm" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80'">
+            <img src="assets/images/avatar.jpg" alt="GG Creation" class="avatar-img-sm" id="navAvatarImg" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80'">
             <span class="profile-name-text" id="navProfileName">GG Creation</span>
             <i class="fa-solid fa-chevron-down" style="font-size: 0.75rem; color: var(--text-muted);"></i>
           </button>
           <div class="profile-menu" id="profileMenuDropdown">
             <div class="profile-menu-header">
-              <div class="profile-menu-title">GG Creation</div>
-              <div class="profile-menu-sub">@GGCreative-x9o</div>
+              <div class="profile-menu-title" id="dropdownUserTitle">GG Creation</div>
+              <div class="profile-menu-sub" id="dropdownUserSub">@GGCreative-x9o</div>
             </div>
             <a href="profile.html" class="profile-menu-item"><i class="fa-solid fa-user-circle"></i> Profile Dashboard</a>
             <a href="projects.html" class="profile-menu-item"><i class="fa-solid fa-layer-group"></i> My DIY Projects</a>
             <a href="products.html" class="profile-menu-item"><i class="fa-solid fa-tags"></i> Affiliate Gear</a>
-            <a href="https://youtube.com/@ggcreative-x9o?si=xSec0GQZRetnup0H" target="_blank" class="profile-menu-item"><i class="fa-brands fa-youtube" style="color: #ff0000;"></i> Open YouTube Channel</a>
+            <a href="https://youtube.com/@ggcreative-x9o?si=3LtZbnrBawQbGshe" target="_blank" class="profile-menu-item"><i class="fa-brands fa-youtube" style="color: #ff0000;"></i> Open YouTube Channel</a>
             <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 4px 0;">
+            <a href="login.html" class="profile-menu-item" id="dropdownLoginItem">
+              <i class="fa-solid fa-right-to-bracket"></i> Sign In / Login
+            </a>
             <a href="#" class="profile-menu-item logout" id="navLogoutBtn"><i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out</a>
           </div>
         </div>
@@ -79,7 +95,7 @@
   </header>
 
   <!-- MAIN CONTENT: CONTACT PAGE (Step 7) -->
-  <main class="container" style="flex: 1;">
+  <main class="container" style="flex: 1; padding-bottom: 80px;">
     <section class="page-header">
       <div class="badge badge-spent-time" style="margin-bottom: 10px;">
         <i class="fa-solid fa-address-book"></i> Step 7 in Wireframe Notebook
@@ -100,9 +116,9 @@
           <i class="fa-brands fa-whatsapp"></i>
         </div>
         <h3 class="channel-name">WhatsApp</h3>
-        <p class="channel-detail-text">+91 98765 43210</p>
+        <p class="channel-detail-text">+91 90430 81667</p>
         <span style="font-size: 0.82rem; color: var(--text-muted);">Quick responses for build inquiries & chat</span>
-        <a href="https://wa.me/919876543210?text=Hi%20GG%20Creator,%20I%20saw%20your%20YouTube%20DIY%20project!" target="_blank" class="btn btn-secondary btn-sm" style="width: 100%; border-color: #25d366; color: #25d366;">
+        <a href="https://wa.me/919043081667?text=Hi%20GG%20Creator,%20I%20saw%20your%20YouTube%20DIY%20project!" target="_blank" class="btn btn-secondary btn-sm" style="width: 100%; border-color: #25d366; color: #25d366;">
           <i class="fa-brands fa-whatsapp"></i> Open WhatsApp Chat
         </a>
       </div>
@@ -114,9 +130,9 @@
           <i class="fa-brands fa-instagram"></i>
         </div>
         <h3 class="channel-name">Instagram</h3>
-        <p class="channel-detail-text">@gg_creator_studio</p>
+        <p class="channel-detail-text">@gj_farming23</p>
         <span style="font-size: 0.82rem; color: var(--text-muted);">Daily stories, behind-the-scenes & direct DMs</span>
-        <a href="https://instagram.com" target="_blank" class="btn btn-secondary btn-sm" style="width: 100%; border-color: #e1306c; color: #e1306c;">
+        <a href="https://www.instagram.com/gj_farming23?stkn=MWRnM3puaXJ2cHExNw==" target="_blank" class="btn btn-secondary btn-sm" style="width: 100%; border-color: #e1306c; color: #e1306c;">
           <i class="fa-brands fa-instagram"></i> Send Instagram DM
         </a>
       </div>
@@ -230,8 +246,8 @@
         <div>
           <h4 class="footer-heading">Direct Contact</h4>
           <ul class="footer-links">
-            <li><a href="https://wa.me/919876543210" target="_blank" class="footer-link"><i class="fa-brands fa-whatsapp" style="color: #25d366;"></i> WhatsApp Chat</a></li>
-            <li><a href="https://instagram.com" target="_blank" class="footer-link"><i class="fa-brands fa-instagram" style="color: #e1306c;"></i> Instagram DM</a></li>
+            <li><a href="https://wa.me/919043081667" target="_blank" class="footer-link"><i class="fa-brands fa-whatsapp" style="color: #25d366;"></i> WhatsApp Chat</a></li>
+            <li><a href="https://www.instagram.com/gj_farming23?stkn=MWRnM3puaXJ2cHExNw==" target="_blank" class="footer-link"><i class="fa-brands fa-instagram" style="color: #e1306c;"></i> Instagram DM</a></li>
             <li><a href="mailto:gjgokul2005@gmail.com" class="footer-link"><i class="fa-solid fa-envelope" style="color: var(--accent-red);"></i> Gmail Inquiry</a></li>
           </ul>
         </div>
@@ -241,7 +257,7 @@
           <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 14px;">
             Join 34,900+ makers and tractor enthusiasts on <strong>@GGCreative-x9o</strong>.
           </p>
-          <a href="https://youtube.com/@ggcreative-x9o?si=xSec0GQZRetnup0H" target="_blank" class="btn btn-primary btn-sm">
+          <a href="https://youtube.com/@ggcreative-x9o?si=3LtZbnrBawQbGshe" target="_blank" class="btn btn-primary btn-sm">
             <i class="fa-brands fa-youtube"></i> Subscribe on YouTube
           </a>
         </div>

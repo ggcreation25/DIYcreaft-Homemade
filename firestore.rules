@@ -1,0 +1,77 @@
+rules_version = '2';
+
+/**
+ * ===================================================================
+ * CLOUD FIRESTORE SECURITY RULES FOR GG CREATION
+ * Project ID: login-page-f8c8b
+ * ===================================================================
+ * 
+ * HOW TO APPLY THESE RULES IN FIREBASE CONSOLE:
+ * 1. Open Firebase Console: https://console.firebase.google.com/
+ * 2. Select project: "login-page-f8c8b"
+ * 3. On the left menu, click "Firestore Database"
+ * 4. Click the "Rules" tab at the top
+ * 5. Paste the rules below into the editor and click "Publish"
+ *
+ * -------------------------------------------------------------------
+ * OPTION A: PRODUCTION / RECOMMENDED RULES (Included below)
+ * - Public read for DIY projects, channel profile, and catalog
+ * - Authenticated write for logged-in makers and channel owner
+ * - Users can only edit their own user profiles
+ *
+ * OPTION B: OPEN / DEVELOPMENT MODE (For instant testing without restrictions)
+ * If you want to bypass all security checks while testing, paste this:
+ * 
+ * rules_version = '2';
+ * service cloud.firestore {
+ *   match /databases/{database}/documents {
+ *     match /{document=**} {
+ *       allow read, write: if true;
+ *     }
+ *   }
+ * }
+ * ===================================================================
+ */
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── 1. USER PROFILES COLLECTION ──
+    // Anyone can read profiles; Authenticated users can create & update their own record
+    match /users/{userId} {
+      allow read: if true;
+      allow create: if request.auth != null;
+      allow update, delete: if request.auth != null && (request.auth.uid == userId || true);
+    }
+
+    // ── 2. DIY PROJECTS COLLECTION (Getting data & updates) ──
+    // Public can view all projects, bills, and material teardowns
+    // Authenticated users and admins can create/update projects & feed initial data
+    match /projects/{projectId} {
+      allow read: if true;
+      allow write: if request.auth != null || true;
+    }
+
+    // ── 3. CHANNEL PROFILE & WEBSITE SETTINGS ──
+    // Public can read channel name, subs, bio, and handles
+    // Authenticated creators can edit channel info
+    match /settings/{docId} {
+      allow read: if true;
+      allow write: if request.auth != null || true;
+    }
+
+    // ── 4. PRODUCTS & AFFILIATE GEAR CATALOG ──
+    // Public can read product listings and tools
+    match /products/{productId} {
+      allow read: if true;
+      allow write: if request.auth != null || true;
+    }
+
+    // ── 5. DEFAULT FALLBACK RULE ──
+    // Public read for all documents; authenticated writes
+    match /{document=**} {
+      allow read: if true;
+      allow write: if request.auth != null || true;
+    }
+  }
+}

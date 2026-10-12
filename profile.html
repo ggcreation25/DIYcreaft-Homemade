@@ -14,6 +14,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+  <!-- Instant Auth Route Guard: Website always starts with Login -->
+  <script>
+    if (!localStorage.getItem('gg_user')) {
+      window.location.replace('login.html?redirect=profile.html');
+    }
+  </script>
+
   <!-- Custom Stylesheet -->
   <link rel="stylesheet" href="css/styles.css">
 </head>
@@ -49,22 +56,31 @@
           <i class="fa-solid fa-sun" id="themeIcon"></i>
         </button>
 
-        <div class="profile-dropdown-wrapper">
+        <!-- Login Button (Visible when Logged Out) -->
+        <a href="login.html" class="btn btn-primary btn-sm nav-login-btn" id="navLoginBtn">
+          <i class="fa-solid fa-right-to-bracket"></i> Login
+        </a>
+
+        <!-- Profile Avatar & Dropdown -->
+        <div class="profile-dropdown-wrapper" id="navProfileDropdownWrapper">
           <button class="profile-avatar-btn" id="profileAvatarBtn">
-            <img src="assets/images/avatar.jpg" alt="GG Creation" class="avatar-img-sm" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80'">
+            <img src="assets/images/avatar.jpg" alt="GG Creation" class="avatar-img-sm" id="navAvatarImg" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80'">
             <span class="profile-name-text" id="navProfileName">GG Creation</span>
             <i class="fa-solid fa-chevron-down" style="font-size: 0.75rem; color: var(--text-muted);"></i>
           </button>
           <div class="profile-menu" id="profileMenuDropdown">
             <div class="profile-menu-header">
-              <div class="profile-menu-title" id="dropdownChannelTitle">GG Creation</div>
-              <div class="profile-menu-sub" id="dropdownChannelHandle">@GGCreative-x9o</div>
+              <div class="profile-menu-title" id="dropdownUserTitle">GG Creation</div>
+              <div class="profile-menu-sub" id="dropdownUserSub">@GGCreative-x9o</div>
             </div>
             <a href="profile.html" class="profile-menu-item"><i class="fa-solid fa-user-circle"></i> Profile Dashboard</a>
             <a href="projects.html" class="profile-menu-item"><i class="fa-solid fa-layer-group"></i> My DIY Projects</a>
             <a href="products.html" class="profile-menu-item"><i class="fa-solid fa-tags"></i> Affiliate Gear</a>
-            <a href="https://youtube.com/@ggcreative-x9o?si=xSec0GQZRetnup0H" target="_blank" class="profile-menu-item"><i class="fa-brands fa-youtube" style="color: #ff0000;"></i> Open YouTube</a>
+            <a href="https://youtube.com/@ggcreative-x9o?si=3LtZbnrBawQbGshe" target="_blank" class="profile-menu-item"><i class="fa-brands fa-youtube" style="color: #ff0000;"></i> Open YouTube</a>
             <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 4px 0;">
+            <a href="login.html" class="profile-menu-item" id="dropdownLoginItem">
+              <i class="fa-solid fa-right-to-bracket"></i> Sign In / Login
+            </a>
             <a href="#" class="profile-menu-item logout" id="navLogoutBtn"><i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out</a>
           </div>
         </div>
@@ -79,6 +95,19 @@
   <!-- MAIN CONTENT: PROFILE DASHBOARD -->
   <main class="container profile-dashboard">
 
+    <!-- Guest Welcome Banner (Visible when logged out) -->
+    <div class="guest-profile-banner" style="display: none;">
+      <div class="guest-banner-text">
+        <i class="fa-solid fa-hand-sparkles"></i>
+        <div>
+          <strong>Welcome, Maker!</strong> You are currently viewing as a guest. Sign in to personalize your channel profile, track DIY builds, and access creator tools.
+        </div>
+      </div>
+      <a href="login.html?redirect=profile.html" class="btn btn-primary btn-sm">
+        <i class="fa-solid fa-right-to-bracket"></i> Sign In to Account
+      </a>
+    </div>
+
     <!-- BREADCRUMB / STATUS TAG -->
     <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
       <div style="display: flex; align-items: center; gap: 8px; font-size: 0.88rem; color: var(--text-secondary);">
@@ -86,7 +115,7 @@
         <i class="fa-solid fa-chevron-right" style="font-size: 0.7rem; color: var(--text-muted);"></i>
         <span>YouTube Profile</span>
         <i class="fa-solid fa-chevron-right" style="font-size: 0.7rem; color: var(--text-muted);"></i>
-        <span style="color: var(--accent-red); font-weight: 600;">GG Creation</span>
+        <span style="color: var(--accent-red); font-weight: 600;" id="userGreetingName">GG Creation</span>
       </div>
       <div class="badge badge-spent-time">
         <i class="fa-brands fa-youtube" style="color: #ff0000;"></i>
@@ -139,7 +168,7 @@
 
           <!-- Channel Action Buttons (Matching YouTube App Screenshot) -->
           <div class="yt-channel-actions-bar">
-            <a href="https://youtube.com/@ggcreative-x9o?si=xSec0GQZRetnup0H" target="_blank" class="btn btn-primary" id="btnSubscribeChannel">
+            <a href="https://youtube.com/@ggcreative-x9o?si=3LtZbnrBawQbGshe" target="_blank" class="btn btn-primary" id="btnSubscribeChannel">
               <i class="fa-brands fa-youtube"></i> Subscribe
             </a>
             <button class="btn btn-secondary" id="btnOpenAnalytics" title="View Channel Analytics">
@@ -147,6 +176,9 @@
             </button>
             <button class="btn btn-secondary" id="btnEditChannel" title="Edit Profile & Channel Info">
               <i class="fa-solid fa-pen-to-square"></i> Edit channel
+            </button>
+            <button class="btn btn-outline-red" id="btnFeedFirestoreProfile" onclick="handleFeedFirestoreClick(this)" title="Feed & sync all authentic projects, materials, and channel data to Cloud Firestore">
+              <i class="fa-solid fa-cloud-arrow-up"></i> Sync Firestore
             </button>
             <button class="btn btn-outline-red" id="btnShareChannel" title="Copy Channel Link">
               <i class="fa-solid fa-share-nodes"></i> Share
@@ -163,7 +195,7 @@
             I am making some product for homemade and make a new product and implementation the product.
           </p>
           <div style="display: flex; gap: 16px; margin-top: 10px; font-size: 0.88rem; flex-wrap: wrap;">
-            <a href="https://youtube.com/@ggcreative-x9o?si=xSec0GQZRetnup0H" target="_blank" style="color: var(--accent-red); font-weight: 600; display: inline-flex; align-items: center; gap: 6px;">
+            <a href="https://youtube.com/@ggcreative-x9o?si=3LtZbnrBawQbGshe" target="_blank" style="color: var(--accent-red); font-weight: 600; display: inline-flex; align-items: center; gap: 6px;">
               <i class="fa-solid fa-link"></i> youtube.com/@GGCreative-x9o
             </a>
             <span style="color: var(--text-muted);"><i class="fa-solid fa-location-dot"></i> Tamil Nadu, India</span>
@@ -220,7 +252,7 @@
             Watch real problem teardowns, homemade implement testing, and tractor gearbox solutions from <strong>@GGCreative-x9o</strong>
           </p>
         </div>
-        <a href="https://youtube.com/@ggcreative-x9o?si=xSec0GQZRetnup0H" target="_blank" class="btn btn-primary btn-sm">
+        <a href="https://youtube.com/@ggcreative-x9o?si=3LtZbnrBawQbGshe" target="_blank" class="btn btn-primary btn-sm">
           <i class="fa-brands fa-youtube"></i> Visit Channel <i class="fa-solid fa-arrow-up-right-from-square"></i>
         </a>
       </div>
@@ -231,7 +263,7 @@
           <div class="yt-video-thumb-wrap">
             <img src="assets/images/tractor-gearbox.jpg" alt="John Deere tractor gearbox problem" class="yt-video-thumb-img" onerror="this.src='assets/images/project-3.jpg'">
             <span class="yt-video-duration">3:42</span>
-            <a href="https://youtube.com/@ggcreative-x9o?si=xSec0GQZRetnup0H" target="_blank" class="yt-video-play-btn" aria-label="Watch John Deere tractor gearbox problem video">
+            <a href="https://youtube.com/@ggcreative-x9o?si=3LtZbnrBawQbGshe" target="_blank" class="yt-video-play-btn" aria-label="Watch John Deere tractor gearbox problem video">
               <i class="fa-solid fa-play"></i>
             </a>
           </div>
@@ -267,7 +299,7 @@
           <div class="yt-video-thumb-wrap">
             <img src="assets/images/project_mahindra_415di.jpg" alt="Handmade Red Mini Tractor Build" class="yt-video-thumb-img" onerror="this.src='assets/images/avatar.jpg'">
             <span class="yt-video-duration">8:15</span>
-            <a href="https://youtube.com/@ggcreative-x9o?si=xSec0GQZRetnup0H" target="_blank" class="yt-video-play-btn" aria-label="Watch Handmade Red Mini Tractor build video">
+            <a href="https://youtube.com/@ggcreative-x9o?si=3LtZbnrBawQbGshe" target="_blank" class="yt-video-play-btn" aria-label="Watch Handmade Red Mini Tractor build video">
               <i class="fa-solid fa-play"></i>
             </a>
           </div>
@@ -303,7 +335,7 @@
           <div class="yt-video-thumb-wrap">
             <img src="assets/images/project-3.jpg" alt="FULL DIY SV Lubricant for Toy Tractors" class="yt-video-thumb-img">
             <span class="yt-video-duration">5:20</span>
-            <a href="https://youtube.com/@ggcreative-x9o?si=xSec0GQZRetnup0H" target="_blank" class="yt-video-play-btn" aria-label="Watch Full DIY SV Lubricant video">
+            <a href="https://youtube.com/@ggcreative-x9o?si=3LtZbnrBawQbGshe" target="_blank" class="yt-video-play-btn" aria-label="Watch Full DIY SV Lubricant video">
               <i class="fa-solid fa-play"></i>
             </a>
           </div>
@@ -523,7 +555,7 @@
           </div>
           <div class="form-group">
             <label class="form-label" for="editChannelUrl">Official YouTube URL</label>
-            <input type="url" id="editChannelUrl" class="form-input" value="https://youtube.com/@ggcreative-x9o?si=xSec0GQZRetnup0H">
+            <input type="url" id="editChannelUrl" class="form-input" value="https://youtube.com/@ggcreative-x9o?si=3LtZbnrBawQbGshe">
           </div>
           <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px;">
             <button type="button" class="btn btn-secondary" id="cancelEditModalBtn">Cancel</button>
@@ -582,7 +614,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <a href="https://youtube.com/@ggcreative-x9o?si=xSec0GQZRetnup0H" target="_blank" class="btn btn-primary btn-sm">
+        <a href="https://youtube.com/@ggcreative-x9o?si=3LtZbnrBawQbGshe" target="_blank" class="btn btn-primary btn-sm">
           <i class="fa-brands fa-youtube"></i> Open YouTube Studio
         </a>
         <button class="btn btn-secondary btn-sm" id="closeAnalyticsModalBtn2">Close</button>
@@ -642,8 +674,8 @@
         <div>
           <h4 class="footer-heading">Direct Contact</h4>
           <ul class="footer-links">
-            <li><a href="https://wa.me/919876543210" target="_blank" class="footer-link"><i class="fa-brands fa-whatsapp" style="color: #25d366;"></i> WhatsApp Chat</a></li>
-            <li><a href="https://instagram.com" target="_blank" class="footer-link"><i class="fa-brands fa-instagram" style="color: #e1306c;"></i> Instagram DM</a></li>
+            <li><a href="https://wa.me/919043081667" target="_blank" class="footer-link"><i class="fa-brands fa-whatsapp" style="color: #25d366;"></i> WhatsApp Chat</a></li>
+            <li><a href="https://www.instagram.com/gj_farming23?stkn=MWRnM3puaXJ2cHExNw==" target="_blank" class="footer-link"><i class="fa-brands fa-instagram" style="color: #e1306c;"></i> Instagram DM</a></li>
             <li><a href="mailto:gjgokul2005@gmail.com" class="footer-link"><i class="fa-solid fa-envelope" style="color: var(--accent-red);"></i> Gmail Inquiry</a></li>
           </ul>
         </div>
@@ -653,7 +685,7 @@
           <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 14px;">
             Join 34,900+ makers and tractor enthusiasts on <strong>@GGCreative-x9o</strong>.
           </p>
-          <a href="https://youtube.com/@ggcreative-x9o?si=xSec0GQZRetnup0H" target="_blank" class="btn btn-primary btn-sm">
+          <a href="https://youtube.com/@ggcreative-x9o?si=3LtZbnrBawQbGshe" target="_blank" class="btn btn-primary btn-sm">
             <i class="fa-brands fa-youtube"></i> Subscribe on YouTube
           </a>
         </div>
@@ -669,7 +701,15 @@
     </div>
   </footer>
 
+  <!-- Firebase SDKs (Compat) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script src="login/firebase-config.js"></script>
+
+  <!-- Core Scripts -->
   <script src="js/main.js"></script>
+  <script src="js/firestore-sync.js"></script>
   <script src="js/projects.js"></script>
   <script>
     // Project Invoices Data
@@ -806,7 +846,7 @@
     // Save Channel Updates
     const editChannelForm = document.getElementById('editChannelForm');
     if (editChannelForm) {
-      editChannelForm.addEventListener('submit', (e) => {
+      editChannelForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const updated = {
           name: document.getElementById('editChannelName').value.trim(),
@@ -818,7 +858,14 @@
         localStorage.setItem('gg_channel_data', JSON.stringify(updated));
         applyChannelData(updated);
         editChannelModal.classList.remove('show');
-        showToast('Channel profile updated successfully!', 'success');
+
+        // Real-time Cloud Firestore Update
+        if (window.GGFirestore && typeof window.GGFirestore.updateChannelProfile === 'function') {
+          await window.GGFirestore.updateChannelProfile(updated);
+          showToast('Channel profile updated & synced to Cloud Firestore! ☁️', 'success');
+        } else {
+          showToast('Channel profile updated successfully!', 'success');
+        }
       });
     }
 
@@ -829,27 +876,52 @@
         document.getElementById('editChannelHandle').value = saved.handle || '@GGCreative-x9o';
         document.getElementById('editChannelSubs').value = saved.subs || '34.9k subscribers';
         document.getElementById('editChannelBio').value = saved.bio || 'I am making some product for homemade and make a new product and implementation the product';
-        document.getElementById('editChannelUrl').value = saved.url || 'https://youtube.com/@ggcreative-x9o?si=xSec0GQZRetnup0H';
+        document.getElementById('editChannelUrl').value = saved.url || 'https://youtube.com/@ggcreative-x9o?si=3LtZbnrBawQbGshe';
       }
     }
 
     function applyChannelData(data) {
       if (!data) return;
       if (data.name) {
-        document.getElementById('channelNameDisplay').textContent = data.name;
-        document.getElementById('dropdownChannelTitle').textContent = data.name;
-        document.getElementById('navProfileName').textContent = data.name;
+        const nameEl = document.getElementById('channelNameDisplay');
+        if (nameEl) nameEl.textContent = data.name;
+        const navName = document.getElementById('navProfileName');
+        if (navName) navName.textContent = data.name;
+        const greeting = document.getElementById('userGreetingName');
+        if (greeting) greeting.textContent = data.name;
       }
       if (data.handle) {
-        document.getElementById('channelHandleDisplay').textContent = data.handle;
-        document.getElementById('dropdownChannelHandle').textContent = data.handle;
+        const handleEl = document.getElementById('channelHandleDisplay');
+        if (handleEl) handleEl.textContent = data.handle;
       }
       if (data.subs) {
-        document.getElementById('channelSubsDisplay').innerHTML = `<i class="fa-brands fa-youtube" style="color: #ff0000;"></i> ${data.subs}`;
-        document.getElementById('statsSubsNumber').textContent = data.subs.replace(/subscribers/i, '').trim().toUpperCase();
+        const subsEl = document.getElementById('channelSubsDisplay');
+        if (subsEl) subsEl.innerHTML = `<i class="fa-brands fa-youtube" style="color: #ff0000;"></i> ${data.subs}`;
+        const statsSubs = document.getElementById('statsSubsNumber');
+        if (statsSubs) statsSubs.textContent = data.subs.replace(/subscribers/i, '').trim().toUpperCase();
       }
       if (data.bio) {
-        document.getElementById('channelBioDisplay').textContent = data.bio;
+        const bioEl = document.getElementById('channelBioDisplay');
+        if (bioEl) bioEl.textContent = data.bio;
+      }
+    }
+
+    // Feed / Sync Previous Data to Firestore Button
+    async function handleFeedFirestoreClick(btn) {
+      if (!window.GGFirestore) {
+        showToast('Firestore engine initializing...', 'info');
+        return;
+      }
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Syncing Firestore...';
+      btn.disabled = true;
+
+      const res = await window.GGFirestore.feedPreviousData();
+      btn.disabled = false;
+      btn.innerHTML = originalText;
+      if (res && res.success) {
+        btn.innerHTML = '<i class="fa-solid fa-check"></i> Firestore Synced!';
+        setTimeout(() => { btn.innerHTML = originalText; }, 3500);
       }
     }
 
@@ -857,7 +929,7 @@
     const btnShareChannel = document.getElementById('btnShareChannel');
     if (btnShareChannel) {
       btnShareChannel.addEventListener('click', () => {
-        const url = 'https://youtube.com/@ggcreative-x9o?si=xSec0GQZRetnup0H';
+        const url = 'https://youtube.com/@ggcreative-x9o?si=3LtZbnrBawQbGshe';
         if (navigator.clipboard) {
           navigator.clipboard.writeText(url).then(() => {
             showToast('Channel link copied: ' + url, 'success');
@@ -877,11 +949,31 @@
       }
     });
 
-    // Initialize saved data if present
+    // Initialize saved data if present & fetch live from Firestore
     document.addEventListener('DOMContentLoaded', () => {
-      const saved = JSON.parse(localStorage.getItem('gg_channel_data') || 'null');
-      if (saved) {
-        applyChannelData(saved);
+      const user = (typeof getAuthUser === 'function') ? getAuthUser() : JSON.parse(localStorage.getItem('gg_user') || 'null');
+      const savedChannel = JSON.parse(localStorage.getItem('gg_channel_data') || 'null');
+      
+      if (savedChannel) {
+        applyChannelData(savedChannel);
+      } else if (user) {
+        if (user.name) {
+          const channelNameEl = document.getElementById('channelNameDisplay');
+          if (channelNameEl) channelNameEl.textContent = user.name;
+          const userGreeting = document.getElementById('userGreetingName');
+          if (userGreeting) userGreeting.textContent = user.name;
+        }
+        if (user.avatar) {
+          const avatarImg = document.getElementById('channelAvatarDisplay');
+          if (avatarImg) avatarImg.src = user.avatar;
+        }
+      }
+
+      // Live fetch from Cloud Firestore
+      if (window.GGFirestore && typeof window.GGFirestore.getChannelProfile === 'function') {
+        window.GGFirestore.getChannelProfile().then(cloudProfile => {
+          if (cloudProfile) applyChannelData(cloudProfile);
+        }).catch(err => console.warn('Cloud profile fetch notice:', err));
       }
     });
   </script>

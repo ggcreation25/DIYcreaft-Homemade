@@ -23,7 +23,7 @@
   <div class="bg-ambient-orb orb-red"></div>
   <div class="bg-ambient-orb orb-rose"></div>
 
-  <!-- STEP 2: NAVIGATION BAR -->
+  <!-- NAVIGATION BAR -->
   <header class="navbar" id="mainNavbar">
     <div class="container navbar-container">
       <a href="index.html" class="brand-logo" id="navBrandLogo">
@@ -51,6 +51,9 @@
         <a href="login.html" class="btn btn-secondary btn-sm">
           <i class="fa-solid fa-right-to-bracket"></i> Login
         </a>
+        <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Open Navigation">
+          <i class="fa-solid fa-bars"></i>
+        </button>
       </div>
     </div>
   </header>
@@ -66,32 +69,68 @@
         <p class="auth-subtitle">Join the DIY maker community to bookmark builds & download bills.</p>
       </div>
 
-      <form id="signupForm" onsubmit="event.preventDefault(); handleSignup();">
-        <!-- 1. Name -->
-        <div class="form-group">
+      <form id="signupForm" onsubmit="event.preventDefault(); handleSignup();" novalidate>
+        <!-- 1. Full Name -->
+        <div class="form-group" id="signupNameGroup">
           <label class="form-label" for="signupName">Full Name *</label>
-          <input type="text" id="signupName" class="form-input" placeholder="e.g. Gokul" required>
+          <input type="text" id="signupName" class="form-input" placeholder="e.g. Gokul" autocomplete="name" required>
+          <span class="form-error-msg" id="signupNameError">Please enter your full name</span>
         </div>
 
         <!-- 2. Phone Number -->
-        <div class="form-group">
+        <div class="form-group" id="signupPhoneGroup">
           <label class="form-label" for="signupPhone">Phone Number *</label>
-          <input type="tel" id="signupPhone" class="form-input" placeholder="+91 98765 XXXXX" required>
+          <input type="tel" id="signupPhone" class="form-input" placeholder="+91 90430 XXXXX" autocomplete="tel" required>
+          <span class="form-error-msg" id="signupPhoneError">Please enter a valid phone number</span>
         </div>
 
         <!-- 3. Gmail -->
-        <div class="form-group">
+        <div class="form-group" id="signupEmailGroup">
           <label class="form-label" for="signupGmail">Gmail Address *</label>
-          <input type="email" id="signupGmail" class="form-input" placeholder="name@gmail.com" required>
+          <input type="email" id="signupGmail" class="form-input" placeholder="name@gmail.com" autocomplete="email" required>
+          <span class="form-error-msg" id="signupEmailError">Please enter a valid Gmail address</span>
         </div>
 
         <!-- 4. Password -->
-        <div class="form-group">
+        <div class="form-group" id="signupPasswordGroup">
           <label class="form-label" for="signupPassword">Password *</label>
-          <input type="password" id="signupPassword" class="form-input" placeholder="Create a strong password" required minlength="6">
+          <div class="password-input-wrap">
+            <input type="password" id="signupPassword" class="form-input" placeholder="Create a strong password" autocomplete="new-password" required minlength="6" oninput="checkPasswordStrength(this.value)">
+            <button type="button" class="toggle-password-btn" aria-label="Toggle password visibility" onclick="togglePasswordVisibility('signupPassword', this)">
+              <i class="fa-regular fa-eye"></i>
+            </button>
+          </div>
+          <!-- Strength Indicator -->
+          <div class="password-strength-container">
+            <div class="password-strength-bar">
+              <div class="strength-fill" id="strengthFill"></div>
+            </div>
+            <span class="strength-text" id="strengthText">Enter at least 6 characters</span>
+          </div>
+          <span class="form-error-msg" id="signupPasswordError">Password must be at least 6 characters</span>
         </div>
 
-        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">
+        <!-- 5. Confirm Password -->
+        <div class="form-group" id="signupConfirmGroup">
+          <label class="form-label" for="signupConfirm">Confirm Password *</label>
+          <div class="password-input-wrap">
+            <input type="password" id="signupConfirm" class="form-input" placeholder="Re-enter your password" autocomplete="new-password" required>
+            <button type="button" class="toggle-password-btn" aria-label="Toggle password visibility" onclick="togglePasswordVisibility('signupConfirm', this)">
+              <i class="fa-regular fa-eye"></i>
+            </button>
+          </div>
+          <span class="form-error-msg" id="signupConfirmError">Passwords do not match</span>
+        </div>
+
+        <!-- Agreement -->
+        <div style="margin-bottom: 20px; font-size: 0.85rem; color: var(--text-secondary);">
+          <label style="display: flex; align-items: flex-start; gap: 8px; cursor: pointer;">
+            <input type="checkbox" id="termsCheck" checked style="margin-top: 3px;">
+            <span>I agree to the DIY Maker community terms & updates on new YouTube builds.</span>
+          </label>
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="signupSubmitBtn" style="width: 100%;">
           <i class="fa-solid fa-user-check"></i> Sign Up & Get Started
         </button>
       </form>
@@ -101,27 +140,192 @@
       </div>
 
       <div style="margin-top: 20px; text-align: center; border-top: 1px solid var(--border-color); padding-top: 16px;">
-        <a href="index.html" class="bottom-back-btn" onclick="if (history.length > 1) { history.back(); return false; }">
-          <i class="fa-solid fa-arrow-left"></i> Back to Home
-        </a>
+        <span style="font-size: 0.82rem; color: var(--text-muted); display: inline-flex; align-items: center; gap: 6px;">
+          <i class="fa-solid fa-shield-halved" style="color: var(--accent-red);"></i> GG Creation Official Portal • Secure Registration
+        </span>
       </div>
     </div>
   </main>
 
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script src="login/firebase-config.js"></script>
+
+  <!-- Main scripts -->
   <script src="js/main.js"></script>
+  <script src="js/firestore-sync.js"></script>
   <script>
-    function handleSignup() {
-      const name = document.getElementById('signupName').value;
-      const email = document.getElementById('signupGmail').value;
-      const user = {
+    function togglePasswordVisibility(inputId, btnEl) {
+      const input = document.getElementById(inputId);
+      if (!input) return;
+      const icon = btnEl.querySelector('i');
+      if (input.type === 'password') {
+        input.type = 'text';
+        if (icon) icon.className = 'fa-regular fa-eye-slash';
+      } else {
+        input.type = 'password';
+        if (icon) icon.className = 'fa-regular fa-eye';
+      }
+    }
+
+    function checkPasswordStrength(password) {
+      const fill = document.getElementById('strengthFill');
+      const text = document.getElementById('strengthText');
+      if (!fill || !text) return;
+
+      if (!password) {
+        fill.className = 'strength-fill';
+        fill.style.width = '0%';
+        text.textContent = 'Enter at least 6 characters';
+        text.style.color = 'var(--text-muted)';
+        return;
+      }
+
+      let score = 0;
+      if (password.length >= 6) score++;
+      if (password.length >= 10) score++;
+      if (/[A-Z]/.test(password)) score++;
+      if (/[0-9]/.test(password) || /[^A-Za-z0-9]/.test(password)) score++;
+
+      if (score <= 1) {
+        fill.className = 'strength-fill weak';
+        text.textContent = 'Weak password';
+        text.style.color = '#ef4444';
+      } else if (score <= 3) {
+        fill.className = 'strength-fill medium';
+        text.textContent = 'Medium strength password';
+        text.style.color = '#f59e0b';
+      } else {
+        fill.className = 'strength-fill strong';
+        text.textContent = 'Strong password! 🔒';
+        text.style.color = '#10b981';
+      }
+    }
+
+    async function handleSignup() {
+      const nameInput = document.getElementById('signupName');
+      const phoneInput = document.getElementById('signupPhone');
+      const emailInput = document.getElementById('signupGmail');
+      const passInput = document.getElementById('signupPassword');
+      const confirmInput = document.getElementById('signupConfirm');
+      const submitBtn = document.getElementById('signupSubmitBtn');
+
+      const name = nameInput.value.trim();
+      const phone = phoneInput.value.trim();
+      const email = emailInput.value.trim();
+      const password = passInput.value.trim();
+      const confirm = confirmInput.value.trim();
+
+      // Clear previous error states
+      ['signupNameGroup', 'signupPhoneGroup', 'signupEmailGroup', 'signupPasswordGroup', 'signupConfirmGroup'].forEach(id => {
+        document.getElementById(id).classList.remove('has-error');
+      });
+
+      let hasError = false;
+
+      if (!name) {
+        document.getElementById('signupNameGroup').classList.add('has-error');
+        nameInput.focus();
+        hasError = true;
+      }
+      if (!phone) {
+        document.getElementById('signupPhoneGroup').classList.add('has-error');
+        if (!hasError) phoneInput.focus();
+        hasError = true;
+      }
+      if (!email || !email.includes('@')) {
+        document.getElementById('signupEmailGroup').classList.add('has-error');
+        if (!hasError) emailInput.focus();
+        hasError = true;
+      }
+      if (!password || password.length < 6) {
+        document.getElementById('signupPasswordGroup').classList.add('has-error');
+        if (!hasError) passInput.focus();
+        hasError = true;
+      }
+      if (password !== confirm) {
+        document.getElementById('signupConfirmGroup').classList.add('has-error');
+        if (!hasError) confirmInput.focus();
+        hasError = true;
+      }
+
+      if (hasError) return;
+
+      submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Creating Account in Firebase...';
+      submitBtn.disabled = true;
+
+      // Try Firebase account creation & Firestore user document write
+      let fbUser = null;
+      if (typeof firebase !== 'undefined' && window.auth) {
+        try {
+          const cred = await window.auth.createUserWithEmailAndPassword(email, password);
+          fbUser = cred.user;
+          if (fbUser) {
+            await fbUser.updateProfile({ displayName: name }).catch(() => {});
+          }
+        } catch (fbErr) {
+          console.error('Firebase Auth error:', fbErr);
+          submitBtn.innerHTML = '<i class="fa-solid fa-user-plus"></i> Create Account';
+          submitBtn.disabled = false;
+
+          if (fbErr.code === 'auth/email-already-in-use') {
+            document.getElementById('signupEmailGroup').classList.add('has-error');
+            showToast('This email is already registered! Please sign in.', 'error');
+            return;
+          } else if (fbErr.code === 'auth/weak-password') {
+            document.getElementById('signupPasswordGroup').classList.add('has-error');
+            showToast('Password is too weak. Please use at least 6 characters.', 'error');
+            return;
+          } else if (fbErr.code === 'auth/invalid-email') {
+            document.getElementById('signupEmailGroup').classList.add('has-error');
+            showToast('Please enter a valid Gmail / email address.', 'error');
+            return;
+          } else if (fbErr.code === 'auth/operation-not-allowed') {
+            showToast('Email/Password sign-in is disabled in Firebase Console! Please enable it.', 'error');
+            return;
+          } else {
+            showToast(fbErr.message || 'Firebase account creation failed.', 'error');
+            return;
+          }
+        }
+      }
+
+      const uid = fbUser ? fbUser.uid : ('user-' + Date.now());
+      const newUser = {
+        uid: uid,
         name: name,
         email: email,
-        avatar: 'assets/images/avatar.jpg'
+        phone: phone,
+        avatar: 'assets/images/avatar.jpg',
+        role: 'Community Maker',
+        handle: '@' + name.toLowerCase().replace(/[^a-z0-9]/g, ''),
+        bio: 'Maker and DIY enthusiast at GG Creation',
+        joinDate: new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
+        loginMethod: fbUser ? 'firebase_email_password' : 'local_signup'
       };
-      localStorage.setItem('gg_user', JSON.stringify(user));
-      showToast(`Welcome ${name}! Account created successfully.`, 'success');
+
+      // Real-time Cloud Firestore User Write
+      if (window.db) {
+        try {
+          await window.db.collection('users').doc(uid).set({
+            ...newUser,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+          }, { merge: true });
+          console.log('User document written to Cloud Firestore successfully.');
+        } catch (dbErr) {
+          console.warn('Notice writing user to Cloud Firestore (check Firestore Rules):', dbErr.message);
+        }
+      }
+
+      setAuthUser(newUser);
+      showToast(`Welcome ${name}! Your account is registered & saved to Firestore. ☁️`, 'success');
+
+      const targetUrl = getRedirectParam('index.html');
       setTimeout(() => {
-        window.location.href = 'projects.html';
+        window.location.href = targetUrl;
       }, 700);
     }
   </script>

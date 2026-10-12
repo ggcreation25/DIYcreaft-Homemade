@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Secure login and signup portal with OTP verification, password recovery, and modern authentication." />
+  <title>AuthFlow — Login & Signup</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="index.css" />
+</head>
+<body>
+
+  <!-- Animated background blobs -->
+  <div class="bg-blobs" aria-hidden="true">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+    <div class="blob blob-4"></div>
+  </div>
+
+  <main class="auth-container" id="authContainer">
+
+    <!-- ==================== LOGIN FORM ==================== -->
+    <section class="auth-card active" id="loginCard" aria-label="Login form">
+      <div class="card-header">
+        <div class="logo-icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="22" stroke="url(#grad1)" stroke-width="3"/><path d="M16 24l6 6 10-12" stroke="url(#grad1)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="grad1" x1="0" y1="0" x2="48" y2="48"><stop stop-color="#6C63FF"/><stop offset="1" stop-color="#E040FB"/></linearGradient></defs></svg>
+        </div>
+        <h1>Welcome Back</h1>
+        <p class="subtitle">Sign in to continue to your account</p>
+      </div>
+
+      <form id="loginForm" class="auth-form" novalidate>
+        <div class="input-group" id="loginNameGroup">
+          <label for="loginName">Full Name</label>
+          <div class="input-wrapper">
+            <svg class="input-icon" viewBox="0 0 24 24"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v2h20v-2c0-3.3-6.7-5-10-5z"/></svg>
+            <input type="text" id="loginName" placeholder="Enter your name" autocomplete="name" required />
+          </div>
+          <span class="error-msg" id="loginNameError"></span>
+        </div>
+
+        <div class="input-group" id="loginEmailGroup">
+          <label for="loginEmail">Email Address</label>
+          <div class="input-wrapper">
+            <svg class="input-icon" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            <input type="email" id="loginEmail" placeholder="you@example.com" autocomplete="email" required />
+          </div>
+          <span class="error-msg" id="loginEmailError"></span>
+        </div>
+
+        <div class="input-group" id="loginPasswordGroup">
+          <label for="loginPassword">Password</label>
+          <div class="input-wrapper">
+            <svg class="input-icon" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.8-2.2-5-5-5S7 3.2 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3-9H9V6c0-1.7 1.3-3 3-3s3 1.3 3 3v2z"/></svg>
+            <input type="password" id="loginPassword" placeholder="Enter your password" autocomplete="current-password" required />
+            <button type="button" class="toggle-password" data-target="loginPassword" aria-label="Toggle password visibility">
+              <svg class="eye-icon" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.7 7.6 1 12c1.7 4.4 6 7.5 11 7.5s9.3-3.1 11-7.5c-1.7-4.4-6-7.5-11-7.5zm0 12.5c-2.8 0-5-2.2-5-5s2.2-5 5-5 5 2.2 5 5-2.2 5-5 5zm0-8c-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3z"/></svg>
+            </button>
+          </div>
+          <span class="error-msg" id="loginPasswordError"></span>
+        </div>
+
+        <div class="form-options">
+          <label class="remember-me">
+            <input type="checkbox" id="rememberMe" />
+            <span class="checkmark"></span>
+            Remember me
+          </label>
+          <button type="button" class="link-btn" id="goForgotPassword">Forgot Password?</button>
+        </div>
+
+        <button type="submit" class="btn-primary" id="loginSubmitBtn">
+          <span class="btn-text">Sign In</span>
+          <span class="btn-loader" aria-hidden="true"></span>
+        </button>
+
+        <div class="divider"><span>or</span></div>
+
+        <button type="button" class="btn-outline" id="goOtpLogin">
+          <svg class="btn-icon" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 12h-2v-2h2v2zm0-4h-2V6h2v4z"/></svg>
+          Login with OTP
+        </button>
+      </form>
+
+      <p class="card-footer">
+        Don't have an account? <button type="button" class="link-btn" id="goSignup">Create Account</button>
+      </p>
+      <p class="card-footer" style="margin-top: 10px; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 10px;">
+        <a href="../index.html" class="link-btn" style="text-decoration: none; color: var(--text-secondary);">← Back to GG Creation Home</a>
+      </p>
+    </section>
+
+    <!-- ==================== SIGNUP FORM ==================== -->
+    <section class="auth-card" id="signupCard" aria-label="Signup form">
+      <div class="card-header">
+        <div class="logo-icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="22" stroke="url(#grad2)" stroke-width="3"/><path d="M24 14v10m-5-5h10" stroke="url(#grad2)" stroke-width="3" stroke-linecap="round"/><defs><linearGradient id="grad2" x1="0" y1="0" x2="48" y2="48"><stop stop-color="#00E5FF"/><stop offset="1" stop-color="#6C63FF"/></linearGradient></defs></svg>
+        </div>
+        <h1>Create Account</h1>
+        <p class="subtitle">Join us and get started today</p>
+      </div>
+
+      <form id="signupForm" class="auth-form" novalidate>
+        <div class="input-group" id="signupNameGroup">
+          <label for="signupName">Full Name</label>
+          <div class="input-wrapper">
+            <svg class="input-icon" viewBox="0 0 24 24"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v2h20v-2c0-3.3-6.7-5-10-5z"/></svg>
+            <input type="text" id="signupName" placeholder="Enter your full name" autocomplete="name" required />
+          </div>
+          <span class="error-msg" id="signupNameError"></span>
+        </div>
+
+        <div class="input-group" id="signupEmailGroup">
+          <label for="signupEmail">Email Address</label>
+          <div class="input-wrapper">
+            <svg class="input-icon" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            <input type="email" id="signupEmail" placeholder="you@example.com" autocomplete="email" required />
+          </div>
+          <span class="error-msg" id="signupEmailError"></span>
+        </div>
+
+        <!-- OTP Section for Signup -->
+        <div class="otp-section" id="signupOtpSection">
+          <div class="input-group">
+            <label>Email Verification OTP</label>
+            <div class="otp-row">
+              <button type="button" class="btn-send-otp" id="signupSendOtp">Send OTP</button>
+            </div>
+            <div class="otp-inputs" id="signupOtpInputs">
+              <input type="text" maxlength="1" class="otp-box" data-index="0" aria-label="OTP digit 1" inputmode="numeric" />
+              <input type="text" maxlength="1" class="otp-box" data-index="1" aria-label="OTP digit 2" inputmode="numeric" />
+              <input type="text" maxlength="1" class="otp-box" data-index="2" aria-label="OTP digit 3" inputmode="numeric" />
+              <input type="text" maxlength="1" class="otp-box" data-index="3" aria-label="OTP digit 4" inputmode="numeric" />
+              <input type="text" maxlength="1" class="otp-box" data-index="4" aria-label="OTP digit 5" inputmode="numeric" />
+              <input type="text" maxlength="1" class="otp-box" data-index="5" aria-label="OTP digit 6" inputmode="numeric" />
+            </div>
+            <span class="error-msg" id="signupOtpError"></span>
+            <div class="otp-timer" id="signupOtpTimer"></div>
+          </div>
+        </div>
+
+        <div class="input-group" id="signupPasswordGroup">
+          <label for="signupPassword">New Password</label>
+          <div class="input-wrapper">
+            <svg class="input-icon" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.8-2.2-5-5-5S7 3.2 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3-9H9V6c0-1.7 1.3-3 3-3s3 1.3 3 3v2z"/></svg>
+            <input type="password" id="signupPassword" placeholder="Create a password" autocomplete="new-password" required />
+            <button type="button" class="toggle-password" data-target="signupPassword" aria-label="Toggle password visibility">
+              <svg class="eye-icon" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.7 7.6 1 12c1.7 4.4 6 7.5 11 7.5s9.3-3.1 11-7.5c-1.7-4.4-6-7.5-11-7.5zm0 12.5c-2.8 0-5-2.2-5-5s2.2-5 5-5 5 2.2 5 5-2.2 5-5 5zm0-8c-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3z"/></svg>
+            </button>
+          </div>
+          <div class="password-strength" id="signupStrength">
+            <div class="strength-bar"><div class="strength-fill" id="signupStrengthFill"></div></div>
+            <span class="strength-text" id="signupStrengthText"></span>
+          </div>
+          <span class="error-msg" id="signupPasswordError"></span>
+        </div>
+
+        <div class="input-group" id="signupConfirmGroup">
+          <label for="signupConfirm">Confirm Password</label>
+          <div class="input-wrapper">
+            <svg class="input-icon" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.8-2.2-5-5-5S7 3.2 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3-9H9V6c0-1.7 1.3-3 3-3s3 1.3 3 3v2z"/></svg>
+            <input type="password" id="signupConfirm" placeholder="Confirm your password" autocomplete="new-password" required />
+            <button type="button" class="toggle-password" data-target="signupConfirm" aria-label="Toggle password visibility">
+              <svg class="eye-icon" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.7 7.6 1 12c1.7 4.4 6 7.5 11 7.5s9.3-3.1 11-7.5c-1.7-4.4-6-7.5-11-7.5zm0 12.5c-2.8 0-5-2.2-5-5s2.2-5 5-5 5 2.2 5 5-2.2 5-5 5zm0-8c-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3z"/></svg>
+            </button>
+          </div>
+          <span class="error-msg" id="signupConfirmError"></span>
+        </div>
+
+        <button type="submit" class="btn-primary" id="signupSubmitBtn">
+          <span class="btn-text">Create Account</span>
+          <span class="btn-loader" aria-hidden="true"></span>
+        </button>
+      </form>
+
+      <p class="card-footer">
+        Already have an account? <button type="button" class="link-btn" id="goLogin">Sign In</button>
+      </p>
+    </section>
+
+    <!-- ==================== FORGOT PASSWORD FORM ==================== -->
+    <section class="auth-card" id="forgotCard" aria-label="Forgot password form">
+      <div class="card-header">
+        <button type="button" class="back-btn" id="forgotBack" aria-label="Go back to login">
+          <svg viewBox="0 0 24 24"><path d="M20 11H7.8l5.6-5.6L12 4l-8 8 8 8 1.4-1.4L7.8 13H20v-2z"/></svg>
+        </button>
+        <div class="logo-icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="22" stroke="url(#grad3)" stroke-width="3"/><path d="M24 14v8" stroke="url(#grad3)" stroke-width="3" stroke-linecap="round"/><circle cx="24" cy="30" r="2" fill="url(#grad3)"/><defs><linearGradient id="grad3" x1="0" y1="0" x2="48" y2="48"><stop stop-color="#FF6B6B"/><stop offset="1" stop-color="#FFB347"/></linearGradient></defs></svg>
+        </div>
+        <h1>Reset Password</h1>
+        <p class="subtitle">We'll send a verification code to your email</p>
+      </div>
+
+      <form id="forgotForm" class="auth-form" novalidate>
+        <div class="input-group" id="forgotEmailGroup">
+          <label for="forgotEmail">Email Address</label>
+          <div class="input-wrapper">
+            <svg class="input-icon" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            <input type="email" id="forgotEmail" placeholder="you@example.com" autocomplete="email" required />
+          </div>
+          <span class="error-msg" id="forgotEmailError"></span>
+        </div>
+
+        <!-- OTP Section for Forgot Password -->
+        <div class="otp-section" id="forgotOtpSection">
+          <div class="input-group">
+            <label>Verification OTP</label>
+            <div class="otp-row">
+              <button type="button" class="btn-send-otp" id="forgotSendOtp">Send OTP</button>
+            </div>
+            <div class="otp-inputs" id="forgotOtpInputs">
+              <input type="text" maxlength="1" class="otp-box" data-index="0" aria-label="OTP digit 1" inputmode="numeric" />
+              <input type="text" maxlength="1" class="otp-box" data-index="1" aria-label="OTP digit 2" inputmode="numeric" />
+              <input type="text" maxlength="1" class="otp-box" data-index="2" aria-label="OTP digit 3" inputmode="numeric" />
+              <input type="text" maxlength="1" class="otp-box" data-index="3" aria-label="OTP digit 4" inputmode="numeric" />
+              <input type="text" maxlength="1" class="otp-box" data-index="4" aria-label="OTP digit 5" inputmode="numeric" />
+              <input type="text" maxlength="1" class="otp-box" data-index="5" aria-label="OTP digit 6" inputmode="numeric" />
+            </div>
+            <span class="error-msg" id="forgotOtpError"></span>
+            <div class="otp-timer" id="forgotOtpTimer"></div>
+          </div>
+        </div>
+
+        <div class="input-group" id="forgotPasswordGroup">
+          <label for="forgotNewPassword">New Password</label>
+          <div class="input-wrapper">
+            <svg class="input-icon" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.8-2.2-5-5-5S7 3.2 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3-9H9V6c0-1.7 1.3-3 3-3s3 1.3 3 3v2z"/></svg>
+            <input type="password" id="forgotNewPassword" placeholder="Create new password" autocomplete="new-password" required />
+            <button type="button" class="toggle-password" data-target="forgotNewPassword" aria-label="Toggle password visibility">
+              <svg class="eye-icon" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.7 7.6 1 12c1.7 4.4 6 7.5 11 7.5s9.3-3.1 11-7.5c-1.7-4.4-6-7.5-11-7.5zm0 12.5c-2.8 0-5-2.2-5-5s2.2-5 5-5 5 2.2 5 5-2.2 5-5 5zm0-8c-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3z"/></svg>
+            </button>
+          </div>
+          <div class="password-strength" id="forgotStrength">
+            <div class="strength-bar"><div class="strength-fill" id="forgotStrengthFill"></div></div>
+            <span class="strength-text" id="forgotStrengthText"></span>
+          </div>
+          <span class="error-msg" id="forgotPasswordError"></span>
+        </div>
+
+        <div class="input-group" id="forgotConfirmGroup">
+          <label for="forgotConfirmPassword">Confirm Password</label>
+          <div class="input-wrapper">
+            <svg class="input-icon" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.8-2.2-5-5-5S7 3.2 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3-9H9V6c0-1.7 1.3-3 3-3s3 1.3 3 3v2z"/></svg>
+            <input type="password" id="forgotConfirmPassword" placeholder="Confirm new password" autocomplete="new-password" required />
+            <button type="button" class="toggle-password" data-target="forgotConfirmPassword" aria-label="Toggle password visibility">
+              <svg class="eye-icon" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.7 7.6 1 12c1.7 4.4 6 7.5 11 7.5s9.3-3.1 11-7.5c-1.7-4.4-6-7.5-11-7.5zm0 12.5c-2.8 0-5-2.2-5-5s2.2-5 5-5 5 2.2 5 5-2.2 5-5 5zm0-8c-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3z"/></svg>
+            </button>
+          </div>
+          <span class="error-msg" id="forgotConfirmError"></span>
+        </div>
+
+        <button type="submit" class="btn-primary" id="forgotSubmitBtn">
+          <span class="btn-text">Reset Password</span>
+          <span class="btn-loader" aria-hidden="true"></span>
+        </button>
+      </form>
+
+      <p class="card-footer">
+        Remember your password? <button type="button" class="link-btn" id="goLoginFromForgot">Sign In</button>
+      </p>
+    </section>
+
+    <!-- ==================== OTP LOGIN FORM ==================== -->
+    <section class="auth-card" id="otpLoginCard" aria-label="OTP login form">
+      <div class="card-header">
+        <button type="button" class="back-btn" id="otpLoginBack" aria-label="Go back to login">
+          <svg viewBox="0 0 24 24"><path d="M20 11H7.8l5.6-5.6L12 4l-8 8 8 8 1.4-1.4L7.8 13H20v-2z"/></svg>
+        </button>
+        <div class="logo-icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="22" stroke="url(#grad4)" stroke-width="3"/><rect x="14" y="18" width="20" height="14" rx="3" stroke="url(#grad4)" stroke-width="2.5"/><circle cx="20" cy="25" r="2" fill="url(#grad4)"/><circle cx="28" cy="25" r="2" fill="url(#grad4)"/><defs><linearGradient id="grad4" x1="0" y1="0" x2="48" y2="48"><stop stop-color="#43E97B"/><stop offset="1" stop-color="#38F9D7"/></linearGradient></defs></svg>
+        </div>
+        <h1>OTP Login</h1>
+        <p class="subtitle">Enter your email to receive a one-time code</p>
+      </div>
+
+      <form id="otpLoginForm" class="auth-form" novalidate>
+        <div class="input-group" id="otpLoginEmailGroup">
+          <label for="otpLoginEmail">Email Address</label>
+          <div class="input-wrapper">
+            <svg class="input-icon" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            <input type="email" id="otpLoginEmail" placeholder="you@example.com" autocomplete="email" required />
+          </div>
+          <span class="error-msg" id="otpLoginEmailError"></span>
+        </div>
+
+        <div class="otp-section" id="otpLoginOtpSection">
+          <div class="input-group">
+            <label>One-Time Password</label>
+            <div class="otp-row">
+              <button type="button" class="btn-send-otp" id="otpLoginSendOtp">Send OTP</button>
+            </div>
+            <div class="otp-inputs" id="otpLoginOtpInputs">
+              <input type="text" maxlength="1" class="otp-box" data-index="0" aria-label="OTP digit 1" inputmode="numeric" />
+              <input type="text" maxlength="1" class="otp-box" data-index="1" aria-label="OTP digit 2" inputmode="numeric" />
+              <input type="text" maxlength="1" class="otp-box" data-index="2" aria-label="OTP digit 3" inputmode="numeric" />
+              <input type="text" maxlength="1" class="otp-box" data-index="3" aria-label="OTP digit 4" inputmode="numeric" />
+              <input type="text" maxlength="1" class="otp-box" data-index="4" aria-label="OTP digit 5" inputmode="numeric" />
+              <input type="text" maxlength="1" class="otp-box" data-index="5" aria-label="OTP digit 6" inputmode="numeric" />
+            </div>
+            <span class="error-msg" id="otpLoginOtpError"></span>
+            <div class="otp-timer" id="otpLoginOtpTimer"></div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary" id="otpLoginSubmitBtn">
+          <span class="btn-text">Verify & Login</span>
+          <span class="btn-loader" aria-hidden="true"></span>
+        </button>
+      </form>
+
+      <p class="card-footer">
+        Back to <button type="button" class="link-btn" id="goLoginFromOtp">Sign In</button>
+      </p>
+    </section>
+
+    <!-- ==================== SUCCESS OVERLAY ==================== -->
+    <div class="success-overlay" id="successOverlay" aria-live="polite">
+      <div class="success-content">
+        <div class="success-icon">
+          <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" fill="none" stroke="#43E97B" stroke-width="3" class="success-circle"/><path d="M20 32l8 8 16-18" fill="none" stroke="#43E97B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="success-check"/></svg>
+        </div>
+        <h2 id="successTitle">Success!</h2>
+        <p id="successMessage">You have been logged in successfully.</p>
+        <button type="button" class="btn-primary" id="successDismiss">
+          <span class="btn-text">Continue</span>
+        </button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- EmailJS SDK (for sending real OTPs to email from frontend) -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+  <!-- Firebase SDKs (CDN) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+  <!-- Config (Firebase & EmailJS) -->
+  <script src="firebase-config.js"></script>
+  <script src="../js/firestore-sync.js"></script>
+
+  <!-- Main App Script -->
+  <script src="index.js"></script>
+</body>
+</html>
