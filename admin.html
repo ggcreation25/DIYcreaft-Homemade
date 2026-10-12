@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Super Admin Hub — GG Creation E-Commerce</title>
+  <meta name="description" content="Exclusive Super Admin Portal for GG Creation. Manage products, customer orders, and supply chain logistics.">
+
+  <!-- Font Awesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Custom Stylesheets -->
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/ecommerce.css">
+
+  <style>
+    .admin-wrapper {
+      padding: 30px 0 80px;
+      min-height: calc(100vh - 160px);
+    }
+    .admin-tabs {
+      display: flex;
+      gap: 10px;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .admin-tab-btn {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 12px 18px;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+    .admin-tab-btn.active {
+      color: var(--accent-red);
+      border-bottom-color: var(--accent-red);
+    }
+    .admin-section {
+      display: none;
+    }
+    .admin-section.active {
+      display: block;
+      animation: fadeIn 0.25s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ADMIN ACCESS GUARD SCRIPT (RUNS IMMEDIATELY) -->
+  <script>
+    (function enforceSuperAdminGuard() {
+      const SUPER_ADMIN = 'ggokuljourney2@gmail.com';
+      try {
+        const raw = localStorage.getItem('gg_user');
+        const user = raw ? JSON.parse(raw) : null;
+        if (!user || !user.email || user.email.toLowerCase().trim() !== SUPER_ADMIN.toLowerCase()) {
+          alert('ACCESS DENIED: Only Super Admin (ggokuljourney2@gmail.com) can access this Admin Hub.');
+          window.location.replace('login.html?redirect=admin.html');
+        }
+      } catch (e) {
+        window.location.replace('login.html');
+      }
+    })();
+  </script>
+
+  <!-- ADMIN HEADER -->
+  <header class="header" style="border-bottom: 2px solid var(--accent-red);">
+    <div class="container header-container">
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <a href="index.html" class="logo">
+          <div class="brand-icon-box" style="background: var(--accent-red); color: #fff;">GG</div>
+          <div class="brand-text">
+            <span class="brand-title">Admin Hub</span>
+            <span class="brand-tag">E-COMMERCE SUPER ADMIN</span>
+          </div>
+        </a>
+        <span class="admin-badge-super">
+          <i class="fa-solid fa-crown"></i> Super Admin: ggokuljourney2@gmail.com
+        </span>
+      </div>
+
+      <div class="nav-actions">
+        <a href="products.html" class="btn btn-secondary btn-sm" target="_blank">
+          <i class="fa-solid fa-store"></i> View Live Store
+        </a>
+        <a href="index.html" class="btn btn-secondary btn-sm">
+          <i class="fa-solid fa-house"></i> Home
+        </a>
+        <button class="btn btn-secondary btn-sm" style="color: #ef4444;" onclick="handleLogout(event)">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN ADMIN DASHBOARD -->
+  <main class="container admin-wrapper">
+
+    <!-- KPI Metric Cards -->
+    <div class="admin-kpi-grid">
+      <div class="admin-kpi-card">
+        <div class="admin-kpi-icon" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">
+          <i class="fa-solid fa-indian-rupee-sign"></i>
+        </div>
+        <div>
+          <div class="admin-kpi-val" id="kpiRevenue">₹ 0</div>
+          <div class="admin-kpi-label">Total Store Sales</div>
+        </div>
+      </div>
+
+      <div class="admin-kpi-card">
+        <div class="admin-kpi-icon" style="background: rgba(59, 130, 246, 0.15); color: #3b82f6;">
+          <i class="fa-solid fa-cart-shopping"></i>
+        </div>
+        <div>
+          <div class="admin-kpi-val" id="kpiOrders">0</div>
+          <div class="admin-kpi-label">Customer Orders</div>
+        </div>
+      </div>
+
+      <div class="admin-kpi-card">
+        <div class="admin-kpi-icon" style="background: rgba(245, 158, 11, 0.15); color: #f59e0b;">
+          <i class="fa-solid fa-boxes-stacked"></i>
+        </div>
+        <div>
+          <div class="admin-kpi-val" id="kpiProducts">0</div>
+          <div class="admin-kpi-label">Products in Catalog</div>
+        </div>
+      </div>
+
+      <div class="admin-kpi-card">
+        <div class="admin-kpi-icon" style="background: rgba(139, 92, 246, 0.15); color: #8b5cf6;">
+          <i class="fa-solid fa-users"></i>
+        </div>
+        <div>
+          <div class="admin-kpi-val" id="kpiCustomers">0</div>
+          <div class="admin-kpi-label">Registered Customers</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Admin Navigation Tabs -->
+    <div class="admin-tabs">
+      <button class="admin-tab-btn active" onclick="switchAdminTab('orders', this)">
+        <i class="fa-solid fa-truck-ramp-box"></i> Orders & Supply Chain (<span id="ordersTabCount">0</span>)
+      </button>
+      <button class="admin-tab-btn" onclick="switchAdminTab('products', this)">
+        <i class="fa-solid fa-box-open"></i> Product Inventory (<span id="productsTabCount">0</span>)
+      </button>
+      <button class="admin-tab-btn" onclick="switchAdminTab('customers', this)">
+        <i class="fa-solid fa-user-group"></i> Customer Database
+      </button>
+      <button class="admin-tab-btn" onclick="switchAdminTab('seeder', this)">
+        <i class="fa-solid fa-cloud-arrow-up"></i> Firestore Sync & Seeder
+      </button>
+    </div>
+
+    <!-- ==================== SECTION 1: ORDERS & SUPPLY CHAIN ==================== -->
+    <section class="admin-section active" id="secOrders">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; flex-wrap: wrap; gap: 12px;">
+        <h2 style="font-size: 1.25rem; font-weight: 700;">Customer Orders & Supply Chain Logistics</h2>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn btn-secondary btn-sm" onclick="loadAdminOrders()">
+            <i class="fa-solid fa-rotate"></i> Refresh Orders
+          </button>
+        </div>
+      </div>
+
+      <div class="admin-table-wrap">
+        <table class="admin-table" id="ordersTable">
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Date</th>
+              <th>Customer</th>
+              <th>Delivery Address</th>
+              <th>Items</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="ordersTableBody">
+            <tr>
+              <td colspan="8" style="text-align: center; padding: 30px; color: var(--text-muted);">
+                <i class="fa-solid fa-spinner fa-spin"></i> Loading live orders from Cloud Firestore...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION 2: PRODUCT INVENTORY ==================== -->
+    <section class="admin-section" id="secProducts">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; flex-wrap: wrap; gap: 12px;">
+        <h2 style="font-size: 1.25rem; font-weight: 700;">Store Products & Inventory</h2>
+        <button class="btn btn-primary btn-sm" onclick="openAddProductModal()">
+          <i class="fa-solid fa-plus"></i> Add New Product
+        </button>
+      </div>
+
+      <div class="admin-table-wrap">
+        <table class="admin-table" id="productsTable">
+          <thead>
+            <tr>
+              <th>Image</th>
+              <th>Product Title</th>
+              <th>Category</th>
+              <th>Price</th>
+              <th>M.R.P.</th>
+              <th>Stock</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="productsTableBody">
+            <tr>
+              <td colspan="7" style="text-align: center; padding: 30px; color: var(--text-muted);">
+                <i class="fa-solid fa-spinner fa-spin"></i> Loading products from Cloud Firestore...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION 3: CUSTOMERS ==================== -->
+    <section class="admin-section" id="secCustomers">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;">
+        <h2 style="font-size: 1.25rem; font-weight: 700;">Registered Customers & Supply Chain Profiles</h2>
+        <button class="btn btn-secondary btn-sm" onclick="loadAdminCustomers()">
+          <i class="fa-solid fa-rotate"></i> Refresh Customers
+        </button>
+      </div>
+
+      <div class="admin-table-wrap">
+        <table class="admin-table" id="customersTable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Role</th>
+              <th>Delivery Addresses</th>
+            </tr>
+          </thead>
+          <tbody id="customersTableBody">
+            <tr>
+              <td colspan="5" style="text-align: center; padding: 30px; color: var(--text-muted);">
+                <i class="fa-solid fa-spinner fa-spin"></i> Loading customer profiles...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION 4: SEEDER & CLOUD TOOLS ==================== -->
+    <section class="admin-section" id="secSeeder">
+      <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 24px; max-width: 600px;">
+        <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 8px;">
+          <i class="fa-solid fa-cloud-arrow-up" style="color: var(--accent-red);"></i> Cloud Firestore Database Manager
+        </h3>
+        <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 20px;">
+          Synchronize or populate initial product catalog and authentic project teardowns to project <code>login-page-f8c8b</code>.
+        </p>
+        <button class="btn btn-primary" onclick="handleAdminSeedProducts(this)">
+          <i class="fa-solid fa-database"></i> Seed/Update Product Catalog in Firestore
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL: UPDATE SUPPLY CHAIN STATUS -->
+  <div class="ecommerce-modal-backdrop" id="updateStatusModal">
+    <div class="ecommerce-modal" style="max-width: 520px;">
+      <div class="modal-header-fk">
+        <div class="modal-title-fk">
+          <i class="fa-solid fa-truck-ramp-box" style="color: var(--accent-red);"></i>
+          <span>Update Supply Chain Status</span>
+        </div>
+        <button class="modal-close-btn" onclick="closeUpdateStatusModal()">&times;</button>
+      </div>
+      <div class="modal-body-fk">
+        <form id="updateStatusForm" onsubmit="event.preventDefault(); handleSaveOrderStatus();">
+          <input type="hidden" id="editOrderId">
+          
+          <div class="form-group">
+            <label class="form-label">Order ID</label>
+            <input type="text" id="displayEditOrderId" class="form-input" readonly style="opacity: 0.7;">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Supply Chain Stage *</label>
+            <select id="editOrderStatus" class="form-input" required>
+              <option value="placed">1. Order Placed / Confirmed</option>
+              <option value="processing">2. Processing & Packed at Workshop</option>
+              <option value="shipped">3. Shipped (Handed over to Courier)</option>
+              <option value="out_for_delivery">4. Out for Delivery</option>
+              <option value="delivered">5. Delivered to Doorstep</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Courier Partner</label>
+            <input type="text" id="editCourierPartner" class="form-input" placeholder="e.g. Ekart Logistics, BlueDart, DTDC">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Courier Tracking ID</label>
+            <input type="text" id="editTrackingId" class="form-input" placeholder="e.g. FMPP83921029IN">
+          </div>
+
+          <div class="modal-footer-fk" style="padding: 0; background: none; border: none; margin-top: 20px;">
+            <button type="button" class="btn btn-secondary btn-sm" onclick="closeUpdateStatusModal()">Cancel</button>
+            <button type="submit" class="btn btn-primary btn-sm">
+              <i class="fa-solid fa-check"></i> Save & Broadcast to Customer
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD / EDIT PRODUCT -->
+  <div class="ecommerce-modal-backdrop" id="productModal">
+    <div class="ecommerce-modal" style="max-width: 540px;">
+      <div class="modal-header-fk">
+        <div class="modal-title-fk">
+          <i class="fa-solid fa-box-open" style="color: var(--accent-red);"></i>
+          <span id="productModalTitle">Add Store Product</span>
+        </div>
+        <button class="modal-close-btn" onclick="closeProductModal()">&times;</button>
+      </div>
+      <div class="modal-body-fk">
+        <form id="productForm" onsubmit="event.preventDefault(); handleSaveProduct();">
+          <input type="hidden" id="editProdId">
+
+          <div class="form-group">
+            <label class="form-label">Product Title *</label>
+            <input type="text" id="prodTitle" class="form-input" placeholder="e.g. Handmade Mini Red Tractor Model" required>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div class="form-group">
+              <label class="form-label">Selling Price (₹) *</label>
+              <input type="number" id="prodPrice" class="form-input" placeholder="e.g. 1999" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">M.R.P. (₹) *</label>
+              <input type="number" id="prodMrp" class="form-input" placeholder="e.g. 2499" required>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div class="form-group">
+              <label class="form-label">Category *</label>
+              <select id="prodCategory" class="form-input">
+                <option value="diy-models">Handmade DIY Models</option>
+                <option value="drills">Power Drills</option>
+                <option value="grinders">Angle Grinders</option>
+                <option value="heat-guns">Heat Guns</option>
+                <option value="precision">Precision Tools</option>
+                <option value="parts">Hardware & Parts</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Stock Quantity</label>
+              <input type="number" id="prodStock" class="form-input" value="15" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Image URL / Path *</label>
+            <input type="text" id="prodImage" class="form-input" placeholder="assets/images/project-1.jpg" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Brief Description</label>
+            <textarea id="prodDesc" class="form-textarea" rows="2" placeholder="Product details & specifications..."></textarea>
+          </div>
+
+          <div class="modal-footer-fk" style="padding: 0; background: none; border: none; margin-top: 20px;">
+            <button type="button" class="btn btn-secondary btn-sm" onclick="closeProductModal()">Cancel</button>
+            <button type="submit" class="btn btn-primary btn-sm">
+              <i class="fa-solid fa-save"></i> Save Product
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script src="login/firebase-config.js"></script>
+
+  <!-- Core App Scripts -->
+  <script src="js/main.js"></script>
+  <script src="js/firestore-sync.js"></script>
+  <script src="js/ecommerce.js"></script>
+
+  <!-- ADMIN LOGIC -->
+  <script>
+    let adminOrdersList = [];
+    let adminProductsList = [];
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadAdminOrders();
+      loadAdminProducts();
+      loadAdminCustomers();
+    });
+
+    function switchAdminTab(tabName, btn) {
+      document.querySelectorAll('.admin-tab-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+
+      document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
+      if (tabName === 'orders') document.getElementById('secOrders').classList.add('active');
+      else if (tabName === 'products') document.getElementById('secProducts').classList.add('active');
+      else if (tabName === 'customers') document.getElementById('secCustomers').classList.add('active');
+      else if (tabName === 'seeder') document.getElementById('secSeeder').classList.add('active');
+    }
+
+    // ── ORDERS MANAGEMENT ──
+    async function loadAdminOrders() {
+      const tbody = document.getElementById('ordersTableBody');
+      tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding: 20px;"><i class="fa-solid fa-spinner fa-spin"></i> Refreshing live orders...</td></tr>`;
+
+      let orders = [];
+
+      // Fetch from Firestore
+      if (window.db) {
+        try {
+          const snap = await window.db.collection('orders').orderBy('createdAt', 'desc').get();
+          snap.forEach(doc => {
+            orders.push(doc.data());
+          });
+        } catch (err) {
+          console.warn('Firestore fetch orders fallback:', err.message);
+        }
+      }
+
+      // Merge with local fallback
+      if (orders.length === 0) {
+        try {
+          orders = JSON.parse(localStorage.getItem('gg_customer_orders') || '[]');
+        } catch (e) {}
+      }
+
+      adminOrdersList = orders;
+      document.getElementById('kpiOrders').textContent = orders.length;
+      document.getElementById('ordersTabCount').textContent = orders.length;
+
+      const totalRev = orders.reduce((acc, o) => acc + (Number(o.totalAmount) || 0), 0);
+      document.getElementById('kpiRevenue').textContent = `₹ ${totalRev.toLocaleString('en-IN')}`;
+
+      if (orders.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; padding: 30px; color: var(--text-muted);">No orders placed yet. As customers buy products, orders appear here!</td></tr>`;
+        return;
+      }
+
+      let html = '';
+      orders.forEach(o => {
+        const addr = o.deliveryAddress || {};
+        const itemsSummary = (o.items || []).map(i => `${i.title} (x${i.quantity})`).join(', ');
+
+        html += `
+          <tr>
+            <td><strong>${o.orderId}</strong></td>
+            <td style="font-size: 0.82rem; color: var(--text-secondary);">${o.createdAtDate ? new Date(o.createdAtDate).toLocaleDateString() : 'Recent'}</td>
+            <td>
+              <div style="font-weight: 600;">${o.customerName || 'Customer'}</div>
+              <div style="font-size: 0.78rem; color: var(--text-muted);">${o.customerPhone || ''}</div>
+            </td>
+            <td style="font-size: 0.82rem; line-height: 1.3; max-width: 200px;">
+              ${addr.street || ''}, ${addr.locality || ''}, ${addr.city || ''} — <strong>${addr.pin || ''}</strong>
+            </td>
+            <td style="font-size: 0.82rem; max-width: 220px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${itemsSummary}">
+              ${itemsSummary}
+            </td>
+            <td style="font-weight: 700; color: var(--accent-red);">₹ ${(o.totalAmount || 0).toLocaleString('en-IN')}</td>
+            <td>
+              <span class="status-badge ${o.orderStatus || 'placed'}">
+                ${o.orderStatus?.toUpperCase() || 'PLACED'}
+              </span>
+            </td>
+            <td>
+              <button class="btn btn-secondary btn-sm" onclick="openUpdateStatusModal('${o.orderId}')" style="padding: 4px 8px; font-size: 0.78rem;">
+                <i class="fa-solid fa-pen"></i> Update Status
+              </button>
+            </td>
+          </tr>
+        `;
+      });
+
+      tbody.innerHTML = html;
+    }
+
+    function openUpdateStatusModal(orderId) {
+      const order = adminOrdersList.find(o => o.orderId === orderId);
+      if (!order) return;
+
+      document.getElementById('editOrderId').value = order.orderId;
+      document.getElementById('displayEditOrderId').value = order.orderId;
+      document.getElementById('editOrderStatus').value = order.orderStatus || 'placed';
+      document.getElementById('editCourierPartner').value = order.courierPartner || 'Ekart Logistics';
+      document.getElementById('editTrackingId').value = order.trackingId || '';
+
+      document.getElementById('updateStatusModal').classList.add('active');
+    }
+
+    function closeUpdateStatusModal() {
+      document.getElementById('updateStatusModal').classList.remove('active');
+    }
+
+    async function handleSaveOrderStatus() {
+      const orderId = document.getElementById('editOrderId').value;
+      const status = document.getElementById('editOrderStatus').value;
+      const courier = document.getElementById('editCourierPartner').value;
+      const tracking = document.getElementById('editTrackingId').value;
+
+      const order = adminOrdersList.find(o => o.orderId === orderId);
+      if (!order) return;
+
+      order.orderStatus = status;
+      order.courierPartner = courier;
+      order.trackingId = tracking;
+
+      // Update in Firestore
+      if (window.db) {
+        try {
+          await window.db.collection('orders').doc(orderId).update({
+            orderStatus: status,
+            courierPartner: courier,
+            trackingId: tracking,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+          });
+          showToast(`Order ${orderId} updated to ${status}! 🚀`, 'success');
+        } catch (e) {
+          console.warn('Firestore update status notice:', e.message);
+        }
+      }
+
+      // Update in localStorage fallback
+      try {
+        localStorage.setItem('gg_customer_orders', JSON.stringify(adminOrdersList));
+      } catch (e) {}
+
+      closeUpdateStatusModal();
+      loadAdminOrders();
+    }
+
+    // ── PRODUCT MANAGEMENT ──
+    async function loadAdminProducts() {
+      const tbody = document.getElementById('productsTableBody');
+      let products = [];
+
+      if (window.db) {
+        try {
+          const snap = await window.db.collection('products').get();
+          snap.forEach(doc => {
+            const data = doc.data();
+            data.id = data.id || doc.id;
+            products.push(data);
+          });
+        } catch (e) {}
+      }
+
+      if (products.length === 0 && window.GGFirestoreSync) {
+        products = window.GGFirestoreSync.PREVIOUS_PRODUCTS || [];
+      }
+
+      adminProductsList = products;
+      document.getElementById('kpiProducts').textContent = products.length;
+      document.getElementById('productsTabCount').textContent = products.length;
+
+      if (products.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 20px;">No products found. Click "Add New Product" to stock the store.</td></tr>`;
+        return;
+      }
+
+      let html = '';
+      products.forEach(p => {
+        html += `
+          <tr>
+            <td><img src="${p.image || 'assets/images/project-1.jpg'}" style="width: 44px; height: 44px; object-fit: cover; border-radius: 4px;" onerror="this.src='assets/images/avatar.jpg'"></td>
+            <td style="font-weight: 600; max-width: 260px;">${p.title}</td>
+            <td><span class="badge" style="background: rgba(255,255,255,0.06);">${p.category || 'tools'}</span></td>
+            <td style="font-weight: 700; color: var(--accent-red);">₹ ${Number(p.priceNumeric || p.price || 0).toLocaleString('en-IN')}</td>
+            <td style="color: var(--text-muted); text-decoration: line-through;">₹ ${Number(p.mrp || Math.round((p.priceNumeric || p.price || 0) * 1.25)).toLocaleString('en-IN')}</td>
+            <td><span style="color: #10b981; font-weight: 700;">In Stock (${p.stock || 12})</span></td>
+            <td>
+              <button class="btn btn-secondary btn-sm" onclick="editProduct('${p.id}')" style="padding: 4px 8px; font-size: 0.78rem;">
+                <i class="fa-solid fa-pen"></i> Edit
+              </button>
+            </td>
+          </tr>
+        `;
+      });
+      tbody.innerHTML = html;
+    }
+
+    function openAddProductModal() {
+      document.getElementById('productModalTitle').textContent = 'Add Store Product';
+      document.getElementById('editProdId').value = '';
+      document.getElementById('prodTitle').value = '';
+      document.getElementById('prodPrice').value = '';
+      document.getElementById('prodMrp').value = '';
+      document.getElementById('prodStock').value = '15';
+      document.getElementById('prodImage').value = 'assets/images/project-1.jpg';
+      document.getElementById('prodDesc').value = '';
+      document.getElementById('productModal').classList.add('active');
+    }
+
+    function editProduct(prodId) {
+      const p = adminProductsList.find(x => String(x.id) === String(prodId));
+      if (!p) return;
+
+      document.getElementById('productModalTitle').textContent = 'Edit Store Product';
+      document.getElementById('editProdId').value = p.id;
+      document.getElementById('prodTitle').value = p.title;
+      document.getElementById('prodPrice').value = p.priceNumeric || p.price || '';
+      document.getElementById('prodMrp').value = p.mrp || '';
+      document.getElementById('prodCategory').value = p.category || 'tools';
+      document.getElementById('prodStock').value = p.stock || 15;
+      document.getElementById('prodImage').value = p.image || '';
+      document.getElementById('prodDesc').value = p.desc || p.sub || '';
+      document.getElementById('productModal').classList.add('active');
+    }
+
+    function closeProductModal() {
+      document.getElementById('productModal').classList.remove('active');
+    }
+
+    async function handleSaveProduct() {
+      const id = document.getElementById('editProdId').value || ('prod_' + Date.now());
+      const title = document.getElementById('prodTitle').value.trim();
+      const price = Number(document.getElementById('prodPrice').value);
+      const mrp = Number(document.getElementById('prodMrp').value) || Math.round(price * 1.25);
+      const category = document.getElementById('prodCategory').value;
+      const stock = Number(document.getElementById('prodStock').value) || 10;
+      const image = document.getElementById('prodImage').value.trim();
+      const desc = document.getElementById('prodDesc').value.trim();
+
+      const prodData = {
+        id, title, priceNumeric: price, price, mrp, category, stock, image, desc,
+        sub: desc, inStock: true
+      };
+
+      if (window.db) {
+        try {
+          await window.db.collection('products').doc(String(id)).set(prodData, { merge: true });
+          showToast('Product saved to Cloud Firestore! 📦', 'success');
+        } catch (e) {
+          console.warn('Firestore product write note:', e);
+        }
+      }
+
+      closeProductModal();
+      loadAdminProducts();
+    }
+
+    // ── CUSTOMERS DIRECTORY ──
+    async function loadAdminCustomers() {
+      const tbody = document.getElementById('customersTableBody');
+      let customers = [];
+
+      if (window.db) {
+        try {
+          const snap = await window.db.collection('users').get();
+          snap.forEach(doc => {
+            customers.push(doc.data());
+          });
+        } catch (e) {}
+      }
+
+      document.getElementById('kpiCustomers').textContent = customers.length;
+
+      if (customers.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 20px;">No customers found in database.</td></tr>`;
+        return;
+      }
+
+      let html = '';
+      customers.forEach(c => {
+        const isSuper = c.email && c.email.toLowerCase() === 'ggokuljourney2@gmail.com';
+        const addrs = (c.addresses || []).map(a => `${a.street}, ${a.city} (${a.pin})`).join('; ') || 'No address yet';
+
+        html += `
+          <tr>
+            <td style="font-weight: 600;">${c.name || 'User'}</td>
+            <td>${c.email || ''}</td>
+            <td>${c.phone || '-'}</td>
+            <td>
+              <span class="badge" style="${isSuper ? 'background: rgba(239, 68, 68, 0.2); color: #ef4444;' : 'background: rgba(59, 130, 246, 0.15); color: #3b82f6;'}">
+                ${isSuper ? 'Super Admin' : 'Customer'}
+              </span>
+            </td>
+            <td style="font-size: 0.8rem; max-width: 240px; color: var(--text-secondary);">${addrs}</td>
+          </tr>
+        `;
+      });
+      tbody.innerHTML = html;
+    }
+
+    // ── SEED PRODUCTS TO FIRESTORE ──
+    async function handleAdminSeedProducts(btn) {
+      if (btn) {
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Seeding Firestore...';
+        btn.disabled = true;
+      }
+
+      if (window.GGFirestoreSync && window.GGFirestoreSync.seedAllDataToFirestore) {
+        await window.GGFirestoreSync.seedAllDataToFirestore();
+        showToast('All products seeded to Cloud Firestore successfully!', 'success');
+      } else {
+        showToast('Firestore seeder ready.', 'info');
+      }
+
+      if (btn) {
+        btn.innerHTML = '<i class="fa-solid fa-database"></i> Seed/Update Product Catalog in Firestore';
+        btn.disabled = false;
+      }
+      loadAdminProducts();
+    }
+  </script>
+</body>
+</html>

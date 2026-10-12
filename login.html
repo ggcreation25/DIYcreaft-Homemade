@@ -331,12 +331,14 @@
           const cred = await window.auth.signInWithEmailAndPassword(email, password);
           const fbUser = cred.user;
 
+          const isSuperAdminUser = fbUser.email && fbUser.email.toLowerCase().trim() === 'ggokuljourney2@gmail.com';
           let userData = {
             uid: fbUser.uid,
-            name: fbUser.displayName || email.split('@')[0],
+            name: isSuperAdminUser ? 'Gokul (Super Admin)' : (fbUser.displayName || email.split('@')[0]),
             email: fbUser.email,
             avatar: fbUser.photoURL || 'assets/images/avatar.jpg',
-            role: 'Community Maker',
+            role: isSuperAdminUser ? 'super_admin' : 'customer',
+            isSuperAdmin: isSuperAdminUser,
             loginMethod: 'firebase_email_password'
           };
 
@@ -346,6 +348,13 @@
               const docSnap = await window.db.collection('users').doc(fbUser.uid).get();
               if (docSnap.exists) {
                 userData = { ...userData, ...docSnap.data() };
+                // Always ensure super admin email keeps super_admin role
+                if (isSuperAdminUser) {
+                  userData.role = 'super_admin';
+                  userData.isSuperAdmin = true;
+                } else if (!userData.role || userData.role === 'Community Maker') {
+                  userData.role = 'customer';
+                }
               } else {
                 // If user document does not exist yet in Firestore, create it
                 await window.db.collection('users').doc(fbUser.uid).set({
@@ -357,6 +366,7 @@
 
               // Update last login timestamp in Firestore
               await window.db.collection('users').doc(fbUser.uid).update({
+                role: userData.role,
                 lastLoginAt: firebase.firestore.FieldValue.serverTimestamp()
               }).catch(() => {});
             } catch (dbErr) {
@@ -365,9 +375,9 @@
           }
 
           setAuthUser(userData);
-          showToast(`Welcome back, ${userData.name}! Successfully signed in.`, 'success');
+          showToast(isSuperAdminUser ? `Welcome, Super Admin! Directing to Admin Hub...` : `Welcome back, ${userData.name}! Successfully signed in.`, 'success');
 
-          const targetUrl = getRedirectParam('index.html');
+          const targetUrl = isSuperAdminUser ? 'admin.html' : getRedirectParam('products.html');
           setTimeout(() => {
             window.location.href = targetUrl;
           }, 600);
@@ -412,13 +422,14 @@
         try {
           const provider = new firebase.auth.GoogleAuthProvider();
           const result = await window.auth.signInWithPopup(provider);
-          const user = result.user;
+          const isSuperAdminGoogle = user.email && user.email.toLowerCase().trim() === 'ggokuljourney2@gmail.com';
           let userObj = {
-            name: user.displayName || 'Google User',
+            name: isSuperAdminGoogle ? 'Gokul (Super Admin)' : (user.displayName || 'Google Customer'),
             email: user.email,
             avatar: user.photoURL || 'assets/images/avatar.jpg',
             uid: user.uid,
-            role: 'Verified Maker',
+            role: isSuperAdminGoogle ? 'super_admin' : 'customer',
+            isSuperAdmin: isSuperAdminGoogle,
             loginMethod: 'google'
           };
 
@@ -428,6 +439,12 @@
               const snap = await window.db.collection('users').doc(user.uid).get();
               if (snap.exists) {
                 userObj = { ...userObj, ...snap.data() };
+                if (isSuperAdminGoogle) {
+                  userObj.role = 'super_admin';
+                  userObj.isSuperAdmin = true;
+                } else if (!userObj.role || userObj.role === 'Verified Maker') {
+                  userObj.role = 'customer';
+                }
               } else {
                 await window.db.collection('users').doc(user.uid).set({
                   ...userObj,
@@ -436,6 +453,7 @@
                 }, { merge: true });
               }
               await window.db.collection('users').doc(user.uid).update({
+                role: userObj.role,
                 lastLoginAt: firebase.firestore.FieldValue.serverTimestamp()
               }).catch(() => {});
             } catch (dbErr) {
@@ -445,7 +463,7 @@
 
           setAuthUser(userObj);
           showToast(`Welcome ${userObj.name}! Signed in with Google.`, 'success');
-          const targetUrl = getRedirectParam('index.html');
+          const targetUrl = isSuperAdminGoogle ? 'admin.html' : getRedirectParam('products.html');
           setTimeout(() => { window.location.href = targetUrl; }, 600);
           return;
         } catch (e) {

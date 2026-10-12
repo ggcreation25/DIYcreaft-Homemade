@@ -147,6 +147,15 @@ function setAuthUser(user) {
   window.dispatchEvent(new CustomEvent('gg_auth_changed', { detail: user }));
 }
 
+const SUPER_ADMIN_EMAIL = 'ggokuljourney2@gmail.com';
+window.SUPER_ADMIN_EMAIL = SUPER_ADMIN_EMAIL;
+
+function isSuperAdmin(user) {
+  if (!user || !user.email) return false;
+  return user.email.toLowerCase().trim() === SUPER_ADMIN_EMAIL.toLowerCase();
+}
+window.isSuperAdmin = isSuperAdmin;
+
 /**
  * Update UI across all pages based on user login state
  */
@@ -166,6 +175,7 @@ function initAuthState() {
 
   if (user) {
     // ── USER IS LOGGED IN ──
+    const isSuper = isSuperAdmin(user);
     const displayName = user.name || (user.email ? user.email.split('@')[0] : 'Creator');
     const displayEmail = user.email || '@GGCreative-x9o';
     const avatarSrc = user.avatar || 'assets/images/avatar.jpg';
@@ -173,9 +183,20 @@ function initAuthState() {
     navLoginBtns.forEach(btn => btn.style.display = 'none');
     profileWrappers.forEach(wrap => wrap.style.display = 'block');
 
-    profileNameEls.forEach(el => { el.textContent = displayName; });
-    userTitleEls.forEach(el => { el.textContent = displayName; });
-    userSubEls.forEach(el => { el.textContent = displayEmail; });
+    profileNameEls.forEach(el => {
+      el.innerHTML = isSuper 
+        ? `${displayName} <span style="background:#ef4444; color:#fff; font-size:0.68rem; padding:1px 6px; border-radius:10px; margin-left:4px;">ADMIN</span>`
+        : displayName;
+    });
+
+    userTitleEls.forEach(el => {
+      el.textContent = isSuper ? 'Gokul (Super Admin)' : displayName;
+    });
+
+    userSubEls.forEach(el => {
+      el.textContent = isSuper ? `${displayEmail} • Super Admin` : `${displayEmail} • Customer`;
+    });
+
     profileAvatarImgs.forEach(img => {
       if (img) img.src = avatarSrc;
     });
@@ -184,6 +205,40 @@ function initAuthState() {
     logoutBtns.forEach(btn => {
       btn.style.display = 'flex';
       btn.onclick = handleLogout;
+    });
+
+    // Inject Admin link or Customer Order links into profile menu
+    const profileMenus = document.querySelectorAll('#profileMenuDropdown, .profile-menu');
+    profileMenus.forEach(menu => {
+      // Remove any previously injected admin/customer links
+      menu.querySelectorAll('.dynamic-role-link').forEach(l => l.remove());
+
+      if (isSuper) {
+        const adminLink = document.createElement('a');
+        adminLink.href = 'admin.html';
+        adminLink.className = 'profile-menu-item dynamic-role-link';
+        adminLink.style.color = '#f59e0b';
+        adminLink.style.fontWeight = '700';
+        adminLink.innerHTML = '<i class="fa-solid fa-gauge-high"></i> Super Admin Hub';
+        menu.insertBefore(adminLink, menu.children[2] || null);
+      } else {
+        const ordersLink = document.createElement('a');
+        ordersLink.href = 'profile.html?tab=orders';
+        ordersLink.className = 'profile-menu-item dynamic-role-link';
+        ordersLink.innerHTML = '<i class="fa-solid fa-truck-fast" style="color: #10b981;"></i> My Orders & Tracking';
+
+        const addressLink = document.createElement('a');
+        addressLink.href = '#';
+        addressLink.className = 'profile-menu-item dynamic-role-link';
+        addressLink.innerHTML = '<i class="fa-solid fa-location-dot" style="color: var(--accent-red);"></i> Delivery Address';
+        addressLink.onclick = (e) => {
+          e.preventDefault();
+          if (window.GGEcommerce) window.GGEcommerce.openAddressModal();
+        };
+
+        menu.insertBefore(ordersLink, menu.children[2] || null);
+        menu.insertBefore(addressLink, menu.children[3] || null);
+      }
     });
 
     guestBanners.forEach(b => b.style.display = 'none');
@@ -199,7 +254,6 @@ function initAuthState() {
     navLoginBtns.forEach(btn => btn.style.display = 'inline-flex');
 
     profileWrappers.forEach(wrap => {
-      // If there is a separate login button, we can hide avatar or keep it with guest state
       if (document.querySelector('.nav-login-btn, #navLoginBtn')) {
         wrap.style.display = 'none';
       } else {
@@ -213,6 +267,9 @@ function initAuthState() {
 
     dropdownLoginItems.forEach(item => item.style.display = 'flex');
     logoutBtns.forEach(btn => btn.style.display = 'none');
+
+    // Remove any dynamic links
+    document.querySelectorAll('.dynamic-role-link').forEach(l => l.remove());
 
     guestBanners.forEach(b => b.style.display = 'flex');
     authOnlyEls.forEach(el => el.style.display = 'none');

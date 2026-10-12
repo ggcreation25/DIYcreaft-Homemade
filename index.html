@@ -23,6 +23,7 @@
 
   <!-- Custom Stylesheet -->
   <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/ecommerce.css">
 </head>
 <body>
 
@@ -57,7 +58,7 @@
           </li>
           <li>
             <a href="products.html" class="nav-link" id="navLinkProducts">
-              <i class="fa-solid fa-link"></i> Link Product
+              <i class="fa-solid fa-store"></i> Store & Buy
             </a>
           </li>
           <li>
@@ -75,6 +76,12 @@
 
       <!-- Nav Actions (Theme, Search, Profile) -->
       <div class="nav-actions">
+        <!-- Cart Trigger Button in Nav -->
+        <button class="nav-btn" onclick="GGEcommerce.openCartDrawer()" title="View Cart" style="position: relative;">
+          <i class="fa-solid fa-cart-shopping"></i>
+          <span class="cart-badge-count" id="navCartBadge" style="top: -2px; right: -2px;">0</span>
+        </button>
+
         <!-- Theme Toggle -->
         <button class="nav-btn" id="themeToggleBtn" aria-label="Toggle Theme">
           <i class="fa-solid fa-sun" id="themeIcon"></i>
@@ -415,6 +422,7 @@
   <!-- Scripts -->
   <script src="js/main.js"></script>
   <script src="js/firestore-sync.js"></script>
+  <script src="js/ecommerce.js"></script>
   <script src="js/projects.js"></script>
 </body>
 </html>

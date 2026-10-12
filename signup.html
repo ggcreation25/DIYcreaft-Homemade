@@ -265,15 +265,18 @@
             await fbUser.updateProfile({ displayName: name }).catch(() => {});
           }
 
+          const isSuper = email && email.toLowerCase().trim() === 'ggokuljourney2@gmail.com';
           const newUser = {
             uid: fbUser.uid,
             name: name,
             email: email,
             phone: phone,
             avatar: 'assets/images/avatar.jpg',
-            role: 'Community Maker',
+            role: isSuper ? 'super_admin' : 'customer',
+            isSuperAdmin: isSuper,
+            addresses: [],
             handle: '@' + name.toLowerCase().replace(/[^a-z0-9]/g, ''),
-            bio: 'Maker and DIY enthusiast at GG Creation',
+            bio: isSuper ? 'Super Administrator of GG Creation' : 'Customer at GG Creation Store',
             joinDate: new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
             loginMethod: 'firebase_email_password',
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
@@ -291,9 +294,9 @@
           }
 
           setAuthUser(newUser);
-          showToast(`Welcome ${name}! Your account has been created.`, 'success');
+          showToast(`Welcome ${name}! Your customer account has been created.`, 'success');
 
-          const targetUrl = getRedirectParam('index.html');
+          const targetUrl = isSuper ? 'admin.html' : getRedirectParam('products.html');
           setTimeout(() => {
             window.location.href = targetUrl;
           }, 600);

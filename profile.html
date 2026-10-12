@@ -23,6 +23,7 @@
 
   <!-- Custom Stylesheet -->
   <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/ecommerce.css">
 </head>
 <body>
 
@@ -119,6 +120,65 @@
       <div class="badge badge-spent-time">
         <i class="fa-brands fa-youtube" style="color: #ff0000;"></i>
         <span>Official Verified Creator Profile</span>
+      </div>
+    </div>
+
+    <!-- SUPER ADMIN DASHBOARD BANNER (Visible only for ggokuljourney2@gmail.com) -->
+    <div id="superAdminProfileBanner" style="display: none; background: rgba(220, 38, 38, 0.12); border: 1px solid rgba(220, 38, 38, 0.4); border-radius: var(--radius-md); padding: 18px 24px; margin-bottom: 24px; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;">
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <div style="width: 44px; height: 44px; border-radius: 50%; background: var(--accent-red); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.3rem;">
+          <i class="fa-solid fa-crown"></i>
+        </div>
+        <div>
+          <h3 style="font-size: 1.1rem; font-weight: 800; color: var(--text-primary); margin-bottom: 2px;">
+            Super Admin Portal Active (ggokuljourney2@gmail.com)
+          </h3>
+          <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0;">
+            Manage customer orders, update supply chain stages, and manage product inventory.
+          </p>
+        </div>
+      </div>
+      <a href="admin.html" class="btn btn-primary btn-sm">
+        <i class="fa-solid fa-gauge-high"></i> Open Admin Hub
+      </a>
+    </div>
+
+    <!-- CUSTOMER E-COMMERCE HUB (ORDERS & DELIVERY ADDRESSES) -->
+    <div id="customerEcommerceHub" style="display: none; margin-bottom: 30px;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 18px;">
+        <!-- Card 1: My Orders & Live Tracking -->
+        <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+            <div style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+              <i class="fa-solid fa-truck-fast" style="color: #10b981;"></i> My Orders & Tracking
+            </div>
+            <a href="products.html" class="btn btn-secondary btn-sm" style="font-size: 0.78rem; padding: 4px 10px;">
+              <i class="fa-solid fa-plus"></i> Shop More
+            </a>
+          </div>
+          <div id="customerOrdersSummaryList">
+            <div style="font-size: 0.88rem; color: var(--text-muted); text-align: center; padding: 20px;">
+              Loading your orders...
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Saved Delivery Address -->
+        <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+            <div style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+              <i class="fa-solid fa-location-dot" style="color: var(--accent-red);"></i> Default Delivery Address
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="GGEcommerce.openAddressModal()" style="font-size: 0.78rem; padding: 4px 10px;">
+              <i class="fa-solid fa-pen"></i> Edit Address
+            </button>
+          </div>
+          <div id="customerAddressSummary">
+            <div style="font-size: 0.88rem; color: var(--text-muted); text-align: center; padding: 20px;">
+              Loading address...
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -709,6 +769,7 @@
   <!-- Core Scripts -->
   <script src="js/main.js"></script>
   <script src="js/firestore-sync.js"></script>
+  <script src="js/ecommerce.js"></script>
   <script src="js/projects.js"></script>
   <script>
     // Project Invoices Data
@@ -968,6 +1029,23 @@
         }
       }
 
+      // Check role & render E-commerce Hub
+      if (user) {
+        const isSuper = window.isSuperAdmin ? window.isSuperAdmin(user) : (user.email && user.email.toLowerCase().trim() === 'ggokuljourney2@gmail.com');
+        const adminBanner = document.getElementById('superAdminProfileBanner');
+        const customerHub = document.getElementById('customerEcommerceHub');
+
+        if (isSuper) {
+          if (adminBanner) adminBanner.style.display = 'flex';
+          if (customerHub) customerHub.style.display = 'none';
+        } else {
+          if (adminBanner) adminBanner.style.display = 'none';
+          if (customerHub) customerHub.style.display = 'block';
+          renderCustomerOrdersSummary();
+          renderCustomerAddressSummary();
+        }
+      }
+
       // Live fetch from Cloud Firestore
       if (window.GGFirestore && typeof window.GGFirestore.getChannelProfile === 'function') {
         window.GGFirestore.getChannelProfile().then(cloudProfile => {
@@ -975,6 +1053,73 @@
         }).catch(err => console.warn('Cloud profile fetch notice:', err));
       }
     });
+
+    function renderCustomerOrdersSummary() {
+      const container = document.getElementById('customerOrdersSummaryList');
+      if (!container) return;
+
+      let orders = [];
+      try {
+        orders = JSON.parse(localStorage.getItem('gg_customer_orders') || '[]');
+      } catch (e) {}
+
+      if (orders.length === 0) {
+        container.innerHTML = `
+          <div style="font-size: 0.88rem; color: var(--text-muted); text-align: center; padding: 18px 10px;">
+            No orders placed yet.<br>
+            <a href="products.html" style="color: var(--accent-red); font-weight: 600; text-decoration: underline; display: inline-block; margin-top: 6px;">Browse Store & Place First Order</a>
+          </div>
+        `;
+        return;
+      }
+
+      let html = '<div style="display: flex; flex-direction: column; gap: 10px;">';
+      orders.slice(0, 3).forEach(o => {
+        html += `
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; background: var(--bg-secondary); border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+            <div>
+              <div style="font-weight: 700; font-size: 0.88rem; color: var(--text-primary);">${o.orderId}</div>
+              <div style="font-size: 0.78rem; color: var(--text-muted);">${o.items?.length || 1} items • ₹ ${(o.totalAmount || 0).toLocaleString('en-IN')}</div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span class="status-badge ${o.orderStatus || 'placed'}">${o.orderStatus?.toUpperCase() || 'PLACED'}</span>
+              <button class="btn btn-secondary btn-sm" onclick="GGEcommerce.showOrderTracking(${JSON.stringify(o).replace(/"/g, '&quot;')})" style="padding: 4px 8px; font-size: 0.78rem;">
+                <i class="fa-solid fa-route"></i> Track
+              </button>
+            </div>
+          </div>
+        `;
+      });
+      html += '</div>';
+      container.innerHTML = html;
+    }
+
+    function renderCustomerAddressSummary() {
+      const container = document.getElementById('customerAddressSummary');
+      if (!container) return;
+
+      const addr = window.GGEcommerce ? window.GGEcommerce.getDefaultAddress() : null;
+      if (!addr) {
+        container.innerHTML = `
+          <div style="font-size: 0.88rem; color: var(--text-muted); text-align: center; padding: 18px 10px;">
+            No delivery address saved.<br>
+            <button class="btn btn-primary btn-sm" onclick="GGEcommerce.openAddressModal()" style="margin-top: 8px;">
+              <i class="fa-solid fa-plus"></i> Add Address
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = `
+        <div style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.4;">
+          <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 2px;">${addr.name} (${addr.type})</div>
+          <div>${addr.street}, ${addr.locality}</div>
+          <div>${addr.city}, ${addr.state} — <strong>${addr.pin}</strong></div>
+          <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;">Phone: ${addr.phone}</div>
+        </div>
+      `;
+    }
   </script>
 </body>
 </html>
