@@ -303,6 +303,7 @@ button, input, select, textarea {
 /* Profile Dropdown Container */
 .profile-dropdown-wrapper {
   position: relative;
+  z-index: 999;
 }
 
 .profile-avatar-btn {
@@ -349,7 +350,7 @@ button, input, select, textarea {
   display: none;
   flex-direction: column;
   gap: 4px;
-  z-index: 150;
+  z-index: 1000;
   animation: fadeInDown 0.2s ease;
 }
 
