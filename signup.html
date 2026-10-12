@@ -63,7 +63,7 @@
     <div class="auth-card">
       <div class="auth-header">
         <div class="badge badge-spent-time" style="margin-bottom: 8px;">
-          <i class="fa-solid fa-user-plus"></i> Step 1 in Notebook Wireframe
+          <i class="fa-solid fa-user-shield"></i> Official Maker Registration
         </div>
         <h1 class="auth-title">Create <span>Account</span></h1>
         <p class="auth-subtitle">Join the DIY maker community to bookmark builds & download bills.</p>
@@ -73,29 +73,29 @@
         <!-- 1. Full Name -->
         <div class="form-group" id="signupNameGroup">
           <label class="form-label" for="signupName">Full Name *</label>
-          <input type="text" id="signupName" class="form-input" placeholder="e.g. Gokul" autocomplete="name" required>
+          <input type="text" id="signupName" class="form-input" placeholder="Enter your full name" autocomplete="name" required>
           <span class="form-error-msg" id="signupNameError">Please enter your full name</span>
         </div>
 
         <!-- 2. Phone Number -->
         <div class="form-group" id="signupPhoneGroup">
           <label class="form-label" for="signupPhone">Phone Number *</label>
-          <input type="tel" id="signupPhone" class="form-input" placeholder="+91 90430 XXXXX" autocomplete="tel" required>
+          <input type="tel" id="signupPhone" class="form-input" placeholder="+91 98765 43210" autocomplete="tel" required>
           <span class="form-error-msg" id="signupPhoneError">Please enter a valid phone number</span>
         </div>
 
-        <!-- 3. Gmail -->
+        <!-- 3. Email -->
         <div class="form-group" id="signupEmailGroup">
-          <label class="form-label" for="signupGmail">Gmail Address *</label>
-          <input type="email" id="signupGmail" class="form-input" placeholder="name@gmail.com" autocomplete="email" required>
-          <span class="form-error-msg" id="signupEmailError">Please enter a valid Gmail address</span>
+          <label class="form-label" for="signupGmail">Email Address *</label>
+          <input type="email" id="signupGmail" class="form-input" placeholder="name@example.com" autocomplete="email" required>
+          <span class="form-error-msg" id="signupEmailError">Please enter a valid email address</span>
         </div>
 
         <!-- 4. Password -->
         <div class="form-group" id="signupPasswordGroup">
           <label class="form-label" for="signupPassword">Password *</label>
           <div class="password-input-wrap">
-            <input type="password" id="signupPassword" class="form-input" placeholder="Create a strong password" autocomplete="new-password" required minlength="6" oninput="checkPasswordStrength(this.value)">
+            <input type="password" id="signupPassword" class="form-input" placeholder="Create a password (min. 6 characters)" autocomplete="new-password" required minlength="6" oninput="checkPasswordStrength(this.value)">
             <button type="button" class="toggle-password-btn" aria-label="Toggle password visibility" onclick="togglePasswordVisibility('signupPassword', this)">
               <i class="fa-regular fa-eye"></i>
             </button>
@@ -114,7 +114,7 @@
         <div class="form-group" id="signupConfirmGroup">
           <label class="form-label" for="signupConfirm">Confirm Password *</label>
           <div class="password-input-wrap">
-            <input type="password" id="signupConfirm" class="form-input" placeholder="Re-enter your password" autocomplete="new-password" required>
+            <input type="password" id="signupConfirm" class="form-input" placeholder="Confirm your password" autocomplete="new-password" required>
             <button type="button" class="toggle-password-btn" aria-label="Toggle password visibility" onclick="togglePasswordVisibility('signupConfirm', this)">
               <i class="fa-regular fa-eye"></i>
             </button>
@@ -131,7 +131,7 @@
         </div>
 
         <button type="submit" class="btn btn-primary" id="signupSubmitBtn" style="width: 100%;">
-          <i class="fa-solid fa-user-check"></i> Sign Up & Get Started
+          <i class="fa-solid fa-user-check"></i> Create Account
         </button>
       </form>
 
@@ -235,7 +235,7 @@
         if (!hasError) phoneInput.focus();
         hasError = true;
       }
-      if (!email || !email.includes('@')) {
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         document.getElementById('signupEmailGroup').classList.add('has-error');
         if (!hasError) emailInput.focus();
         hasError = true;
@@ -253,26 +253,60 @@
 
       if (hasError) return;
 
-      submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Creating Account in Firebase...';
+      submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Creating Account...';
       submitBtn.disabled = true;
 
-      // Try Firebase account creation & Firestore user document write
-      let fbUser = null;
+      // Real Firebase account creation & Firestore user document write
       if (typeof firebase !== 'undefined' && window.auth) {
         try {
           const cred = await window.auth.createUserWithEmailAndPassword(email, password);
-          fbUser = cred.user;
+          const fbUser = cred.user;
           if (fbUser) {
             await fbUser.updateProfile({ displayName: name }).catch(() => {});
           }
+
+          const newUser = {
+            uid: fbUser.uid,
+            name: name,
+            email: email,
+            phone: phone,
+            avatar: 'assets/images/avatar.jpg',
+            role: 'Community Maker',
+            handle: '@' + name.toLowerCase().replace(/[^a-z0-9]/g, ''),
+            bio: 'Maker and DIY enthusiast at GG Creation',
+            joinDate: new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
+            loginMethod: 'firebase_email_password',
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+          };
+
+          // Write document to Cloud Firestore
+          if (window.db) {
+            try {
+              await window.db.collection('users').doc(fbUser.uid).set(newUser, { merge: true });
+              console.log('User document saved to Cloud Firestore successfully.');
+            } catch (dbErr) {
+              console.warn('Firestore user write note:', dbErr.message);
+            }
+          }
+
+          setAuthUser(newUser);
+          showToast(`Welcome ${name}! Your account has been created.`, 'success');
+
+          const targetUrl = getRedirectParam('index.html');
+          setTimeout(() => {
+            window.location.href = targetUrl;
+          }, 600);
+          return;
+
         } catch (fbErr) {
           console.error('Firebase Auth error:', fbErr);
-          submitBtn.innerHTML = '<i class="fa-solid fa-user-plus"></i> Create Account';
+          submitBtn.innerHTML = '<i class="fa-solid fa-user-check"></i> Create Account';
           submitBtn.disabled = false;
 
           if (fbErr.code === 'auth/email-already-in-use') {
             document.getElementById('signupEmailGroup').classList.add('has-error');
-            showToast('This email is already registered! Please sign in.', 'error');
+            showToast('An account with this email already exists! Please sign in.', 'error');
             return;
           } else if (fbErr.code === 'auth/weak-password') {
             document.getElementById('signupPasswordGroup').classList.add('has-error');
@@ -280,53 +314,21 @@
             return;
           } else if (fbErr.code === 'auth/invalid-email') {
             document.getElementById('signupEmailGroup').classList.add('has-error');
-            showToast('Please enter a valid Gmail / email address.', 'error');
+            showToast('Please enter a valid email address.', 'error');
             return;
           } else if (fbErr.code === 'auth/operation-not-allowed') {
-            showToast('Email/Password sign-in is disabled in Firebase Console! Please enable it.', 'error');
+            showToast('Email/Password sign-in is disabled in Firebase Console! Please enable it in Authentication.', 'error');
             return;
           } else {
-            showToast(fbErr.message || 'Firebase account creation failed.', 'error');
+            showToast(fbErr.message || 'Account registration failed.', 'error');
             return;
           }
         }
+      } else {
+        submitBtn.innerHTML = '<i class="fa-solid fa-user-check"></i> Create Account';
+        submitBtn.disabled = false;
+        showToast('Firebase connection is not available. Please check your internet connection.', 'error');
       }
-
-      const uid = fbUser ? fbUser.uid : ('user-' + Date.now());
-      const newUser = {
-        uid: uid,
-        name: name,
-        email: email,
-        phone: phone,
-        avatar: 'assets/images/avatar.jpg',
-        role: 'Community Maker',
-        handle: '@' + name.toLowerCase().replace(/[^a-z0-9]/g, ''),
-        bio: 'Maker and DIY enthusiast at GG Creation',
-        joinDate: new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
-        loginMethod: fbUser ? 'firebase_email_password' : 'local_signup'
-      };
-
-      // Real-time Cloud Firestore User Write
-      if (window.db) {
-        try {
-          await window.db.collection('users').doc(uid).set({
-            ...newUser,
-            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-          }, { merge: true });
-          console.log('User document written to Cloud Firestore successfully.');
-        } catch (dbErr) {
-          console.warn('Notice writing user to Cloud Firestore (check Firestore Rules):', dbErr.message);
-        }
-      }
-
-      setAuthUser(newUser);
-      showToast(`Welcome ${name}! Your account is registered & saved to Firestore. ☁️`, 'success');
-
-      const targetUrl = getRedirectParam('index.html');
-      setTimeout(() => {
-        window.location.href = targetUrl;
-      }, 700);
     }
   </script>
 </body>

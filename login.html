@@ -74,8 +74,8 @@
 
         <div class="already-logged-in-box">
           <img src="assets/images/avatar.jpg" alt="Profile Avatar" class="already-logged-in-avatar" id="activeUserAvatar" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80'">
-          <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary); margin-bottom: 2px;" id="activeUserTitle">GG Creation</h3>
-          <p style="font-size: 0.88rem; color: var(--text-secondary);" id="activeUserEmail">gjgokul2005@gmail.com</p>
+          <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary); margin-bottom: 2px;" id="activeUserTitle">Account Member</h3>
+          <p style="font-size: 0.88rem; color: var(--text-secondary);" id="activeUserEmail"></p>
         </div>
 
         <div style="display: flex; flex-direction: column; gap: 10px;">
@@ -95,37 +95,24 @@
       <div id="loginFormState">
         <div class="auth-header">
           <div class="badge badge-spent-time" style="margin-bottom: 8px;">
-            <i class="fa-solid fa-key"></i> Step 1 in Notebook Wireframe
+            <i class="fa-solid fa-shield-halved"></i> Secure Account Access
           </div>
-          <h1 class="auth-title">Creator <span>Login</span></h1>
-          <p class="auth-subtitle">Welcome back! Sign in to access your saved DIY projects & bills.</p>
-        </div>
-
-        <!-- 1-Click Fast Demo Login for Testers / Users -->
-        <div class="auth-demo-box">
-          <div class="auth-demo-info">
-            <span class="auth-demo-title">
-              <i class="fa-solid fa-bolt" style="color: #ff9e00;"></i> 1-Click Quick Login
-            </span>
-            <span class="auth-demo-sub">Sign in instantly as <strong>Gokul (GG Creator)</strong></span>
-          </div>
-          <button type="button" class="btn-demo-quick" id="quickDemoLoginBtn" onclick="handleQuickDemoLogin()">
-            <i class="fa-solid fa-right-to-bracket"></i> Fast Login
-          </button>
+          <h1 class="auth-title">Account <span>Sign In</span></h1>
+          <p class="auth-subtitle">Sign in to your GG Creation account to access saved DIY projects & bills.</p>
         </div>
 
         <!-- Main Email/Password Form -->
         <form id="loginForm" onsubmit="event.preventDefault(); handleEmailPasswordLogin();" novalidate>
           <div class="form-group" id="loginEmailGroup">
-            <label class="form-label" for="loginGmail">Gmail Address *</label>
-            <input type="email" id="loginGmail" class="form-input" placeholder="gjgokul2005@gmail.com" autocomplete="email" required>
-            <span class="form-error-msg" id="loginEmailError">Please enter a valid Gmail address</span>
+            <label class="form-label" for="loginGmail">Email Address *</label>
+            <input type="email" id="loginGmail" class="form-input" placeholder="name@example.com" autocomplete="email" required>
+            <span class="form-error-msg" id="loginEmailError">Please enter a valid email address</span>
           </div>
 
           <div class="form-group" id="loginPasswordGroup">
             <label class="form-label" for="loginPassword">Password *</label>
             <div class="password-input-wrap">
-              <input type="password" id="loginPassword" class="form-input" placeholder="••••••••••••" autocomplete="current-password" required>
+              <input type="password" id="loginPassword" class="form-input" placeholder="Enter your password" autocomplete="current-password" required>
               <button type="button" class="toggle-password-btn" id="togglePasswordBtn" aria-label="Toggle password visibility" onclick="togglePasswordVisibility('loginPassword', this)">
                 <i class="fa-regular fa-eye"></i>
               </button>
@@ -135,13 +122,13 @@
 
           <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; font-size: 0.88rem;">
             <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; color: var(--text-secondary);">
-              <input type="checkbox" id="rememberMe" checked> Remember Me
+              <input type="checkbox" id="rememberMe"> Remember Me
             </label>
             <a href="#" style="color: var(--accent-red); font-weight: 500;" onclick="openForgotPasswordModal(event)">Forgot Password?</a>
           </div>
 
           <button type="submit" class="btn btn-primary" id="loginSubmitBtn" style="width: 100%;">
-            <i class="fa-solid fa-right-to-bracket"></i> Sign In to Account
+            <i class="fa-solid fa-right-to-bracket"></i> Sign In
           </button>
         </form>
 
@@ -172,12 +159,12 @@
             Enter 6-Digit Email Verification Code:
           </div>
           <div class="otp-input-row" id="otpInputsRow">
-            <input type="text" maxlength="1" class="otp-box-digit" data-idx="0" inputmode="numeric" value="7">
-            <input type="text" maxlength="1" class="otp-box-digit" data-idx="1" inputmode="numeric" value="3">
-            <input type="text" maxlength="1" class="otp-box-digit" data-idx="2" inputmode="numeric" value="9">
-            <input type="text" maxlength="1" class="otp-box-digit" data-idx="3" inputmode="numeric" value="2">
-            <input type="text" maxlength="1" class="otp-box-digit" data-idx="4" inputmode="numeric" value="0">
-            <input type="text" maxlength="1" class="otp-box-digit" data-idx="5" inputmode="numeric" value="1">
+            <input type="text" maxlength="1" class="otp-box-digit" data-idx="0" inputmode="numeric" placeholder="•">
+            <input type="text" maxlength="1" class="otp-box-digit" data-idx="1" inputmode="numeric" placeholder="•">
+            <input type="text" maxlength="1" class="otp-box-digit" data-idx="2" inputmode="numeric" placeholder="•">
+            <input type="text" maxlength="1" class="otp-box-digit" data-idx="3" inputmode="numeric" placeholder="•">
+            <input type="text" maxlength="1" class="otp-box-digit" data-idx="4" inputmode="numeric" placeholder="•">
+            <input type="text" maxlength="1" class="otp-box-digit" data-idx="5" inputmode="numeric" placeholder="•">
           </div>
           <button type="button" class="btn btn-primary btn-sm" style="width: 100%;" onclick="handleVerifyOtpLogin()">
             <i class="fa-solid fa-check"></i> Verify & Sign In
@@ -209,11 +196,11 @@
       </div>
       <div class="modal-body">
         <p style="font-size: 0.92rem; color: var(--text-secondary); margin-bottom: 18px;">
-          Enter your registered Gmail address. We will send a secure password reset link directly to your inbox.
+          Enter your registered email address. We will send a secure password reset link directly to your inbox.
         </p>
         <div class="form-group">
-          <label class="form-label" for="forgotEmailInput">Your Gmail Address</label>
-          <input type="email" id="forgotEmailInput" class="form-input" placeholder="you@gmail.com">
+          <label class="form-label" for="forgotEmailInput">Email Address</label>
+          <input type="email" id="forgotEmailInput" class="form-input" placeholder="name@example.com">
         </div>
       </div>
       <div class="modal-footer">
@@ -251,9 +238,9 @@
       const formEl = document.getElementById('loginFormState');
 
       if (user && alreadyLoggedEl && formEl) {
-        document.getElementById('activeUserName').textContent = user.name || 'Creator';
-        document.getElementById('activeUserTitle').textContent = user.name || 'GG Creation';
-        document.getElementById('activeUserEmail').textContent = user.email || 'gjgokul2005@gmail.com';
+        document.getElementById('activeUserName').textContent = user.name || 'Member';
+        document.getElementById('activeUserTitle').textContent = user.name || 'Member Account';
+        document.getElementById('activeUserEmail').textContent = user.email || '';
         if (user.avatar) {
           document.getElementById('activeUserAvatar').src = user.avatar;
         }
@@ -272,12 +259,8 @@
       const emailInput = document.getElementById('loginGmail');
       if (remembered && emailInput) {
         emailInput.value = remembered;
-      } else if (emailInput && !emailInput.value) {
-        emailInput.value = 'gjgokul2005@gmail.com';
-      }
-      const passInput = document.getElementById('loginPassword');
-      if (passInput && !passInput.value) {
-        passInput.value = 'creator123';
+        const rememberCheckbox = document.getElementById('rememberMe');
+        if (rememberCheckbox) rememberCheckbox.checked = true;
       }
     }
 
@@ -302,30 +285,7 @@
     }
 
     /**
-     * Quick Demo Login Handler
-     */
-    function handleQuickDemoLogin() {
-      const demoUser = {
-        name: 'Gokul (GG Creation)',
-        email: 'gjgokul2005@gmail.com',
-        avatar: 'assets/images/avatar.jpg',
-        role: 'Verified Creator & Maker',
-        handle: '@GGCreative-x9o',
-        loginMethod: 'quick_demo',
-        loginTime: new Date().toISOString()
-      };
-
-      setAuthUser(demoUser);
-      showToast('Welcome Gokul! Signed in as GG Creator.', 'success');
-
-      const targetUrl = getRedirectParam('index.html');
-      setTimeout(() => {
-        window.location.href = targetUrl;
-      }, 700);
-    }
-
-    /**
-     * Email & Password Sign In
+     * Email & Password Sign In (Real Firebase Authentication & Firestore Sync)
      */
     async function handleEmailPasswordLogin() {
       const emailInput = document.getElementById('loginGmail');
@@ -336,19 +296,21 @@
       const email = emailInput.value.trim();
       const password = passwordInput.value.trim();
 
-      // Reset errors
+      // Reset error states
       document.getElementById('loginEmailGroup').classList.remove('has-error');
       document.getElementById('loginPasswordGroup').classList.remove('has-error');
 
-      if (!email || !email.includes('@')) {
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         document.getElementById('loginEmailGroup').classList.add('has-error');
         emailInput.focus();
+        showToast('Please enter a valid email address.', 'error');
         return;
       }
 
       if (!password || password.length < 6) {
         document.getElementById('loginPasswordGroup').classList.add('has-error');
         passwordInput.focus();
+        showToast('Password must be at least 6 characters.', 'error');
         return;
       }
 
@@ -361,44 +323,36 @@
 
       // Button loading state
       const originalText = submitBtn.innerHTML;
-      submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Signing in to Firebase...';
+      submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Signing in...';
       submitBtn.disabled = true;
-
-      // Check if Firebase is available
-      let fbUser = null;
-      let userData = null;
 
       if (typeof firebase !== 'undefined' && window.auth && window.auth.signInWithEmailAndPassword) {
         try {
           const cred = await window.auth.signInWithEmailAndPassword(email, password);
-          fbUser = cred.user;
+          const fbUser = cred.user;
 
-          // Default user profile from Auth
-          userData = {
+          let userData = {
+            uid: fbUser.uid,
             name: fbUser.displayName || email.split('@')[0],
             email: fbUser.email,
             avatar: fbUser.photoURL || 'assets/images/avatar.jpg',
-            uid: fbUser.uid,
-            role: 'Creator Community Member',
+            role: 'Community Maker',
             loginMethod: 'firebase_email_password'
           };
 
-          // Fetch Live User Document from Cloud Firestore
+          // Fetch Live User Document from Cloud Firestore DB
           if (window.db) {
             try {
               const docSnap = await window.db.collection('users').doc(fbUser.uid).get();
               if (docSnap.exists) {
-                // Merge data from Firestore
                 userData = { ...userData, ...docSnap.data() };
-                console.log('User profile loaded from Cloud Firestore.');
               } else {
-                // If user document was not yet created in Firestore, feed it now!
+                // If user document does not exist yet in Firestore, create it
                 await window.db.collection('users').doc(fbUser.uid).set({
                   ...userData,
                   createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                   updatedAt: firebase.firestore.FieldValue.serverTimestamp()
                 }, { merge: true });
-                console.log('Created missing user doc in Cloud Firestore.');
               }
 
               // Update last login timestamp in Firestore
@@ -406,17 +360,17 @@
                 lastLoginAt: firebase.firestore.FieldValue.serverTimestamp()
               }).catch(() => {});
             } catch (dbErr) {
-              console.warn('Firestore user fetch notice (check security rules):', dbErr.message);
+              console.warn('Firestore user fetch note:', dbErr.message);
             }
           }
 
           setAuthUser(userData);
-          showToast(`Welcome back, ${userData.name}! Signed in via Firebase. ☁️`, 'success');
+          showToast(`Welcome back, ${userData.name}! Successfully signed in.`, 'success');
 
           const targetUrl = getRedirectParam('index.html');
           setTimeout(() => {
             window.location.href = targetUrl;
-          }, 700);
+          }, 600);
           return;
 
         } catch (fbErr) {
@@ -430,42 +384,28 @@
             return;
           } else if (fbErr.code === 'auth/user-not-found') {
             document.getElementById('loginEmailGroup').classList.add('has-error');
-            showToast('No registered user found with this email. Please Sign Up.', 'error');
+            showToast('No registered user found with this email. Please sign up.', 'error');
             return;
           } else if (fbErr.code === 'auth/too-many-requests') {
-            showToast('Too many failed attempts. Please reset password or try later.', 'error');
+            showToast('Access temporarily locked due to multiple failed attempts. Please reset your password.', 'error');
             return;
           } else if (fbErr.code === 'auth/operation-not-allowed') {
-            showToast('Email/Password provider is disabled in Firebase Console! Please enable it.', 'error');
+            showToast('Email/Password provider is disabled in Firebase Console. Please enable it in Authentication.', 'error');
             return;
           } else {
-            showToast(fbErr.message || 'Firebase login failed.', 'error');
+            showToast(fbErr.message || 'Login failed. Please verify your credentials.', 'error');
             return;
           }
         }
+      } else {
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+        showToast('Firebase connection is not available. Please check your internet connection.', 'error');
       }
-
-      // Offline / Local state fallback only if Firebase SDK is unavailable
-      const namePart = email.split('@')[0];
-      const formattedName = namePart.charAt(0).toUpperCase() + namePart.slice(1);
-      const fallbackUser = {
-        name: email.toLowerCase().includes('gokul') ? 'Gokul (GG)' : formattedName,
-        email: email,
-        avatar: 'assets/images/avatar.jpg',
-        role: 'Creator Community Member',
-        loginMethod: 'offline_fallback'
-      };
-      setAuthUser(fallbackUser);
-      showToast(`Signed in as ${email}`, 'success');
-
-      const targetUrl = getRedirectParam('index.html');
-      setTimeout(() => {
-        window.location.href = targetUrl;
-      }, 700);
     }
 
     /**
-     * Google Sign-in Handler
+     * Google Sign-in Handler (Firebase Auth & Firestore DB)
      */
     async function handleGoogleSignIn() {
       if (typeof firebase !== 'undefined' && window.auth) {
@@ -473,36 +413,50 @@
           const provider = new firebase.auth.GoogleAuthProvider();
           const result = await window.auth.signInWithPopup(provider);
           const user = result.user;
-          const userObj = {
+          let userObj = {
             name: user.displayName || 'Google User',
             email: user.email,
             avatar: user.photoURL || 'assets/images/avatar.jpg',
             uid: user.uid,
-            role: 'Verified Google Member',
+            role: 'Verified Maker',
             loginMethod: 'google'
           };
+
+          // Sync with Firestore DB
+          if (window.db) {
+            try {
+              const snap = await window.db.collection('users').doc(user.uid).get();
+              if (snap.exists) {
+                userObj = { ...userObj, ...snap.data() };
+              } else {
+                await window.db.collection('users').doc(user.uid).set({
+                  ...userObj,
+                  createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                  updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                }, { merge: true });
+              }
+              await window.db.collection('users').doc(user.uid).update({
+                lastLoginAt: firebase.firestore.FieldValue.serverTimestamp()
+              }).catch(() => {});
+            } catch (dbErr) {
+              console.warn('Firestore Google user sync note:', dbErr.message);
+            }
+          }
+
           setAuthUser(userObj);
-          showToast(`Welcome ${userObj.name}! Google sign in successful.`, 'success');
+          showToast(`Welcome ${userObj.name}! Signed in with Google.`, 'success');
           const targetUrl = getRedirectParam('index.html');
           setTimeout(() => { window.location.href = targetUrl; }, 600);
           return;
         } catch (e) {
-          console.warn('Google Popup fallback:', e.message);
+          console.warn('Google Popup error:', e.message);
+          if (e.code !== 'auth/popup-closed-by-user') {
+            showToast(e.message || 'Google sign in failed.', 'error');
+          }
         }
+      } else {
+        showToast('Firebase Google sign-in is not configured.', 'error');
       }
-
-      // Demo Google fallback
-      const googleUser = {
-        name: 'Gokul Google Account',
-        email: 'gjgokul2005@gmail.com',
-        avatar: 'assets/images/avatar.jpg',
-        role: 'Verified Maker',
-        loginMethod: 'google_demo'
-      };
-      setAuthUser(googleUser);
-      showToast('Signed in with Google account (gjgokul2005@gmail.com)', 'success');
-      const targetUrl = getRedirectParam('index.html');
-      setTimeout(() => { window.location.href = targetUrl; }, 600);
     }
 
     /**
@@ -537,18 +491,22 @@
     }
 
     function handleVerifyOtpLogin() {
-      const email = document.getElementById('loginGmail').value.trim() || 'gjgokul2005@gmail.com';
-      const userObj = {
-        name: 'Gokul (OTP Verified)',
-        email: email,
-        avatar: 'assets/images/avatar.jpg',
-        role: 'OTP Authenticated Maker',
-        loginMethod: 'otp'
-      };
-      setAuthUser(userObj);
-      showToast('OTP Code Verified! Logging in...', 'success');
-      const targetUrl = getRedirectParam('index.html');
-      setTimeout(() => { window.location.href = targetUrl; }, 600);
+      const inputs = document.querySelectorAll('.otp-box-digit');
+      let otp = '';
+      inputs.forEach(i => { otp += i.value.trim(); });
+
+      if (otp.length < 6) {
+        showToast('Please enter the complete 6-digit verification code.', 'error');
+        return;
+      }
+
+      const email = document.getElementById('loginGmail').value.trim();
+      if (!email || !email.includes('@')) {
+        showToast('Please enter your email address above to verify code.', 'error');
+        return;
+      }
+
+      showToast('Verifying code for ' + email + '...', 'info');
     }
 
     /**
@@ -569,20 +527,23 @@
     async function handleSendPasswordReset() {
       const email = document.getElementById('forgotEmailInput').value.trim();
       if (!email || !email.includes('@')) {
-        showToast('Please enter a valid Gmail address', 'error');
+        showToast('Please enter a valid email address.', 'error');
         return;
       }
 
       if (typeof firebase !== 'undefined' && window.auth && window.auth.sendPasswordResetEmail) {
         try {
           await window.auth.sendPasswordResetEmail(email);
+          closeForgotPasswordModal();
+          showToast(`Password reset link dispatched to ${email}! Check your inbox.`, 'success');
         } catch (err) {
           console.log('Firebase reset error:', err.message);
+          showToast(err.message || 'Failed to dispatch password reset link.', 'error');
         }
+      } else {
+        closeForgotPasswordModal();
+        showToast(`Reset link dispatched to ${email}.`, 'info');
       }
-
-      closeForgotPasswordModal();
-      showToast(`Password reset link dispatched to ${email}! Check your inbox.`, 'success');
     }
   </script>
 </body>

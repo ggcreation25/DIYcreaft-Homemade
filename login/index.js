@@ -434,17 +434,8 @@
         setBtnLoading('loginSubmitBtn', false);
         showSuccess('Welcome Back!', `Signed in successfully as ${displayName}.`);
       } else {
-        setTimeout(() => {
-          const userObj = {
-            name: name,
-            email: email,
-            avatar: 'assets/images/avatar.jpg',
-            role: 'Creator Member'
-          };
-          localStorage.setItem('gg_user', JSON.stringify(userObj));
-          setBtnLoading('loginSubmitBtn', false);
-          showSuccess('Welcome Back!', `Signed in successfully as ${name}.`);
-        }, 1000);
+        setBtnLoading('loginSubmitBtn', false);
+        setError('loginEmailGroup', 'loginEmailError', 'Firebase service is unavailable. Please check your network connection.');
       }
     } catch (err) {
       setBtnLoading('loginSubmitBtn', false);
@@ -556,18 +547,8 @@
         setBtnLoading('signupSubmitBtn', false);
         showSuccess('Account Created!', `Welcome, ${name}! Your account has been registered and verified in Firebase.`);
       } else {
-        setTimeout(() => {
-          const userObj = {
-            name: name,
-            email: email,
-            avatar: 'assets/images/avatar.jpg',
-            role: 'Community Maker'
-          };
-          localStorage.setItem('gg_user', JSON.stringify(userObj));
-          activeOtps.signup = null;
-          setBtnLoading('signupSubmitBtn', false);
-          showSuccess('Account Created!', `Welcome, ${name}! Your account has been verified.`);
-        }, 1000);
+        setBtnLoading('signupSubmitBtn', false);
+        setError('signupEmailGroup', 'signupEmailError', 'Firebase service is unavailable. Please check your network connection.');
       }
     } catch (err) {
       setBtnLoading('signupSubmitBtn', false);
@@ -692,20 +673,36 @@
 
     if (!valid) return;
 
-    setBtnLoading('otpLoginSubmitBtn', true);
-
-    setTimeout(() => {
-      const userObj = {
-        name: email.split('@')[0],
+    try {
+      let displayName = email.split('@')[0];
+      displayName = displayName.charAt(0).toUpperCase() + displayName.slice(1);
+      let userObj = {
+        name: displayName,
         email: email,
         avatar: 'assets/images/avatar.jpg',
-        role: 'OTP Verified Maker'
+        role: 'Community Maker',
+        loginMethod: 'email_otp'
       };
+
+      if (window.db) {
+        try {
+          const userSnap = await window.db.collection('users').where('email', '==', email).limit(1).get();
+          if (!userSnap.empty) {
+            userObj = { ...userObj, ...userSnap.docs[0].data() };
+          }
+        } catch (dbErr) {
+          console.warn('Firestore OTP login user fetch note:', dbErr.message);
+        }
+      }
+
       localStorage.setItem('gg_user', JSON.stringify(userObj));
       activeOtps.otpLogin = null;
       setBtnLoading('otpLoginSubmitBtn', false);
       showSuccess('Logged In Successfully!', `You have been verified and logged in via OTP (${email}).`);
-    }, 1000);
+    } catch (err) {
+      setBtnLoading('otpLoginSubmitBtn', false);
+      setError('otpLoginEmailGroup', 'otpLoginEmailError', err.message || 'OTP Login failed.');
+    }
   });
 
   // ── Clear errors on input ──
