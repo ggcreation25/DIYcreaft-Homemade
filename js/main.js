@@ -194,7 +194,7 @@ function initAuthState() {
     });
 
     userSubEls.forEach(el => {
-      el.textContent = isSuper ? `${displayEmail} • Super Admin` : `${displayEmail} • Customer`;
+      el.textContent = isSuper ? `${displayEmail} • Super Admin` : displayEmail;
     });
 
     profileAvatarImgs.forEach(img => {
@@ -207,10 +207,9 @@ function initAuthState() {
       btn.onclick = handleLogout;
     });
 
-    // Inject Admin link or Customer Order links into profile menu
+    // Inject Admin link if Super Admin
     const profileMenus = document.querySelectorAll('#profileMenuDropdown, .profile-menu');
     profileMenus.forEach(menu => {
-      // Remove any previously injected admin/customer links
       menu.querySelectorAll('.dynamic-role-link').forEach(l => l.remove());
 
       if (isSuper) {
@@ -221,23 +220,6 @@ function initAuthState() {
         adminLink.style.fontWeight = '700';
         adminLink.innerHTML = '<i class="fa-solid fa-gauge-high"></i> Super Admin Hub';
         menu.insertBefore(adminLink, menu.children[2] || null);
-      } else {
-        const ordersLink = document.createElement('a');
-        ordersLink.href = 'profile.html?tab=orders';
-        ordersLink.className = 'profile-menu-item dynamic-role-link';
-        ordersLink.innerHTML = '<i class="fa-solid fa-truck-fast" style="color: #10b981;"></i> My Orders & Tracking';
-
-        const addressLink = document.createElement('a');
-        addressLink.href = '#';
-        addressLink.className = 'profile-menu-item dynamic-role-link';
-        addressLink.innerHTML = '<i class="fa-solid fa-location-dot" style="color: var(--accent-red);"></i> Delivery Address';
-        addressLink.onclick = (e) => {
-          e.preventDefault();
-          if (window.GGEcommerce) window.GGEcommerce.openAddressModal();
-        };
-
-        menu.insertBefore(ordersLink, menu.children[2] || null);
-        menu.insertBefore(addressLink, menu.children[3] || null);
       }
     });
 

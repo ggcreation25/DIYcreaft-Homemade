@@ -38,7 +38,7 @@
         <ul class="nav-menu" id="navDesktopMenu">
           <li><a href="index.html" class="nav-link"><i class="fa-solid fa-house"></i> Home</a></li>
           <li><a href="projects.html" class="nav-link"><i class="fa-solid fa-shapes"></i> Project</a></li>
-          <li><a href="products.html" class="nav-link"><i class="fa-solid fa-link"></i> Link Product</a></li>
+          <li><a href="products.html" class="nav-link"><i class="fa-solid fa-link"></i> Link Products</a></li>
           <li><a href="about.html" class="nav-link"><i class="fa-solid fa-user"></i> About</a></li>
           <li><a href="contact.html" class="nav-link"><i class="fa-solid fa-phone"></i> Contact Number</a></li>
         </ul>
@@ -79,10 +79,7 @@
         </div>
 
         <div style="display: flex; flex-direction: column; gap: 10px;">
-          <a href="profile.html" class="btn btn-primary" style="width: 100%;">
-            <i class="fa-solid fa-user-circle"></i> Go to Profile Dashboard
-          </a>
-          <a href="projects.html" class="btn btn-secondary" style="width: 100%;">
+          <a href="projects.html" class="btn btn-primary" style="width: 100%;">
             <i class="fa-solid fa-layer-group"></i> Browse DIY Projects
           </a>
           <button type="button" class="btn btn-secondary" style="width: 100%; color: #ef4444;" onclick="handleSwitchAccount()">
@@ -130,6 +127,18 @@
           <button type="submit" class="btn btn-primary" id="loginSubmitBtn" style="width: 100%;">
             <i class="fa-solid fa-right-to-bracket"></i> Sign In
           </button>
+
+          <!-- SUPER ADMIN TEST CREDENTIALS BOX -->
+          <div style="margin-top: 14px; background: rgba(239, 68, 68, 0.08); border: 1px dashed rgba(239, 68, 68, 0.4); border-radius: var(--radius-sm); padding: 10px 14px; display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+            <div style="font-size: 0.82rem; color: var(--text-secondary);">
+              <strong style="color: var(--accent-red); display: block; font-size: 0.85rem;"><i class="fa-solid fa-crown"></i> Super Admin Credentials:</strong>
+              <code style="color: var(--text-primary); font-size: 0.8rem;">ggokuljourney2@gmail.com</code><br>
+              <span style="font-size: 0.78rem;">Pass: <code>Admin@123456</code></span>
+            </div>
+            <button type="button" class="btn btn-outline-red btn-sm" onclick="fillAdminCredentials()" style="padding: 6px 12px; font-size: 0.8rem; white-space: nowrap;">
+              <i class="fa-solid fa-key"></i> Auto-Fill
+            </button>
+          </div>
         </form>
 
         <div class="auth-divider">
@@ -207,6 +216,50 @@
         <button type="button" class="btn btn-secondary btn-sm" onclick="closeForgotPasswordModal()">Cancel</button>
         <button type="button" class="btn btn-primary btn-sm" onclick="handleSendPasswordReset()">
           <i class="fa-solid fa-paper-plane"></i> Send Reset Link
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- GOOGLE DOMAIN AUTHORIZATION HELP MODAL -->
+  <div class="modal-backdrop" id="domainAuthModal">
+    <div class="modal-content" style="max-width: 520px;">
+      <div class="modal-header">
+        <h3 class="modal-title" style="display: flex; align-items: center; gap: 8px; color: #f59e0b;">
+          <i class="fa-brands fa-google"></i> Google Sign-In: Domain Setup
+        </h3>
+        <button class="modal-close-btn" onclick="closeDomainAuthModal()">&times;</button>
+      </div>
+      <div class="modal-body" style="font-size: 0.92rem; line-height: 1.6; color: var(--text-secondary);">
+        <div style="background: rgba(245, 158, 11, 0.1); border-left: 4px solid #f59e0b; padding: 12px 14px; border-radius: 4px; margin-bottom: 16px; color: var(--text-primary);">
+          <strong>Firebase Notice:</strong> <span id="domainAuthReasonText">This domain is not authorized for OAuth operations in your Firebase project.</span>
+        </div>
+
+        <div style="margin-bottom: 14px;">
+          <strong style="color: var(--text-primary);"><i class="fa-solid fa-bolt" style="color: #10b981;"></i> Option 1: Instant Local Fix</strong>
+          <p style="margin: 4px 0 8px;">
+            If you are opening from <code>127.0.0.1</code>, simply open the URL using <strong style="color: #10b981;">http://localhost:5500</strong> instead! Firebase has <code>localhost</code> whitelisted by default.
+          </p>
+        </div>
+
+        <div style="margin-bottom: 16px;">
+          <strong style="color: var(--text-primary);"><i class="fa-solid fa-gear" style="color: var(--accent-red);"></i> Option 2: Add Domain in Firebase Console</strong>
+          <ol style="padding-left: 20px; margin: 6px 0;">
+            <li>Open <a href="https://console.firebase.google.com/project/login-page-f8c8b/authentication/settings" target="_blank" style="color: var(--accent-red); font-weight: 600; text-decoration: underline;">Firebase Console Auth Settings <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.75rem;"></i></a></li>
+            <li>Scroll down to <strong>Authorized domains</strong> &rarr; Click <strong>Add domain</strong></li>
+            <li>Add: <code id="detectedDomainCode">127.0.0.1</code> (or your domain e.g. <code>ggcreation25.github.io</code>)</li>
+            <li>Click <strong>Save</strong> and reload the page.</li>
+          </ol>
+        </div>
+
+        <div style="background: var(--bg-secondary); padding: 10px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+          <span style="font-size: 0.85rem; color: var(--text-muted);"><i class="fa-solid fa-shield-halved" style="color: #10b981;"></i> You can also sign in directly using <strong>Email/Password</strong> or <strong>Auto-Fill Admin Credentials</strong> with no domain restrictions!</span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm" onclick="closeDomainAuthModal()">Close</button>
+        <button type="button" class="btn btn-primary btn-sm" onclick="fillAdminCredentials(); closeDomainAuthModal();">
+          <i class="fa-solid fa-crown"></i> Use Super Admin Login
         </button>
       </div>
     </div>
@@ -388,6 +441,56 @@
           submitBtn.innerHTML = originalText;
           submitBtn.disabled = false;
 
+          // SPECIAL HANDLING: If Super Admin attempts login and user is not found, auto-create in Firebase Auth!
+          if (email.toLowerCase() === 'ggokuljourney2@gmail.com') {
+            if (fbErr.code === 'auth/user-not-found' || fbErr.code === 'auth/invalid-credential') {
+              try {
+                submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Provisioning Super Admin...';
+                submitBtn.disabled = true;
+                const newCred = await window.auth.createUserWithEmailAndPassword(email, password);
+                const newFbUser = newCred.user;
+                const adminData = {
+                  uid: newFbUser.uid,
+                  name: 'Gokul (Super Admin)',
+                  email: 'ggokuljourney2@gmail.com',
+                  avatar: 'assets/images/avatar.jpg',
+                  role: 'super_admin',
+                  isSuperAdmin: true,
+                  loginMethod: 'firebase_email_password'
+                };
+                if (window.db) {
+                  await window.db.collection('users').doc(newFbUser.uid).set({
+                    ...adminData,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                  }, { merge: true });
+                }
+                setAuthUser(adminData);
+                showToast('Super Admin account created & verified! Entering Admin Hub...', 'success');
+                setTimeout(() => { window.location.href = 'admin.html'; }, 600);
+                return;
+              } catch (createErr) {
+                console.warn('Auto create super admin error:', createErr);
+                // If create also fails (e.g. password mismatch or offline), allow test bypass if password is Admin@123456
+                if (password === 'Admin@123456') {
+                  const testAdminData = {
+                    uid: 'super-admin-direct',
+                    name: 'Gokul (Super Admin)',
+                    email: 'ggokuljourney2@gmail.com',
+                    avatar: 'assets/images/avatar.jpg',
+                    role: 'super_admin',
+                    isSuperAdmin: true,
+                    loginMethod: 'admin_test_credentials'
+                  };
+                  setAuthUser(testAdminData);
+                  showToast('Super Admin Test Session Authorized! Entering Admin Hub...', 'success');
+                  setTimeout(() => { window.location.href = 'admin.html'; }, 500);
+                  return;
+                }
+              }
+            }
+          }
+
           if (fbErr.code === 'auth/invalid-credential' || fbErr.code === 'auth/wrong-password') {
             document.getElementById('loginPasswordGroup').classList.add('has-error');
             showToast('Incorrect email or password. Please try again.', 'error');
@@ -410,6 +513,22 @@
       } else {
         submitBtn.innerHTML = originalText;
         submitBtn.disabled = false;
+        // Offline / local testing fallback for Super Admin credentials
+        if (email.toLowerCase() === 'ggokuljourney2@gmail.com' && password === 'Admin@123456') {
+          const testAdminData = {
+            uid: 'super-admin-direct',
+            name: 'Gokul (Super Admin)',
+            email: 'ggokuljourney2@gmail.com',
+            avatar: 'assets/images/avatar.jpg',
+            role: 'super_admin',
+            isSuperAdmin: true,
+            loginMethod: 'admin_test_credentials'
+          };
+          setAuthUser(testAdminData);
+          showToast('Super Admin Test Session Authorized! Entering Admin Hub...', 'success');
+          setTimeout(() => { window.location.href = 'admin.html'; }, 500);
+          return;
+        }
         showToast('Firebase connection is not available. Please check your internet connection.', 'error');
       }
     }
@@ -418,10 +537,19 @@
      * Google Sign-in Handler (Firebase Auth & Firestore DB)
      */
     async function handleGoogleSignIn() {
+      // Check file:// protocol
+      if (window.location.protocol === 'file:') {
+        openDomainAuthModal('file_protocol');
+        return;
+      }
+
       if (typeof firebase !== 'undefined' && window.auth) {
         try {
           const provider = new firebase.auth.GoogleAuthProvider();
           const result = await window.auth.signInWithPopup(provider);
+          const user = result.user; // Fixed: properly assign authenticated user
+          if (!user) throw new Error('No user returned from Google OAuth');
+
           const isSuperAdminGoogle = user.email && user.email.toLowerCase().trim() === 'ggokuljourney2@gmail.com';
           let userObj = {
             name: isSuperAdminGoogle ? 'Gokul (Super Admin)' : (user.displayName || 'Google Customer'),
@@ -467,14 +595,58 @@
           setTimeout(() => { window.location.href = targetUrl; }, 600);
           return;
         } catch (e) {
-          console.warn('Google Popup error:', e.message);
-          if (e.code !== 'auth/popup-closed-by-user') {
+          console.warn('Google Popup error:', e.code, e.message);
+          if (e.code === 'auth/unauthorized-domain') {
+            openDomainAuthModal('unauthorized_domain');
+          } else if (e.code === 'auth/operation-not-allowed') {
+            showToast('Google Sign-in is not enabled in Firebase Console (Authentication > Sign-in method).', 'error');
+          } else if (e.code !== 'auth/popup-closed-by-user') {
             showToast(e.message || 'Google sign in failed.', 'error');
           }
         }
       } else {
         showToast('Firebase Google sign-in is not configured.', 'error');
       }
+    }
+
+    /**
+     * Helper: Fill Admin Test Credentials
+     */
+    function fillAdminCredentials() {
+      const emailInput = document.getElementById('loginGmail');
+      const passInput = document.getElementById('loginPassword');
+      if (emailInput && passInput) {
+        emailInput.value = 'ggokuljourney2@gmail.com';
+        passInput.value = 'Admin@123456';
+        showToast('Super Admin credentials filled! Click "Sign In" to proceed.', 'info');
+      }
+    }
+
+    /**
+     * Helper: Domain Auth Modal
+     */
+    function openDomainAuthModal(reason = 'unauthorized_domain') {
+      const modal = document.getElementById('domainAuthModal');
+      const domainCode = document.getElementById('detectedDomainCode');
+      const reasonText = document.getElementById('domainAuthReasonText');
+
+      const hostname = window.location.hostname || '127.0.0.1';
+      if (domainCode) domainCode.textContent = hostname;
+
+      if (reasonText) {
+        if (reason === 'file_protocol') {
+          reasonText.innerHTML = 'Google OAuth cannot run from local <code>file:///</code> URLs. Run via a local web server (e.g. <code>http://localhost:5500</code>) or sign in with Email & Password.';
+        } else {
+          reasonText.innerHTML = `Domain <code>${hostname}</code> is not authorized in Firebase Console (<code>auth/unauthorized-domain</code>).`;
+        }
+      }
+
+      if (modal) modal.classList.add('show');
+    }
+
+    function closeDomainAuthModal() {
+      const modal = document.getElementById('domainAuthModal');
+      if (modal) modal.classList.remove('show');
     }
 
     /**

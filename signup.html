@@ -38,7 +38,7 @@
         <ul class="nav-menu" id="navDesktopMenu">
           <li><a href="index.html" class="nav-link"><i class="fa-solid fa-house"></i> Home</a></li>
           <li><a href="projects.html" class="nav-link"><i class="fa-solid fa-shapes"></i> Project</a></li>
-          <li><a href="products.html" class="nav-link"><i class="fa-solid fa-link"></i> Link Product</a></li>
+          <li><a href="products.html" class="nav-link"><i class="fa-solid fa-link"></i> Link Products</a></li>
           <li><a href="about.html" class="nav-link"><i class="fa-solid fa-user"></i> About</a></li>
           <li><a href="contact.html" class="nav-link"><i class="fa-solid fa-phone"></i> Contact Number</a></li>
         </ul>
@@ -294,7 +294,7 @@
           }
 
           setAuthUser(newUser);
-          showToast(`Welcome ${name}! Your customer account has been created.`, 'success');
+          showToast(`Welcome ${name}! Your account has been created.`, 'success');
 
           const targetUrl = isSuper ? 'admin.html' : getRedirectParam('products.html');
           setTimeout(() => {

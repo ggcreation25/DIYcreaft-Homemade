@@ -4,9 +4,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GG Creation Store — Official E-Commerce & Workshop Gear</title>
+  <title>GG Creation — Authentic Workshop Tools & Link Products</title>
   <meta name="description"
-    content="Direct E-Commerce Store for GG Creation. Purchase authentic handmade tractor models, workshop tools, and maker gear with Flipkart-style delivery tracking across India.">
+    content="Official workshop tools and affiliate gear links for GG Creation. Direct Flipkart and Amazon verified links for tools used in authentic homemade tractor builds.">
 
   <!-- Font Awesome 6 Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -20,54 +20,46 @@
     href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
     rel="stylesheet">
 
-  <!-- Instant Auth Route Guard -->
-  <script>
-    if (!localStorage.getItem('gg_user')) {
-      window.location.replace('login.html?redirect=products.html');
-    }
-  </script>
-
   <!-- Custom Stylesheets -->
   <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="css/ecommerce.css">
 
   <style>
-    .ecommerce-products-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 22px;
-      margin-top: 24px;
-    }
     .store-filter-bar {
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
-      margin: 20px 0 24px;
+      margin: 16px 0 24px;
     }
+
     .store-filter-btn {
-      padding: 8px 16px;
+      padding: 8px 18px;
       background: var(--bg-card);
       border: 1px solid var(--border-color);
-      border-radius: 20px;
+      border-radius: var(--radius-full);
       color: var(--text-secondary);
       font-size: 0.85rem;
       font-weight: 600;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 7px;
       transition: all 0.2s ease;
     }
-    .store-filter-btn.active, .store-filter-btn:hover {
+
+    .store-filter-btn.active,
+    .store-filter-btn:hover {
       background: var(--accent-red);
       color: #fff;
       border-color: var(--accent-red);
+      box-shadow: 0 4px 12px rgba(255, 77, 109, 0.3);
     }
+
     .store-search-wrap {
       position: relative;
       max-width: 440px;
       width: 100%;
     }
+
     .store-search-input {
       width: 100%;
       padding: 12px 16px 12px 42px;
@@ -79,15 +71,40 @@
       outline: none;
       transition: border-color 0.2s ease;
     }
+
     .store-search-input:focus {
       border-color: var(--accent-red);
     }
+
     .store-search-icon {
       position: absolute;
       left: 16px;
       top: 50%;
       transform: translateY(-50%);
       color: var(--text-muted);
+    }
+
+    .project-filter-active-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid var(--accent-red);
+      color: #f87171;
+      border-radius: 9999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+    .project-filter-active-pill button {
+      background: none;
+      border: none;
+      color: #f87171;
+      cursor: pointer;
+      font-size: 0.95rem;
+      line-height: 1;
+      padding: 0;
     }
   </style>
 </head>
@@ -105,7 +122,7 @@
         <div class="brand-icon-box">GG</div>
         <div class="brand-text">
           <span class="brand-title">GG Creation</span>
-          <span class="brand-tag">HOMEMADE & DIY STORE</span>
+          <span class="brand-tag">HOMEMADE & DIY INNOVATION</span>
         </div>
       </a>
 
@@ -114,7 +131,7 @@
         <ul class="nav-menu" id="navDesktopMenu">
           <li><a href="index.html" class="nav-link" id="navLinkHome"><i class="fa-solid fa-house"></i> Home</a></li>
           <li><a href="projects.html" class="nav-link" id="navLinkProjects"><i class="fa-solid fa-shapes"></i> Projects</a></li>
-          <li><a href="products.html" class="nav-link active" id="navLinkProducts"><i class="fa-solid fa-store"></i> Store & Buy</a></li>
+          <li><a href="products.html" class="nav-link active" id="navLinkProducts"><i class="fa-solid fa-link"></i> Link Products</a></li>
           <li><a href="about.html" class="nav-link" id="navLinkAbout"><i class="fa-solid fa-user"></i> About</a></li>
           <li><a href="contact.html" class="nav-link" id="navLinkContact"><i class="fa-solid fa-phone"></i> Contact</a></li>
         </ul>
@@ -122,12 +139,6 @@
 
       <!-- Nav Actions -->
       <div class="nav-actions">
-        <!-- Cart Trigger Button in Nav -->
-        <button class="nav-btn" onclick="GGEcommerce.openCartDrawer()" title="View Cart" style="position: relative;">
-          <i class="fa-solid fa-cart-shopping"></i>
-          <span class="cart-badge-count" id="navCartBadge" style="top: -2px; right: -2px;">0</span>
-        </button>
-
         <!-- Theme Toggle -->
         <button class="nav-btn" id="themeToggleBtn" aria-label="Toggle Theme">
           <i class="fa-solid fa-sun" id="themeIcon"></i>
@@ -140,19 +151,18 @@
 
         <!-- Profile Avatar & Dropdown -->
         <div class="profile-dropdown-wrapper" id="navProfileDropdownWrapper">
-          <button class="profile-avatar-btn" id="profileAvatarBtn">
-            <img src="assets/images/avatar.jpg" alt="GG Creation" class="avatar-img-sm" id="navAvatarImg"
-              onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80'">
+          <button class="profile-avatar-btn" id="profileAvatarBtn" aria-label="User Profile Menu">
+            <img src="assets/images/avatar.jpg" alt="GG Creation" class="avatar-img-sm" id="navAvatarImg">
             <span class="profile-name-text" id="navProfileName">GG Creation</span>
             <i class="fa-solid fa-chevron-down" style="font-size: 0.75rem; color: var(--text-muted);"></i>
           </button>
+
+          <!-- Dropdown Menu (Clean finishing: removed customer dashboard, orders, delivery, diy projects) -->
           <div class="profile-menu" id="profileMenuDropdown">
             <div class="profile-menu-header">
               <div class="profile-menu-title" id="dropdownUserTitle">GG Creation</div>
-              <div class="profile-menu-sub" id="dropdownUserSub">Customer Account</div>
+              <div class="profile-menu-sub" id="dropdownUserSub">Community Member</div>
             </div>
-            <a href="profile.html" class="profile-menu-item"><i class="fa-solid fa-user-circle"></i> Profile Dashboard</a>
-            <a href="projects.html" class="profile-menu-item"><i class="fa-solid fa-layer-group"></i> My DIY Projects</a>
             <a href="https://youtube.com/@ggcreative-x9o?si=3LtZbnrBawQbGshe" target="_blank"
               class="profile-menu-item"><i class="fa-brands fa-youtube" style="color: #ff0000;"></i> Open YouTube Channel</a>
             <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 4px 0;">
@@ -171,42 +181,42 @@
     </div>
   </header>
 
-  <!-- MAIN CONTENT: E-COMMERCE STORE -->
+  <!-- MAIN CONTENT: LINK PRODUCTS CATALOG -->
   <main class="container" style="flex: 1; padding-bottom: 80px;">
 
     <!-- Page Header -->
-    <section class="page-header" style="margin-bottom: 20px;">
+    <section class="page-header" style="margin-bottom: 24px;">
       <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;">
         <div>
           <div class="badge badge-spent-time" style="margin-bottom: 10px;">
-            <i class="fa-solid fa-bag-shopping"></i> Direct E-Commerce Store
+            <i class="fa-solid fa-wrench"></i> Workshop Gear & Link Products
           </div>
-          <h1 class="page-title">Handmade Creations & <span>Workshop Gear</span></h1>
+          <h1 class="page-title">Authentic Workshop Tools & <span>Link Products</span></h1>
           <p class="page-subtitle">
-            Purchase custom handmade tractor scale models, precision tools, and build components directly with Flipkart-style delivery tracking across India.
+            Direct Flipkart & Amazon verified purchase links for tools and components used in official GG Creation homemade tractor builds.
           </p>
         </div>
 
         <div style="display: flex; align-items: center; gap: 10px;">
-          <button class="btn btn-secondary btn-sm" onclick="GGEcommerce.openAddressModal()">
-            <i class="fa-solid fa-location-dot" style="color: var(--accent-red);"></i> My Delivery Address
-          </button>
-          <button class="btn btn-primary btn-sm" onclick="GGEcommerce.openCartDrawer()">
-            <i class="fa-solid fa-cart-shopping"></i> View Cart (<span id="storeCartCount">0</span>)
-          </button>
+          <a href="projects.html" class="btn btn-secondary btn-sm">
+            <i class="fa-solid fa-shapes"></i> Browse Builds
+          </a>
         </div>
       </div>
     </section>
 
-    <!-- Search & Filter Controls -->
-    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; margin-bottom: 16px;">
+    <!-- Search & Active Project Filter -->
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; margin-bottom: 8px;">
       <div class="store-search-wrap">
         <i class="fa-solid fa-magnifying-glass store-search-icon"></i>
-        <input type="text" class="store-search-input" id="storeSearchInput" placeholder="Search models, impact drills, grinders, parts..." oninput="handleStoreSearch(this.value)">
+        <input type="text" class="store-search-input" id="storeSearchInput" placeholder="Search drills, angle grinders, heat guns, calipers..." oninput="handleStoreSearch(this.value)">
       </div>
 
-      <div style="font-size: 0.88rem; color: #10b981; font-weight: 700; display: inline-flex; align-items: center; gap: 6px;">
-        <i class="fa-solid fa-truck-fast"></i> Free Delivery on all Orders • Cash on Delivery & UPI
+      <div id="projectFilterNotice" style="display: none;">
+        <span class="project-filter-active-pill">
+          <span id="projectFilterText">Filtered by Project</span>
+          <button onclick="clearProjectFilter()" title="Clear filter">&times;</button>
+        </span>
       </div>
     </div>
 
@@ -215,29 +225,444 @@
       <button class="store-filter-btn active" onclick="filterStoreCategory('all', this)">
         <i class="fa-solid fa-boxes-stacked"></i> All Products
       </button>
-      <button class="store-filter-btn" onclick="filterStoreCategory('diy-models', this)">
-        <i class="fa-solid fa-tractor"></i> Handmade DIY Models
-      </button>
       <button class="store-filter-btn" onclick="filterStoreCategory('drills', this)">
         <i class="fa-solid fa-screwdriver"></i> Power Drills
       </button>
       <button class="store-filter-btn" onclick="filterStoreCategory('grinders', this)">
         <i class="fa-solid fa-compact-disc"></i> Angle Grinders
       </button>
-      <button class="store-filter-btn" onclick="filterStoreCategory('heat-guns', this)">
-        <i class="fa-solid fa-fire"></i> Heat & Glue Guns
+      <button class="store-filter-btn" onclick="filterStoreCategory('thermal', this)">
+        <i class="fa-solid fa-fire"></i> Thermal & Glue
       </button>
       <button class="store-filter-btn" onclick="filterStoreCategory('precision', this)">
         <i class="fa-solid fa-ruler-combined"></i> Precision Tools
       </button>
+      <button class="store-filter-btn" onclick="filterStoreCategory('moulds', this)">
+        <i class="fa-solid fa-cubes"></i> Silicone Moulds
+      </button>
     </div>
 
-    <!-- Dynamic Products Grid -->
-    <div class="ecommerce-products-grid" id="storeProductsGrid">
-      <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--text-muted);">
-        <i class="fa-solid fa-spinner fa-spin" style="font-size: 1.8rem; margin-bottom: 10px;"></i>
-        <div>Loading store catalog from Cloud Firestore...</div>
-      </div>
+    <!-- Products List (Matches exact Flipkart card layout from user screenshot) -->
+    <div class="products-list-container" id="productsList">
+
+      <!-- Product 1: iBELL Tool Kit with Impact Drill -->
+      <article class="product-link-card" data-category="drills" data-projects="1,4" data-id="1">
+        <div class="card-left-col">
+          <div class="product-thumb-box">
+            <img src="assets/images/tool_ibell_drill_kit.jpg" alt="iBELL Tool Kit with Impact Drill TD13-100" onerror="this.src='assets/images/project-1.jpg'">
+          </div>
+          <div class="product-price-block">
+            <div class="product-price-value">₹ 2,499</div>
+            <div class="product-price-sub">115 Tools Kit • 650W</div>
+          </div>
+        </div>
+
+        <div class="card-info-col">
+          <div class="product-badge-row">
+            <span class="badge-pdf-tag">Product 1 • PDF Page 1</span>
+            <span class="badge-spec-tag"><i class="fa-solid fa-award"></i> Workshop Essential</span>
+          </div>
+          <h3 class="product-card-title">iBELL Tool Kit with Impact Drill TD13-100, 650W, Copper Armature, Chuck 13mm Keyless Power & Hand Tool Kit (115 Tools)</h3>
+          <p class="product-card-desc">650W copper armature with complete 115-piece hand tool organizer kit. Ideal for drilling chassis frames, pilot holes, and heavy bracket mounting.</p>
+          <div class="product-used-in-row">
+            <span class="used-in-label"><i class="fa-solid fa-diagram-project"></i> USED IN:</span>
+            <a href="project-detail.html?id=proj-mahindra-415di" class="badge-used-proj">🚜 1. Mahindra 415DI XP PLUS</a>
+            <a href="project-detail.html?id=proj-truck-1" class="badge-used-proj">🚛 4. Truck 1</a>
+          </div>
+          <div class="product-shortlink-row">
+            <i class="fa-solid fa-link" style="color: var(--accent-red);"></i>
+            <a href="https://dl.flipkart.com/s/R9_0UZNNNN" target="_blank" rel="noopener noreferrer">dl.flipkart.com/s/R9_0UZNNNN</a>
+          </div>
+        </div>
+
+        <div class="card-action-col">
+          <a href="https://dl.flipkart.com/s/R9_0UZNNNN" target="_blank" rel="noopener noreferrer" class="btn-buy-flipkart">
+            <i class="fa-solid fa-cart-shopping"></i> Buy on Flipkart
+          </a>
+        </div>
+      </article>
+
+      <!-- Product 2: IZOM 20V Battery Operated Drill (EXACT LAYOUT FROM USER SCREENSHOT) -->
+      <article class="product-link-card" data-category="drills" data-projects="3,4" data-id="2">
+        <div class="card-left-col">
+          <div class="product-thumb-box">
+            <img src="assets/images/tool_izom_cordless_drill.jpg" alt="IZOM 20V Battery Operated Drill" onerror="this.src='assets/images/project-2.jpg'">
+          </div>
+          <div class="product-price-block">
+            <div class="product-price-value">₹ 1,899</div>
+            <div class="product-price-sub">20V Cordless • Li-ion</div>
+          </div>
+        </div>
+
+        <div class="card-info-col">
+          <div class="product-badge-row">
+            <span class="badge-pdf-tag">Product 2 • PDF Page 1</span>
+            <span class="badge-spec-tag"><i class="fa-solid fa-battery-full"></i> 20V Battery</span>
+          </div>
+          <h3 class="product-card-title">IZOM 20V IZOM Battery Operated Drill - IZ-CDK Power & Hand Tool Kit (1 Tools)</h3>
+          <p class="product-card-desc">Cordless convenience with 20V lithium battery, rapid desktop charger, flexible extension drive rod, screwdriver bits, socket set, and heavy-duty box. Ideal for tight mini tractor engine bays.</p>
+          <div class="product-used-in-row">
+            <span class="used-in-label"><i class="fa-solid fa-diagram-project"></i> USED IN:</span>
+            <a href="project-detail.html?id=proj-jd-5310-4wd" class="badge-used-proj">🚜 3. John Deere 5310 4wd</a>
+            <a href="project-detail.html?id=proj-truck-1" class="badge-used-proj">🚛 4. Truck 1</a>
+          </div>
+          <div class="product-shortlink-row">
+            <i class="fa-solid fa-link" style="color: var(--accent-red);"></i>
+            <a href="https://dl.flipkart.com/s/Rkprp0NNNN" target="_blank" rel="noopener noreferrer">dl.flipkart.com/s/Rkprp0NNNN</a>
+          </div>
+        </div>
+
+        <div class="card-action-col">
+          <a href="https://dl.flipkart.com/s/Rkprp0NNNN" target="_blank" rel="noopener noreferrer" class="btn-buy-flipkart">
+            <i class="fa-solid fa-cart-shopping"></i> Buy on Flipkart
+          </a>
+        </div>
+      </article>
+
+      <!-- Product 3: Sauran AG-801 Angle Grinder -->
+      <article class="product-link-card" data-category="grinders" data-projects="1,2" data-id="3">
+        <div class="card-left-col">
+          <div class="product-thumb-box">
+            <img src="assets/images/tool_sauran_angle_grinder.jpg" alt="Sauran AG-801 Angle Grinder" onerror="this.src='assets/images/project-3.jpg'">
+          </div>
+          <div class="product-price-block">
+            <div class="product-price-value">₹ 1,499</div>
+            <div class="product-price-sub">850W High Copper • 100mm Disc</div>
+          </div>
+        </div>
+
+        <div class="card-info-col">
+          <div class="product-badge-row">
+            <span class="badge-pdf-tag">Product 3 • PDF Page 1</span>
+            <span class="badge-spec-tag"><i class="fa-solid fa-bolt"></i> 100mm Wheel</span>
+          </div>
+          <h3 class="product-card-title">Sauran AG-801 Angle Grinder (100 mm Wheel Diameter)</h3>
+          <p class="product-card-desc">Heavy duty 850W angle grinder with safety spindle lock and protective guard for precision cutting of tractor metal chassis and axle rods.</p>
+          <div class="product-used-in-row">
+            <span class="used-in-label"><i class="fa-solid fa-diagram-project"></i> USED IN:</span>
+            <a href="project-detail.html?id=proj-mahindra-415di" class="badge-used-proj">🚜 1. Mahindra 415DI XP PLUS</a>
+            <a href="project-detail.html?id=proj-jd-5050d-2wd" class="badge-used-proj">🚜 2. John Deere 5050 D 2wd</a>
+          </div>
+          <div class="product-shortlink-row">
+            <i class="fa-solid fa-link" style="color: var(--accent-red);"></i>
+            <a href="https://dl.flipkart.com/s/pVRVqXNNNN" target="_blank" rel="noopener noreferrer">dl.flipkart.com/s/pVRVqXNNNN</a>
+          </div>
+        </div>
+
+        <div class="card-action-col">
+          <a href="https://dl.flipkart.com/s/pVRVqXNNNN" target="_blank" rel="noopener noreferrer" class="btn-buy-flipkart">
+            <i class="fa-solid fa-cart-shopping"></i> Buy on Flipkart
+          </a>
+        </div>
+      </article>
+
+      <!-- Product 4: OMXE OPAL-801 950w Heavy Duty Angle Grinder -->
+      <article class="product-link-card" data-category="grinders" data-projects="3,5" data-id="4">
+        <div class="card-left-col">
+          <div class="product-thumb-box">
+            <img src="assets/images/tool_omxe_angle_grinder.jpg" alt="OMXE OPAL-801 950w Angle Grinder" onerror="this.src='assets/images/project-4.jpg'">
+          </div>
+          <div class="product-price-block">
+            <div class="product-price-value">₹ 1,649</div>
+            <div class="product-price-sub">950W High Torque • Spindle Lock</div>
+          </div>
+        </div>
+
+        <div class="card-info-col">
+          <div class="product-badge-row">
+            <span class="badge-pdf-tag">Product 4 • PDF Page 1</span>
+            <span class="badge-spec-tag"><i class="fa-solid fa-fire"></i> 11,000 RPM</span>
+          </div>
+          <h3 class="product-card-title">OMXE OPAL-801 950w Heavy Duty Professional Angle Grinder (100 mm Wheel Diameter)</h3>
+          <p class="product-card-desc">950W ultra-high RPM grinder ideal for heavy metal fabrication, smoothing welded tractor brackets, and custom frame grinding.</p>
+          <div class="product-used-in-row">
+            <span class="used-in-label"><i class="fa-solid fa-diagram-project"></i> USED IN:</span>
+            <a href="project-detail.html?id=proj-jd-5310-4wd" class="badge-used-proj">🚜 3. John Deere 5310 4wd</a>
+            <a href="project-detail.html?id=proj-truck-2" class="badge-used-proj">🚛 5. Truck 2</a>
+          </div>
+          <div class="product-shortlink-row">
+            <i class="fa-solid fa-link" style="color: var(--accent-red);"></i>
+            <a href="https://dl.flipkart.com/s/pV6W8ZuuuN" target="_blank" rel="noopener noreferrer">dl.flipkart.com/s/pV6W8ZuuuN</a>
+          </div>
+        </div>
+
+        <div class="card-action-col">
+          <a href="https://dl.flipkart.com/s/pV6W8ZuuuN" target="_blank" rel="noopener noreferrer" class="btn-buy-flipkart">
+            <i class="fa-solid fa-cart-shopping"></i> Buy on Flipkart
+          </a>
+        </div>
+      </article>
+
+      <!-- Product 5: Qualigen 2000 W Heavy Duty Heat Gun -->
+      <article class="product-link-card" data-category="thermal" data-projects="2,5" data-id="5">
+        <div class="card-left-col">
+          <div class="product-thumb-box">
+            <img src="assets/images/tool_qualigen_heat_gun.jpg" alt="Qualigen 2000 W Heavy Duty Heat Gun" onerror="this.src='assets/images/hero.jpg'">
+          </div>
+          <div class="product-price-block">
+            <div class="product-price-value">₹ 899</div>
+            <div class="product-price-sub">2000 Watts • 350°C / 550°C</div>
+          </div>
+        </div>
+
+        <div class="card-info-col">
+          <div class="product-badge-row">
+            <span class="badge-pdf-tag">Product 5 • PDF Page 2</span>
+            <span class="badge-spec-tag"><i class="fa-solid fa-temperature-arrow-up"></i> Dual Temp Mode</span>
+          </div>
+          <h3 class="product-card-title">Qualigen 2000 W HEAVY DUTY hot air 2000 W Heat Gun</h3>
+          <p class="product-card-desc">Dual temperature hot air blower for heat-shrinking electrical tubing, thermal acrylic moulding, and bending DIY tractor exhaust pipes.</p>
+          <div class="product-used-in-row">
+            <span class="used-in-label"><i class="fa-solid fa-diagram-project"></i> USED IN:</span>
+            <a href="project-detail.html?id=proj-jd-5050d-2wd" class="badge-used-proj">🚜 2. John Deere 5050 D 2wd</a>
+            <a href="project-detail.html?id=proj-truck-2" class="badge-used-proj">🚛 5. Truck 2</a>
+          </div>
+          <div class="product-shortlink-row">
+            <i class="fa-solid fa-link" style="color: var(--accent-red);"></i>
+            <a href="https://dl.flipkart.com/s/pVzJXZuuuN" target="_blank" rel="noopener noreferrer">dl.flipkart.com/s/pVzJXZuuuN</a>
+          </div>
+        </div>
+
+        <div class="card-action-col">
+          <a href="https://dl.flipkart.com/s/pVzJXZuuuN" target="_blank" rel="noopener noreferrer" class="btn-buy-flipkart">
+            <i class="fa-solid fa-cart-shopping"></i> Buy on Flipkart
+          </a>
+        </div>
+      </article>
+
+      <!-- Product 6: INGCO SI0268 60 W Soldering Iron -->
+      <article class="product-link-card" data-category="thermal" data-projects="1,4,6" data-id="6">
+        <div class="card-left-col">
+          <div class="product-thumb-box">
+            <img src="assets/images/tool_ingco_soldering_iron.jpg" alt="INGCO SI0268 60 W Soldering Iron" onerror="this.src='assets/images/project-1.jpg'">
+          </div>
+          <div class="product-price-block">
+            <div class="product-price-value">₹ 449</div>
+            <div class="product-price-sub">60 Watts • Rapid Heat Mica</div>
+          </div>
+        </div>
+
+        <div class="card-info-col">
+          <div class="product-badge-row">
+            <span class="badge-pdf-tag">Product 6 • PDF Page 2</span>
+            <span class="badge-spec-tag"><i class="fa-solid fa-plug"></i> 60W Mica Core</span>
+          </div>
+          <h3 class="product-card-title">INGCO SI0268 60 W Simple (Conical Tip) Soldering Iron</h3>
+          <p class="product-card-desc">Precision 60W soldering iron with heat-resistant ergonomic handle for wiring mini tractor LED headlights, batteries, and DC speed controllers.</p>
+          <div class="product-used-in-row">
+            <span class="used-in-label"><i class="fa-solid fa-diagram-project"></i> USED IN:</span>
+            <a href="project-detail.html?id=proj-mahindra-415di" class="badge-used-proj">🚜 1. Mahindra 415DI XP PLUS</a>
+            <a href="project-detail.html?id=proj-truck-1" class="badge-used-proj">🚛 4. Truck 1</a>
+            <a href="project-detail.html?id=proj-water-pump" class="badge-used-proj">⚙️ 6. Water Pump</a>
+          </div>
+          <div class="product-shortlink-row">
+            <i class="fa-solid fa-link" style="color: var(--accent-red);"></i>
+            <a href="https://dl.flipkart.com/s/eZ9bKxNNNN" target="_blank" rel="noopener noreferrer">dl.flipkart.com/s/eZ9bKxNNNN</a>
+          </div>
+        </div>
+
+        <div class="card-action-col">
+          <a href="https://dl.flipkart.com/s/eZ9bKxNNNN" target="_blank" rel="noopener noreferrer" class="btn-buy-flipkart">
+            <i class="fa-solid fa-cart-shopping"></i> Buy on Flipkart
+          </a>
+        </div>
+      </article>
+
+      <!-- Product 7: TechTrove 20W Mini Glue Gun -->
+      <article class="product-link-card" data-category="thermal" data-projects="2,4" data-id="7">
+        <div class="card-left-col">
+          <div class="product-thumb-box">
+            <img src="assets/images/tool_techtrove_glue_gun.jpg" alt="TechTrove 20W Mini Glue Gun" onerror="this.src='assets/images/project-2.jpg'">
+          </div>
+          <div class="product-price-block">
+            <div class="product-price-value">₹ 299</div>
+            <div class="product-price-sub">20W • 15 Glue Sticks Included</div>
+          </div>
+        </div>
+
+        <div class="card-info-col">
+          <div class="product-badge-row">
+            <span class="badge-pdf-tag">Product 7 • PDF Page 2</span>
+            <span class="badge-spec-tag"><i class="fa-solid fa-wand-magic-sparkles"></i> PTC Rapid Heat</span>
+          </div>
+          <h3 class="product-card-title">TechTrove 20W MINI GLUE GUN WITH 15 STICKS FOR DIY HOME CRAFT ,ART (7 mm)</h3>
+          <p class="product-card-desc">Compact 20W hot glue gun with quick heating PTC ceramic element. Ideal for fast mounting of tractor cabs, dashboard dials, and acrylic panels.</p>
+          <div class="product-used-in-row">
+            <span class="used-in-label"><i class="fa-solid fa-diagram-project"></i> USED IN:</span>
+            <a href="project-detail.html?id=proj-jd-5050d-2wd" class="badge-used-proj">🚜 2. John Deere 5050 D 2wd</a>
+            <a href="project-detail.html?id=proj-truck-1" class="badge-used-proj">🚛 4. Truck 1</a>
+          </div>
+          <div class="product-shortlink-row">
+            <i class="fa-solid fa-link" style="color: var(--accent-red);"></i>
+            <a href="https://dl.flipkart.com/s/pVZZ1ruuuN" target="_blank" rel="noopener noreferrer">dl.flipkart.com/s/pVZZ1ruuuN</a>
+          </div>
+        </div>
+
+        <div class="card-action-col">
+          <a href="https://dl.flipkart.com/s/pVZZ1ruuuN" target="_blank" rel="noopener noreferrer" class="btn-buy-flipkart">
+            <i class="fa-solid fa-cart-shopping"></i> Buy on Flipkart
+          </a>
+        </div>
+      </article>
+
+      <!-- Product 8: SEE INSIDE Electronic Digital Vernier Caliper -->
+      <article class="product-link-card" data-category="precision" data-projects="2,3,5" data-id="8">
+        <div class="card-left-col">
+          <div class="product-thumb-box">
+            <img src="assets/images/tool_digital_vernier_caliper.jpg" alt="SEE INSIDE Digital Vernier Caliper" onerror="this.src='assets/images/project-3.jpg'">
+          </div>
+          <div class="product-price-block">
+            <div class="product-price-value">₹ 389</div>
+            <div class="product-price-sub">0-150 mm • Large LCD Screen</div>
+          </div>
+        </div>
+
+        <div class="card-info-col">
+          <div class="product-badge-row">
+            <span class="badge-pdf-tag">Product 8 • PDF Page 2</span>
+            <span class="badge-spec-tag"><i class="fa-solid fa-ruler"></i> 0.1mm Accuracy</span>
+          </div>
+          <h3 class="product-card-title">SEE INSIDE Vernier Caliper Electronic Digital LCD Display Ruler (0 - 150 mm)</h3>
+          <p class="product-card-desc">Digital caliper with 0.1 mm precision for measuring gear clearances, axle shaft diameters, and bearing tolerances during tractor assembly.</p>
+          <div class="product-used-in-row">
+            <span class="used-in-label"><i class="fa-solid fa-diagram-project"></i> USED IN:</span>
+            <a href="project-detail.html?id=proj-jd-5050d-2wd" class="badge-used-proj">🚜 2. John Deere 5050 D 2wd</a>
+            <a href="project-detail.html?id=proj-jd-5310-4wd" class="badge-used-proj">🚜 3. John Deere 5310 4wd</a>
+            <a href="project-detail.html?id=proj-truck-2" class="badge-used-proj">🚛 5. Truck 2</a>
+          </div>
+          <div class="product-shortlink-row">
+            <i class="fa-solid fa-link" style="color: var(--accent-red);"></i>
+            <a href="https://dl.flipkart.com/s/Rkfz9xNNNN" target="_blank" rel="noopener noreferrer">dl.flipkart.com/s/Rkfz9xNNNN</a>
+          </div>
+        </div>
+
+        <div class="card-action-col">
+          <a href="https://dl.flipkart.com/s/Rkfz9xNNNN" target="_blank" rel="noopener noreferrer" class="btn-buy-flipkart">
+            <i class="fa-solid fa-cart-shopping"></i> Buy on Flipkart
+          </a>
+        </div>
+      </article>
+
+      <!-- Product 9: NITYA HSS Titanium Coated Drill Bit Set -->
+      <article class="product-link-card" data-category="precision" data-projects="1,3,6" data-id="9">
+        <div class="card-left-col">
+          <div class="product-thumb-box">
+            <img src="assets/images/tool_hss_titanium_drill_bits.jpg" alt="NITYA HSS Titanium Coated Drill Bit Set" onerror="this.src='assets/images/project-4.jpg'">
+          </div>
+          <div class="product-price-block">
+            <div class="product-price-value">₹ 329</div>
+            <div class="product-price-sub">6 PCS • Multi-Material Drill</div>
+          </div>
+        </div>
+
+        <div class="card-info-col">
+          <div class="product-badge-row">
+            <span class="badge-pdf-tag">Product 9 • PDF Page 3</span>
+            <span class="badge-spec-tag"><i class="fa-solid fa-screwdriver"></i> Titanium Coated</span>
+          </div>
+          <h3 class="product-card-title">NITYA HSS Titanium Coated Drill Bit Set 6PCS for cutting, drilling and reaming</h3>
+          <p class="product-card-desc">High-speed titanium coated stepped drill and saw bits for boring smooth holes in PVC sheets, sheet metal tractor bonnets, and wood frames.</p>
+          <div class="product-used-in-row">
+            <span class="used-in-label"><i class="fa-solid fa-diagram-project"></i> USED IN:</span>
+            <a href="project-detail.html?id=proj-mahindra-415di" class="badge-used-proj">🚜 1. Mahindra 415DI XP PLUS</a>
+            <a href="project-detail.html?id=proj-jd-5310-4wd" class="badge-used-proj">🚜 3. John Deere 5310 4wd</a>
+            <a href="project-detail.html?id=proj-water-pump" class="badge-used-proj">⚙️ 6. Water Pump</a>
+          </div>
+          <div class="product-shortlink-row">
+            <i class="fa-solid fa-link" style="color: var(--accent-red);"></i>
+            <a href="https://dl.flipkart.com/s/pV_b3guuuN" target="_blank" rel="noopener noreferrer">dl.flipkart.com/s/pV_b3guuuN</a>
+          </div>
+        </div>
+
+        <div class="card-action-col">
+          <a href="https://dl.flipkart.com/s/pV_b3guuuN" target="_blank" rel="noopener noreferrer" class="btn-buy-flipkart">
+            <i class="fa-solid fa-cart-shopping"></i> Buy on Flipkart
+          </a>
+        </div>
+      </article>
+
+      <!-- Product 10: Kiesh Holesaw Cutter Set 11pcs -->
+      <article class="product-link-card" data-category="precision" data-projects="4,5,6" data-id="10">
+        <div class="card-left-col">
+          <div class="product-thumb-box">
+            <img src="assets/images/tool_holesaw_cutter_set.jpg" alt="Kiesh Holesaw Cutter Set 11pcs" onerror="this.src='assets/images/project-5.jpg'">
+          </div>
+          <div class="product-price-block">
+            <div class="product-price-value">₹ 599</div>
+            <div class="product-price-sub">11 PCS • 3/4" to 2 1/2" Cutters</div>
+          </div>
+        </div>
+
+        <div class="card-info-col">
+          <div class="product-badge-row">
+            <span class="badge-pdf-tag">Product 10 • PDF Page 3</span>
+            <span class="badge-spec-tag"><i class="fa-solid fa-circle-dot"></i> 11 Pcs Kit</span>
+          </div>
+          <h3 class="product-card-title">Kiesh Holesaw Cutter Set 11pcs Woodworking Hole Saw Drill Bit Kit 3/4" to 2 1/2"</h3>
+          <p class="product-card-desc">11-piece carbon steel hole saw kit for drilling large diameter openings for tractor wheel hubs, water pump casings, and circular headlights.</p>
+          <div class="product-used-in-row">
+            <span class="used-in-label"><i class="fa-solid fa-diagram-project"></i> USED IN:</span>
+            <a href="project-detail.html?id=proj-truck-1" class="badge-used-proj">🚛 4. Truck 1</a>
+            <a href="project-detail.html?id=proj-truck-2" class="badge-used-proj">🚛 5. Truck 2</a>
+            <a href="project-detail.html?id=proj-water-pump" class="badge-used-proj">⚙️ 6. Water Pump</a>
+          </div>
+          <div class="product-shortlink-row">
+            <i class="fa-solid fa-link" style="color: var(--accent-red);"></i>
+            <a href="https://dl.flipkart.com/s/5_1k1JuuuN" target="_blank" rel="noopener noreferrer">dl.flipkart.com/s/5_1k1JuuuN</a>
+          </div>
+        </div>
+
+        <div class="card-action-col">
+          <a href="https://dl.flipkart.com/s/5_1k1JuuuN" target="_blank" rel="noopener noreferrer" class="btn-buy-flipkart">
+            <i class="fa-solid fa-cart-shopping"></i> Buy on Flipkart
+          </a>
+        </div>
+      </article>
+
+      <!-- Product 11: Husaini Mart Silicone Chocolate / Casting Mould -->
+      <article class="product-link-card" data-category="moulds" data-projects="5,6" data-id="11">
+        <div class="card-left-col">
+          <div class="product-thumb-box">
+            <img src="assets/images/tool_silicone_mould_tray.jpg" alt="Husaini Mart Silicone Mould 2 Pack" onerror="this.src='assets/images/project-1.jpg'">
+          </div>
+          <div class="product-price-block">
+            <div class="product-price-value">₹ 349</div>
+            <div class="product-price-sub">Pack of 2 Trays</div>
+          </div>
+        </div>
+
+        <div class="card-info-col">
+          <div class="product-badge-row">
+            <span class="badge-pdf-tag">Product 11 • PDF Page 3</span>
+            <span class="badge-spec-tag"><i class="fa-solid fa-cubes"></i> Silicone Molds</span>
+          </div>
+          <h3 class="product-card-title">Husaini Mart Silicone Chocolate Mould Skytail 2 Pack Rectangle Silicone Mold (Pack of 2)</h3>
+          <p class="product-card-desc">Flexible silicone casting moulds for pouring homemade resin counterweights, bumper blocks, and tractor wheel rim castings.</p>
+          <div class="product-used-in-row">
+            <span class="used-in-label"><i class="fa-solid fa-diagram-project"></i> USED IN:</span>
+            <a href="project-detail.html?id=proj-truck-2" class="badge-used-proj">🚛 5. Truck 2</a>
+            <a href="project-detail.html?id=proj-water-pump" class="badge-used-proj">⚙️ 6. Water Pump</a>
+          </div>
+          <div class="product-shortlink-row">
+            <i class="fa-solid fa-link" style="color: var(--accent-red);"></i>
+            <a href="https://dl.flipkart.com/s/eZYB6xNNNN" target="_blank" rel="noopener noreferrer">dl.flipkart.com/s/eZYB6xNNNN</a>
+          </div>
+        </div>
+
+        <div class="card-action-col">
+          <a href="https://dl.flipkart.com/s/eZYB6xNNNN" target="_blank" rel="noopener noreferrer" class="btn-buy-flipkart">
+            <i class="fa-solid fa-cart-shopping"></i> Buy on Flipkart
+          </a>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- Bottom Navigation Back Bar -->
+    <div class="bottom-back-bar" style="margin-top: 40px; text-align: center;">
+      <a href="projects.html" class="bottom-back-btn">
+        <i class="fa-solid fa-arrow-left"></i> Back to Projects Showcase
+      </a>
     </div>
 
   </main>
@@ -255,18 +680,18 @@
             </div>
           </a>
           <p class="footer-col-desc">
-            Official E-commerce store of YouTube channel <strong>GG Creation (@GGCreative-x9o)</strong>. Order authentic handmade models & workshop tools with doorstep delivery.
+            Official website of YouTube channel <strong>GG Creation (@GGCreative-x9o)</strong>. Verified workshop gear and authentic project materials.
           </p>
         </div>
 
         <div>
-          <h4 class="footer-heading">Store Navigation</h4>
+          <h4 class="footer-heading">Navigation</h4>
           <ul class="footer-links">
             <li><a href="index.html" class="footer-link">Home</a></li>
             <li><a href="projects.html" class="footer-link">Projects Showcase</a></li>
-            <li><a href="products.html" class="footer-link">E-Commerce Store</a></li>
-            <li><a href="profile.html?tab=orders" class="footer-link">Track Order & Supply Chain</a></li>
-            <li><a href="contact.html" class="footer-link">Support & Inquiries</a></li>
+            <li><a href="products.html" class="footer-link">Link Products</a></li>
+            <li><a href="about.html" class="footer-link">About GG Creation</a></li>
+            <li><a href="contact.html" class="footer-link">Contact Channels</a></li>
           </ul>
         </div>
 
@@ -274,9 +699,9 @@
           <h4 class="footer-heading">Direct Contact</h4>
           <ul class="footer-links">
             <li><a href="https://wa.me/919043081667" target="_blank" class="footer-link"><i
-                  class="fa-brands fa-whatsapp" style="color: #25d366;"></i> WhatsApp Support</a></li>
+                  class="fa-brands fa-whatsapp" style="color: #25d366;"></i> WhatsApp Chat</a></li>
             <li><a href="mailto:gjgokul2005@gmail.com" class="footer-link"><i class="fa-solid fa-envelope"
-                  style="color: var(--accent-red);"></i> Store Support Email</a></li>
+                  style="color: var(--accent-red);"></i> Email Inquiry</a></li>
           </ul>
         </div>
 
@@ -293,11 +718,7 @@
       </div>
 
       <div class="footer-bottom">
-        <div>&copy; 2026 GG Creation Store. All rights reserved. Handcrafted with passion.</div>
-        <div style="display: flex; gap: 16px;">
-          <a href="admin.html" style="color: var(--text-muted);"><i class="fa-solid fa-lock"></i> Admin Hub</a>
-          <a href="profile.html" style="color: var(--text-muted);"><i class="fa-solid fa-user"></i> My Account</a>
-        </div>
+        <div>&copy; 2026 GG Creation. All rights reserved. Handcrafted with passion.</div>
       </div>
     </div>
   </footer>
@@ -310,308 +731,87 @@
 
   <!-- Core App Scripts -->
   <script src="js/main.js"></script>
-  <script src="js/firestore-sync.js"></script>
-  <script src="js/ecommerce.js"></script>
 
   <script>
-    // Authentic Store Products Catalog (Handmade Models + Workshop Gear)
-    const DEFAULT_STORE_PRODUCTS = [
-      {
-        id: 'model-red-tractor',
-        title: 'Handmade 415DI Red Mini Tractor Model (Scratch Build)',
-        category: 'diy-models',
-        categoryLabel: 'Handmade Models',
-        priceNumeric: 3499,
-        mrp: 4999,
-        stock: 5,
-        rating: 4.9,
-        reviewsCount: 38,
-        image: 'assets/images/project-1.jpg',
-        badge: 'Handmade Masterpiece',
-        desc: 'Precision scaled handmade red mini tractor with real steering linkage, functional PTO shaft mockup, and working LED headlamps.'
-      },
-      {
-        id: 'model-jd-5050d',
-        title: 'Handcrafted John Deere 5050D 2WD Scale Model',
-        category: 'diy-models',
-        categoryLabel: 'Handmade Models',
-        priceNumeric: 3999,
-        mrp: 5499,
-        stock: 3,
-        rating: 5.0,
-        reviewsCount: 24,
-        image: 'assets/images/project-2.jpg',
-        badge: 'Rare Handcrafted Build',
-        desc: 'Signature green and yellow John Deere tribute with openable bonnet, replica exhaust stack, and high-traction rubber tread tires.'
-      },
-      {
-        id: 'model-jcb-3dx',
-        title: 'Handmade JCB 3DX Backhoe Loader Scale Model',
-        category: 'diy-models',
-        categoryLabel: 'Handmade Models',
-        priceNumeric: 4499,
-        mrp: 6299,
-        stock: 2,
-        rating: 4.9,
-        reviewsCount: 19,
-        image: 'assets/images/project-7.jpg',
-        badge: 'Limited Edition Build',
-        desc: 'Functional front shovel arm and rear excavator boom with syringe hydraulic actuators. Complete steel frame and yellow chassis.'
-      },
-      {
-        id: 'tool-ibell-drill',
-        title: 'iBELL Tool Kit with Impact Drill TD13-100 (650W, 13mm Chuck)',
-        category: 'drills',
-        categoryLabel: 'Power Drills',
-        priceNumeric: 1749,
-        mrp: 2499,
-        stock: 14,
-        rating: 4.8,
-        reviewsCount: 112,
-        image: 'assets/images/tool_ibell_impact_drill.jpg',
-        badge: 'Workshop Essential',
-        desc: '650W Copper Armature with complete 115-piece hand tool organizer kit.'
-      },
-      {
-        id: 'tool-sauran-grinder',
-        title: 'Sauran AG-801 Angle Grinder 100mm (850W Heavy Duty)',
-        category: 'grinders',
-        categoryLabel: 'Angle Grinders',
-        priceNumeric: 1499,
-        mrp: 1999,
-        stock: 18,
-        rating: 4.7,
-        reviewsCount: 86,
-        image: 'assets/images/tool_sauran_angle_grinder.jpg',
-        badge: 'Metal Cutting Pro',
-        desc: '850 Watts high-speed motor with lock-on switch, safety guard, and spanner.'
-      },
-      {
-        id: 'tool-qualigen-heatgun',
-        title: 'Qualigen 2000W Heavy Duty Dual-Temp Heat Gun',
-        category: 'heat-guns',
-        categoryLabel: 'Heat Guns',
-        priceNumeric: 899,
-        mrp: 1399,
-        stock: 22,
-        rating: 4.8,
-        reviewsCount: 64,
-        image: 'assets/images/tool_qualigen_heat_gun.jpg',
-        badge: 'Fast Acrylic Bending',
-        desc: 'Dual heat setting 350°C and 550°C for PVC bending, shrink wrap, and paint removal.'
-      },
-      {
-        id: 'tool-techtrove-gluegun',
-        title: 'TechTrove 20W Mini Hot Melt Glue Gun + 15 Sticks',
-        category: 'heat-guns',
-        categoryLabel: 'Glue Guns',
-        priceNumeric: 299,
-        mrp: 499,
-        stock: 35,
-        rating: 4.6,
-        reviewsCount: 140,
-        image: 'assets/images/tool_techtrove_glue_gun.jpg',
-        badge: 'Top Value Maker Kit',
-        desc: 'Rapid 3-minute melt PTC ceramic element with insulated nozzle.'
-      },
-      {
-        id: 'tool-vernier-caliper',
-        title: 'SEE INSIDE Digital Vernier Caliper 150mm LCD Display',
-        category: 'precision',
-        categoryLabel: 'Precision Tools',
-        priceNumeric: 389,
-        mrp: 699,
-        stock: 20,
-        rating: 4.8,
-        reviewsCount: 95,
-        image: 'assets/images/tool_vernier_caliper.jpg',
-        badge: '0.1mm Accuracy',
-        desc: 'Carbon fiber composite with inch/metric conversion for gearbox tolerances.'
-      },
-      {
-        id: 'tool-izom-cordless',
-        title: 'IZOM 20V Cordless Drill Driver with Li-Ion Battery',
-        category: 'drills',
-        categoryLabel: 'Power Drills',
-        priceNumeric: 2199,
-        mrp: 3299,
-        stock: 8,
-        rating: 4.9,
-        reviewsCount: 71,
-        image: 'assets/images/tool_izom_cordless_drill.jpg',
-        badge: 'Portable Pro Driver',
-        desc: '20V Max lithium battery, keyless 10mm chuck, and reversible 18+1 clutch settings.'
-      },
-      {
-        id: 'tool-omxe-grinder',
-        title: 'OMXE OPAL-801 950W Heavy Duty 4-Inch Angle Grinder',
-        category: 'grinders',
-        categoryLabel: 'Angle Grinders',
-        priceNumeric: 1649,
-        mrp: 2399,
-        stock: 11,
-        rating: 4.7,
-        reviewsCount: 43,
-        image: 'assets/images/tool_omxe_angle_grinder.jpg',
-        badge: '11000 RPM Motor',
-        desc: 'High copper armature with side handle and abrasive disc for steel chassis fabrications.'
-      },
-      {
-        id: 'tool-hss-drillbits',
-        title: 'NITYA HSS Titanium Coated Drill Bit Set (13 Pcs)',
-        category: 'precision',
-        categoryLabel: 'Precision Bits',
-        priceNumeric: 329,
-        mrp: 599,
-        stock: 40,
-        rating: 4.6,
-        reviewsCount: 88,
-        image: 'assets/images/tool_hss_drill_bits.jpg',
-        badge: 'Titanium Nitride',
-        desc: '13 essential bit sizes 1.5mm to 6.5mm with 135° split point for metal and hardwood.'
-      },
-      {
-        id: 'model-water-pump-kit',
-        title: 'Custom Mini 775 Centrifugal Water Pump Mechanical Kit',
-        category: 'diy-models',
-        categoryLabel: 'Handmade Mechanics',
-        priceNumeric: 1299,
-        mrp: 1899,
-        stock: 6,
-        rating: 4.8,
-        reviewsCount: 22,
-        image: 'assets/images/project-6.jpg',
-        badge: 'High-Flow Maker Kit',
-        desc: 'Complete DIY kit with 12V 775 DC motor, clear acrylic impeller housing, and fittings.'
-      }
-    ];
+    let currentCategoryFilter = 'all';
+    let currentProjectFilter = 'all';
+    let currentSearchTerm = '';
 
-    let storeProducts = [];
-    let currentCategory = 'all';
-    let searchQuery = '';
+    const PROJECT_LABELS = {
+      '1': '1. Mahindra 415DI XP PLUS',
+      '2': '2. John Deere 5050 D 2wd',
+      '3': '3. John Deere 5310 4wd',
+      '4': '4. Truck 1',
+      '5': '5. Truck 2',
+      '6': '6. Water Pump'
+    };
 
-    document.addEventListener('DOMContentLoaded', () => {
-      loadStoreProducts();
-      updateStoreCartBadge();
-    });
-
-    window.addEventListener('gg_cart_updated', updateStoreCartBadge);
-
-    function updateStoreCartBadge() {
-      const count = window.GGEcommerce ? window.GGEcommerce.getCartCount() : 0;
-      const el = document.getElementById('storeCartCount');
-      if (el) el.textContent = count;
-    }
-
-    async function loadStoreProducts() {
-      const grid = document.getElementById('storeProductsGrid');
-      let liveProducts = [];
-
-      // Try fetching live products from Firestore
-      if (window.db) {
-        try {
-          const snap = await window.db.collection('products').get();
-          snap.forEach(doc => {
-            const data = doc.data();
-            data.id = data.id || doc.id;
-            liveProducts.push(data);
-          });
-        } catch (e) {
-          console.warn('Firestore products fetch fallback:', e);
+    function filterByProject(projId) {
+      currentProjectFilter = projId;
+      const noticeEl = document.getElementById('projectFilterNotice');
+      const textEl = document.getElementById('projectFilterText');
+      if (noticeEl && textEl) {
+        if (projId !== 'all' && PROJECT_LABELS[projId]) {
+          textEl.textContent = `Filtered by: ${PROJECT_LABELS[projId]}`;
+          noticeEl.style.display = 'block';
+        } else {
+          noticeEl.style.display = 'none';
         }
       }
-
-      if (liveProducts.length > 0) {
-        storeProducts = liveProducts;
-      } else {
-        storeProducts = DEFAULT_STORE_PRODUCTS;
-      }
-
-      renderStoreProducts();
+      applyProductFilters();
     }
 
-    function renderStoreProducts() {
-      const grid = document.getElementById('storeProductsGrid');
-      if (!grid) return;
-
-      const filtered = storeProducts.filter(p => {
-        const matchesCat = (currentCategory === 'all' || p.category === currentCategory);
-        const matchesSearch = !searchQuery || p.title.toLowerCase().includes(searchQuery) || (p.desc || '').toLowerCase().includes(searchQuery);
-        return matchesCat && matchesSearch;
-      });
-
-      if (filtered.length === 0) {
-        grid.innerHTML = `
-          <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--text-muted);">
-            <i class="fa-solid fa-magnifying-glass" style="font-size: 2rem; margin-bottom: 12px; opacity: 0.5;"></i>
-            <h3>No products found</h3>
-            <p>Try searching for a different keyword or selecting "All Products".</p>
-          </div>
-        `;
-        return;
-      }
-
-      let html = '';
-      filtered.forEach(p => {
-        const price = Number(p.priceNumeric || p.price || 0);
-        const mrp = Number(p.mrp || Math.round(price * 1.25));
-        const discountPct = mrp > price ? Math.round(((mrp - price) / mrp) * 100) : 0;
-
-        html += `
-          <div class="ecommerce-product-card" data-category="${p.category || 'tools'}">
-            <div class="product-card-img-wrap">
-              <img src="${p.image || 'assets/images/project-1.jpg'}" alt="${p.title}" class="product-card-img" onerror="this.src='assets/images/avatar.jpg'">
-              <div class="product-tag-pill">
-                <i class="fa-solid fa-shield-check"></i> ${p.badge || 'Flipkart Assured'}
-              </div>
-            </div>
-
-            <div class="product-card-details">
-              <div class="product-card-brand">${p.categoryLabel || p.category || 'GG Creation'}</div>
-              <h3 class="product-card-name" title="${p.title}">${p.title}</h3>
-              
-              <div class="product-card-rating">
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star-half-stroke"></i>
-                <span style="color: var(--text-muted); font-size: 0.78rem;">(${p.reviewsCount || 45})</span>
-              </div>
-
-              <div class="product-card-pricing">
-                <span class="price-current">₹ ${price.toLocaleString('en-IN')}</span>
-                <span class="price-mrp">₹ ${mrp.toLocaleString('en-IN')}</span>
-                ${discountPct > 0 ? `<span class="price-discount-badge">${discountPct}% OFF</span>` : ''}
-              </div>
-
-              <div class="product-btn-group">
-                <button type="button" class="btn-add-cart" onclick="GGEcommerce.addToCart(${JSON.stringify(p).replace(/"/g, '&quot;')})">
-                  <i class="fa-solid fa-cart-plus"></i> Add to Cart
-                </button>
-                <button type="button" class="btn-buy-now" onclick="GGEcommerce.startCheckoutFlow(${JSON.stringify(p).replace(/"/g, '&quot;')})">
-                  <i class="fa-solid fa-bolt"></i> Buy Now
-                </button>
-              </div>
-            </div>
-          </div>
-        `;
-      });
-
-      grid.innerHTML = html;
+    function clearProjectFilter() {
+      currentProjectFilter = 'all';
+      const noticeEl = document.getElementById('projectFilterNotice');
+      if (noticeEl) noticeEl.style.display = 'none';
+      applyProductFilters();
     }
 
-    function filterStoreCategory(cat, btn) {
+    function filterStoreCategory(category, btn) {
       document.querySelectorAll('#storeFilterBar .store-filter-btn').forEach(b => b.classList.remove('active'));
       if (btn) btn.classList.add('active');
-      currentCategory = cat;
-      renderStoreProducts();
+      currentCategoryFilter = category;
+      applyProductFilters();
     }
 
-    function handleStoreSearch(val) {
-      searchQuery = (val || '').toLowerCase().trim();
-      renderStoreProducts();
+    function handleStoreSearch(query) {
+      currentSearchTerm = (query || '').toLowerCase().trim();
+      applyProductFilters();
     }
+
+    function applyProductFilters() {
+      const cards = document.querySelectorAll('#productsList .product-link-card');
+      let visibleCount = 0;
+      cards.forEach(card => {
+        const cat = card.dataset.category || '';
+        const projs = (card.dataset.projects || '').split(',').map(s => s.trim());
+        const title = (card.querySelector('.product-card-title')?.textContent || '').toLowerCase();
+        const desc = (card.querySelector('.product-card-desc')?.textContent || '').toLowerCase();
+
+        const matchesCat = (currentCategoryFilter === 'all' || cat === currentCategoryFilter);
+        const matchesProj = (currentProjectFilter === 'all' || projs.includes(currentProjectFilter));
+        const matchesQuery = !currentSearchTerm || title.includes(currentSearchTerm) || desc.includes(currentSearchTerm);
+
+        if (matchesCat && matchesProj && matchesQuery) {
+          card.style.display = 'flex';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // Auto-detect ?project= query parameter on load
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const projParam = urlParams.get('project');
+      if (projParam && PROJECT_LABELS[projParam]) {
+        filterByProject(projParam);
+        const targetEl = document.getElementById('productsList');
+        if (targetEl) targetEl.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
   </script>
 </body>
 

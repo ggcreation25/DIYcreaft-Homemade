@@ -58,7 +58,7 @@
           </li>
           <li>
             <a href="products.html" class="nav-link" id="navLinkProducts">
-              <i class="fa-solid fa-store"></i> Store & Buy
+              <i class="fa-solid fa-link"></i> Link Products
             </a>
           </li>
           <li>
@@ -76,12 +76,6 @@
 
       <!-- Nav Actions (Theme, Search, Profile) -->
       <div class="nav-actions">
-        <!-- Cart Trigger Button in Nav -->
-        <button class="nav-btn" onclick="GGEcommerce.openCartDrawer()" title="View Cart" style="position: relative;">
-          <i class="fa-solid fa-cart-shopping"></i>
-          <span class="cart-badge-count" id="navCartBadge" style="top: -2px; right: -2px;">0</span>
-        </button>
-
         <!-- Theme Toggle -->
         <button class="nav-btn" id="themeToggleBtn" aria-label="Toggle Theme">
           <i class="fa-solid fa-sun" id="themeIcon"></i>
@@ -104,14 +98,8 @@
           <div class="profile-menu" id="profileMenuDropdown">
             <div class="profile-menu-header">
               <div class="profile-menu-title" id="dropdownUserTitle">GG Creation</div>
-              <div class="profile-menu-sub" id="dropdownUserSub">@GGCreative-x9o</div>
+              <div class="profile-menu-sub" id="dropdownUserSub">Community Member</div>
             </div>
-            <a href="profile.html" class="profile-menu-item">
-              <i class="fa-solid fa-user-circle"></i> Profile Dashboard
-            </a>
-            <a href="projects.html" class="profile-menu-item">
-              <i class="fa-solid fa-layer-group"></i> My DIY Projects
-            </a>
             <a href="https://youtube.com/@ggcreative-x9o?si=3LtZbnrBawQbGshe" target="_blank" class="profile-menu-item">
               <i class="fa-brands fa-youtube" style="color: #ff0000;"></i> Open YouTube Channel
             </a>
@@ -154,9 +142,6 @@
             </a>
             <a href="https://youtube.com/@ggcreative-x9o?si=3LtZbnrBawQbGshe" target="_blank" class="btn btn-secondary btn-lg">
               <i class="fa-brands fa-youtube" style="color: #ff0000;"></i> Subscribe Channel
-            </a>
-            <a href="profile.html" class="btn btn-outline-red btn-lg">
-              <i class="fa-solid fa-user-circle"></i> Channel Profile
             </a>
           </div>
         </div>
@@ -422,7 +407,6 @@
   <!-- Scripts -->
   <script src="js/main.js"></script>
   <script src="js/firestore-sync.js"></script>
-  <script src="js/ecommerce.js"></script>
   <script src="js/projects.js"></script>
 </body>
 </html>
